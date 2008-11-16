@@ -1,3 +1,6 @@
+#summary Main wiki page
+#labels Featured
+
 = Browser Security Handbook =
 
   * Written and maintained by [http://lcamtuf.coredump.cx/ Michal Zalewski] <[mailto:lcamtuf@google.com lcamtuf@google.com]>. 
