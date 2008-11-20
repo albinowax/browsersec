@@ -2,9 +2,32 @@
 #labels Featured
 
 = Browser Security Handbook =
-
+hello <font color=red>hello</font> hello
   * Written and maintained by [http://lcamtuf.coredump.cx/ Michal Zalewski] <[mailto:lcamtuf@google.com lcamtuf@google.com]>. 
   * Copyright 2008 Google Inc, rights reserved.
   * Released under terms and conditions of the [http://creativecommons.org/licenses/by/3.0 CC-3.0-BY] license.
 
 =Introduction=
+
+Hello, and welcome to _Browser Security Handbook_!
+
+Browser Security Handbook is meant to provide web application developers, browser engineers, and information security researchers with a one-stop reference to key security properties of contemporary web browsers. Insufficient understanding of these often poorly-documented characteristics is a major contributing factor to the prevalence of several classes of security vulnerabilities.
+
+Although all browsers implement roughly the same set of baseline features, there is relatively little conformance to standards when it comes to many of the less apparent characteristics. Furthermore, vendors routinely introduce poorly documented, proprietary tweaks or improvements that may interfere with existing features in non-obvious ways. For these reasons, it seemed prudent to compile this reference.
+
+The current version of this document is based on the following versions of web browsers:
+
+|| *Browser* || *Version* || *Test date* || *Notes* ||
+|| Microsoft Internet Explorer 6 || 6.0.2900.5512 || Nov 18, 2008 || ||
+|| Microsoft Internet Explorer 7 || 7.0.5730.11 || Nov 18, 2008 || ||
+|| Microsoft Internet Explorer 8 (beta) || || || Not tested (pending stabilization). ||
+|| Mozilla Firefox 2 || 2.0.0.17 || Nov 6, 2008 || ||
+|| Mozilla Firefox 3 || 3.0.3 || Nov 18, 2008 || ||
+|| Apple Safari || 3.2 || Nov 18, 2008 || ||
+|| Opera || 9.62 || Nov 18, 2008 || ||
+|| Google Chrome || 0.3.154.9 || Nov 18, 2008 || ||
+|| Android  built-in browser || SDK 1.0 RC1 || Nov 10, 2008 || Tests requiring `file:///` targets not executed. ||
+
+*DISCLAIMER: Although we tried to make this document as accurate as possible, some errors might have slipped through. Please use this document only as an initial reference, and independently verify any characteristics you wish to depend upon. All the test cases featured in this document are [http://browsersec.googlecode.com/files/browser_tests-1.0.tar.gz freely available for download].*
+
+=Underlying technologies=
