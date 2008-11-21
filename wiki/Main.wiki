@@ -59,7 +59,7 @@ In practice, browsers deviate from these standards in many ways, for example acc
 || Non-standard characters permitted in URL scheme fields (excluding `0-9 A-Z a-z + - .`) || \t \r \n || \t \r \n || || \t \r \n || \t \r \n || _none_ || \r \n *+UTF8* || *\0* \t \r \n || _none_ ||
 || Non-standard characters kept as-is, with no escaping, in URL queries (excluding `0-9 A-Z a-z - . _ ~ : / ? # [ ] @ ! $ & ' ( ) * + , ; =`) || *" < > \* ^ ` { | } \x7F || *" < > \* ^ ` { | } \x7F || || *\* ^ { | } || *\* ^ { | } || ^ { | } || ^ { | } \x7F || *" \* ^ ` { | } || _tbd_ ||
 || Non-standard characters fully ignored in host names || \t \r \n || \t \r \n \xAD || || \t \r \n \xAD || \t \r \n \xAD || \xAD || \x0A-\x0D \xA0 \xAD || \t \r \n \xAD || _none_ ||
-|| Types of partial or broken URLs auto-corrected to fully qualified ones || //y \\y || //y \\y || || //y x:///y x://[y] || //y x:///y x://[y] || //y \\y x:/y x:///y || //y \\y x://[y] || //y \\y x:///y || //y \\y ||
+|| Types of partial or broken URLs auto-corrected to fully qualified ones || //y \\y || //y \\y || || //y x:///y x://`[y]` || //y x:///y x://`[y]` || //y \\y x:/y x:///y || //y \\y x://`[y]` || //y \\y x:///y || //y \\y ||
 || Fragment ID (hash) encoded by applying RFC-mandated URL escaping rules? || *NO* || *NO* || || *PARTLY* || *PARTLY* || YES || *NO* || *NO* || YES ||
 
 _NOTE: As an anti-phishing mechanism, additional restrictions on the use of `authority` and `password` fields in URLs are imposed by many browsers; see the section on HTTP authentication later on._
