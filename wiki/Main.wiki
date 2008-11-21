@@ -92,7 +92,7 @@ Key security-relevant differences in high-bit URL handling are outlined below:
 || Request URL path encoding for manually entered URLs || UTF-8 || UTF-8 || || UTF-8 || UTF-8 || UTF-8 || UTF-8 || UTF-8 || UTF-8 ||
 || Request URL query string encoding for manually entered URLs || *transcoded to 7-bit* || *transcoded to 7-bit* || || UTF-8 || UTF-8 || UTF-8 || *stripped to `?`* || UTF-8 || UTF-8 ||
 || Raw Unicode in host names auto-converted to Punycode? || NO || YES || || YES || YES || YES || YES || YES || NO ||
-|| Percent-escaped UTF-8 in host names auto-converted to Punycode? || _n/a_ || YES || || *NO* || *on retry* || YES || YES || YES || _n/a_ ||
+|| Percent-escaped UTF-8 in host names auto-converted to Punycode? || (NO) || YES || || *NO* || *on retry* || YES || YES || YES || (NO) ||
 || URL bar Unicode display method for host names || (Punycode) || Unicode || || Unicode || Unicode || Unicode || Unicode || Punycode || (Punycode) ||
 || URL bar Unicode display method outside host names || Unicode || Unicode || || `%nn` || Unicode || Unicode || as `?` || Unicode || _n/a_ ||
 
