@@ -1,11 +1,14 @@
 #summary Main wiki page
 #labels Featured
 
-= Browser Security Handbook =
+=Browser Security Handbook=
 
   * Written and maintained by [http://lcamtuf.coredump.cx/ Michal Zalewski] <[mailto:lcamtuf@google.com lcamtuf@google.com]>. 
   * Copyright 2008 Google Inc, rights reserved.
   * Released under terms and conditions of the [http://creativecommons.org/licenses/by/3.0 CC-3.0-BY] license.
+
+=Table of Contents=
+<wiki:toc max_depth="10" />
 
 =Introduction=
 
@@ -61,4 +64,4 @@ In practice, browsers deviate from these standards in many ways, for example acc
 
 _NOTE: As an anti-phishing mechanism, additional restrictions on the use of `authority` and `password` fields in URLs are imposed by many browsers; see the section on HTTP authentication later on._
 
-Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity] decoding takes place before the link is parsed. Because of this, if a newline is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as Javascript, just as `javascript<TAB>:alert(1)` would be.
+Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity decoding] takes place before the link is parsed. Because of this, if a newline is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as Javascript, just as `javascript<TAB>:alert(1)` would be.
