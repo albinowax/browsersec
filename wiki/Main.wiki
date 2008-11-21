@@ -98,3 +98,47 @@ Key security-relevant differences in high-bit URL handling are outlined below:
 
  
 _NOTE: As an anti-phishing mechanism, additional restrictions on the use of some or all Unicode characters in certain top-level domains are imposed by many browsers; see domain name restrictions chapter later on._
+
+==True URL schemes==
+
+URL schemes are used to indicate what general protocol needs to be used to retrieve the data, and how the information needs to be processed for display. Schemes may also be tied to specific default values of some URL fields - such as a TCP port - or specific non-standard URL syntax parsing rules (the latter is usually denoted by the absence of a `//` string after scheme identifier).
+
+Back in 1994, [http://www.ietf.org/rfc/rfc1738.txt RFC 1738] laid out several URL schemes in the context of web browsing, some of which are not handled natively by browsers, or have fallen into disuse. As the Web matured, multiple new open and proprietary schemes appeared with little or no consistency, and the set of protocols supported by each browser began to diverge. [http://www.ietf.org/rfc/rfc2718.txt RFC 2718] attempted to specify some ground rules for the creation of new protocols, and [http://www.ietf.org/rfc/rfc4395.txt RFC 4395] mandated that new schemes be registered with IANA (their list is [http://www.iana.org/assignments/uri-schemes.html available here]). In practice, however, few parties could be bothered to follow this route.
+
+To broadly survey the capabilities of modern browsers, it makes sense to divide URL schemes into a group natively supported by the software, and another group supported by a plethora of plugins, extensions, or third-party programs. The first list is relatively short:
+
+|| *Scheme name* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
+|| HTTP ([http://www.ietf.org/rfc/rfc2616.txt RFC 2616]) || YES || YES || || YES || YES || YES || YES || YES || YES ||
+|| HTTPS ([http://www.ietf.org/rfc/rfc2616.txt RFC 2818]) || YES || YES || || YES || YES || YES || YES || YES || YES ||
+|| SHTTP ([http://www.ietf.org/rfc/rfc2660.txt RFC 2660]) || as HTTP || as HTTP || || NO || NO || NO || NO || NO || NO ||
+|| FTP ([http://www.ietf.org/rfc/rfc1738.txt RFC 1738]) || YES || YES || || YES || YES || YES || YES || YES || NO ||
+|| file ([http://www.ietf.org/rfc/rfc1738.txt RFC 1738]) || YES || YES || || YES (local) || YES (local) || YES (local) || YES || YES || _tbd_ ||
+|| Gopher ([http://www.ietf.org/rfc/rfc14266.txt RFC 4266]) || NO || NO || || YES || YES || NO || defunct? || NO || NO ||
+|| news ([http://tools.ietf.org/html/draft-ellermann-news-nntp-uri-11 draft RFC]) || NO || NO || || NO || NO || NO || YES || NO || NO ||
+
+These protocols may be used to deliver natively rendered content that is interpreted and executed using the security rules implemented within the browsers.
+
+The other list, third-party protocols routed to other applications, depends quite heavily on system configuration. The set of protocols and their handlers is usually maintained in a separate system-wide registry. Browsers may whitelist some of them by default (executing external programs without prompting), or blacklist some (preventing their use altogether); the default action is often to display a mildly confusing prompt. Most common protocols in this family include:
+
+{{{
+acrobat                           - Acrobat Reader
+callto                            - some instant messengers, IP phones
+daap / itpc / itms / ...          - Apple iTunes
+FirefoxURL                        - Mozilla Firefox
+hcp                               - Microsoft Windows Help subsystem
+ldap                              - address book functionality
+mailto                            - various mail agents
+mmst / mmsu / msbd / rtsp / ...   - streaming media of all sorts
+mso-offdap                        - Microsoft Office
+news / snews / nntp               - various news clients
+outlook / stssync                 - Microsoft Outlook
+rlogin / telnet / tn3270          - telnet client
+shell                             - Windows Explorer
+sip                               - various IP phone software
+}}}
+
+New handlers might be registered in OS- and application-specific ways, for example by registering new `HKCR\Protocols\Handlers` keys in Windows registry, or adding `network.protocol-handler.*` settings in Firefox.
+
+As a rule, the latter set of protocols is not honored within the renderer when referencing document elements such as images, script or applet sources, and so forth; they do work, however, as `IFRAME` and link targets, and will launch a separate program as needed. These programs may sometimes integrate seamlessly with the renderer, but the rules by which they render content and impose security restrictions are generally unrelated to the browser as such.
+
+Historically, the ability to plant such third-party schemes in links proved to be a significant exploitation vector, as poorly written, vulnerable external programs often register protocol handlers without user's knowledge or consent; as such, it is prudent to reject unexpected schemes where possible, and exercise caution when introducing new ones on client side (including observing [http://www.securityfocus.com/bid/24837/ safe parameter passing conventions]).
