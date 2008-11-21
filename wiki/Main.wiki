@@ -142,3 +142,38 @@ New handlers might be registered in OS- and application-specific ways, for examp
 As a rule, the latter set of protocols is not honored within the renderer when referencing document elements such as images, script or applet sources, and so forth; they do work, however, as `IFRAME` and link targets, and will launch a separate program as needed. These programs may sometimes integrate seamlessly with the renderer, but the rules by which they render content and impose security restrictions are generally unrelated to the browser as such.
 
 Historically, the ability to plant such third-party schemes in links proved to be a significant exploitation vector, as poorly written, vulnerable external programs often register protocol handlers without user's knowledge or consent; as such, it is prudent to reject unexpected schemes where possible, and exercise caution when introducing new ones on client side (including observing [http://www.securityfocus.com/bid/24837/ safe parameter passing conventions]).
+
+=Pseudo URL schemes=
+
+In addition to the aforementioned "true" URL schemes, modern browsers support a large number of pseudo-schemes used to implement various advanced features, such as encapsulating encoded documents within URLs, providing legacy scripting features, or giving access to internal browser information and data views.
+
+Encapsulating schemes are of interest to any link-handling applications, as these methods usually impose specific non-standard content parsing or rendering modes on top of existing resources specified in the later part of the URL. The underlying content is retrieved using HTTP, looked up locally (e.g., `file:///`), or obtained using other generic method - and may execute in the security context associated with the true origin of data. For example, the following URL:
+
+{{{
+jar:http://www.example.com/archive.jar!/resource.html
+}}}
+
+...will be retrieved over HTTP from `http://www.example.com/archive.jar`. Because of the encapsulating protocol, the browser will then attempt to interpret the obtained file as a standard Sun Java ZIP archive (`JAR`), and extract, then display `/resource.html` from within that archive.
+
+Common encapsulating schemes are shown in the table below.
+
+|| *Scheme name* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
+|| feed (RSS, [http://www.brindys.com/winrss/feedformat.html draft spec]) || NO || NO || || NO || NO || YES || NO || NO || NO ||
+|| hcp, its, mhtml, mk, ms-help, ms-its, ms-itss (Windows Help archive parsing) || YES || YES || || NO || NO || NO || NO || NO || NO ||
+|| jar ([http://docs.sun.com/source/819-0913/author/jar.html Java archive parsing]) || NO || NO || || YES || YES || NO || NO || NO || NO ||
+|| view-cache, wyciwyg (cached page views) || NO || NO || || YES || YES || NO || NO || YES || NO ||
+|| view-source (page source views) || NO || NO || || YES || YES || NO || NO || YES || NO ||
+
+In addition to encapsulating schemes enumerated above, there are various schemes used for accessing browser-specific internal features unrelated to web content. These pseudo-protocols include `about:` (used to access static info pages, errors, cache statistics, configuration pages, [http://en.wikipedia.org/wiki/About: and more]), `moz-icon:` (used to access file icons), `chrome:`, `chrome-resource:`, `chromewebdata:`, `resource:`, `res:`, `rdf:`, and `inspector:` (all used to reference built-in resources of the browser, often rendered with elevated privileges). There is little or no standardization or proper documentation for these mechanisms, but as a general rule, web content is not permitted to directly reference any sensitive data. Permitting them to go through on trusted pages may serve as an attack vector in case of browser-side vulnerabilities, however.
+
+Finally, several pseudo-schemes exist specifically to enable scripting or URL-contained data rendering in the security context inherited from the caller, without actually referencing any additional external or internal content. It is particularly unsafe to output attacker-controlled URLs of this type on pages that may contain any sensitive content. Known schemes of this type include:
+
+|| *Scheme name* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
+|| data ([http://www.ietf.org/rfc/rfc2397.txt RFC 2397]) || NO || NO || || YES || YES || YES || YES || YES || YES ||
+|| javascript ([http://developer.mozilla.org/en/docs/JavaScript scripting]) || YES || YES || || YES || YES || YES || YES || YES || YES ||
+|| vbscript ([http://msdn.microsoft.com/en-us/library/sx7b3k7y(VS.85).aspx scripting]) || YES || YES || || NO || NO || NO || NO || NO || NO ||
+
+
+_NOTE: Historically, numerous aliases for these schemes were also present; `livescript` and `mocha` schemes were supported by Netscape Navigator and other early browsers as aliases for Javascript; `local` worked in some browsers as a nickname for `file`; etc. This is generally not seen anymore._
+
+==Hypertext Transfer Protocol==
