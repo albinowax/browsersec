@@ -143,7 +143,7 @@ As a rule, the latter set of protocols is not honored within the renderer when r
 
 Historically, the ability to plant such third-party schemes in links proved to be a significant exploitation vector, as poorly written, vulnerable external programs often register protocol handlers without user's knowledge or consent; as such, it is prudent to reject unexpected schemes where possible, and exercise caution when introducing new ones on client side (including observing [http://www.securityfocus.com/bid/24837/ safe parameter passing conventions]).
 
-=Pseudo URL schemes=
+==Pseudo URL schemes==
 
 In addition to the aforementioned "true" URL schemes, modern browsers support a large number of pseudo-schemes used to implement various advanced features, such as encapsulating encoded documents within URLs, providing legacy scripting features, or giving access to internal browser information and data views.
 
@@ -177,3 +177,52 @@ Finally, several pseudo-schemes exist specifically to enable scripting or URL-co
 _NOTE: Historically, numerous aliases for these schemes were also present; `livescript` and `mocha` schemes were supported by Netscape Navigator and other early browsers as aliases for Javascript; `local` worked in some browsers as a nickname for `file`; etc. This is generally not seen anymore._
 
 ==Hypertext Transfer Protocol==
+
+The core protocol used to request and annotate much of web traffic is called the Hypertext Transfer Protocol. This text-based scheme originated as a very simple, underspecified design drafted by Tim Berners-Lee, and dubbed HTTP/0.9 ([http://www.w3.org/Protocols/HTTP/AsImplemented.html see W3C archive]) - these days no longer used by web browsers, but recognized by some servers. It then evolved into a fairly complex, and still somewhat underspecified HTTP/1.1, as described in [http://www.ietf.org/rfc/rfc2616.txt RFC 2616], whilst maintaining some superficial backward compatibility with the original idea.
+
+Every HTTP request opens with a single-line description of a content access method (`GET` meant for requesting basic content, and `POST` meant for submitting state-changing data to servers - along with plethora of more specialized options typically not used by web browsers under normal circumstances). In HTTP/1.0 and up, this is then followed by protocol version specification - and the opening line itself is followed by zero or more additional `field: value` headers, each occupying their own line. These headers specify all sorts of meta-data, from target host name (so that a single machine may host multiple web sites), to information about client-supported MIME types, cache parameters, the site from which a particular request originated (`Referer`), and so forth. Headers are terminated with a single empty line, followed by any optional payload data being sent to the server if specified by a `Content-Length` header. 
+
+One example of an HTTP request might be:
+
+{{{
+POST /fuzzy_bunnies/images/bunny_dispenser.php HTTP/1.1
+Host: www.fuzzybunnies.com
+User-Agent: Bunny Browser 1.7
+Content-Type: text/plain
+Content-Length: 11
+Referer: http://www.fuzzybunnies.com/main.html
+
+HELLO SERVER
+}}}
+
+The server responds in a similar manner, returning a numerical status code, spoken protocol version, and similarly formatted metadata headers followed by actual content requested, if available:
+
+{{{
+HTTP/1.1 200 OK
+Server: Bunny Server 0.9.2
+Content-Type: text/plain
+
+HELLO CLIENT
+}}}
+
+Originally, every connection would be one-shot: after a request is sent, and response received, the session is terminated, and a new connection needs to be established. Since the need to carry out a complete TCP/IP handshake for every request imposed a performance penalty, newer specifications introduced the concept of keep-alive connections, negotiated with a particular request header that is then acknowledged by the server.
+
+This, in conjunction with the fact that HTTP supports proxying and content caching on interim systems managed by content providers, ISPs, and individual subscribers, made it particularly important for all parties involved in an HTTP transaction to have exactly the same idea of where a request starts, where it ends, and what it is related to. Unfortunately, the protocol itself is highly ambiguous and has a potential for redundancy, which leads to multiple problems and differences between how servers, clients, and proxies may interpret responses:
+
+  * Like many other text protocols of that time, early takes on HTTP made little or no effort to mandate a strict adherence to a particular understanding of what a text-based format really is, or how certain "intuitive" field values must be structured. Because of this, implementations would recognize, and often handle in incompatible ways, technically malformed inputs - such as incorrect newline characters (lone `CR`, lone `LF`, `LF CR`), `NUL` or other disruptive control characters in text, incorrect number of whitespaces in field delimiters, and so forth; to various implementations, `Head\0er: Value` may appear as `Head`, `Head: Value`, `Header: Value`, or `Head\0er: Value`. In later versions, as outlined in RFC 2616 section 19.3 ("Tolerant Applications"), the standard explicitly recommends, but does not require, lax parsing of certain fields and invalid values. One of the most striking examples of compatibility kludges is Firefox [http://mxr.mozilla.org/mozilla1.8.0/source/nsprpub/pr/src/misc/prtime.c#1045 prtime.c] function used to parse HTTP `Date` fields, which shows a stunning complexity behind what should be a remarkably simple task.
+
+  * No particular high bit character set is defined for HTTP headers, and high bit characters are technically disallowed, despite legitimate reasons for them to appear in certain HTTP fields (e.g., `Cookie`, `Content-Disposition` filenames), and the protocol having no provisions for any particular method of escaping them. This resulted in some implementations interpreting HTTP data as UTF-8, and some using single-byte interpretations native to low-level OS string handling facilities.
+
+   * The behavior when some headers critical to the correct understanding of an HTTP request are duplicate or contradictory is not well defined; as such, various clients will give precedence to different occurrences of the same parameter within HTTP headers (e.g., duplicate `Content-Type`), or assign various weights to conflicting information (say, `Content-Length` not matching payload length).
+
+   * When new features that change the meaning of requests were introduced in HTTP/1.1 standard, no strict prohibition against recognizing them in requests or responses marked as HTTP/1.0 was made. As a result, the understanding of HTTP/1.0 traffic may differ significantly between legacy agents, such as some commercial web proxies, and HTTP/1.1 applications such as contemporary browsers (e.g., `Connection: keep-alive`, `Transfer-Encoding: chunked`, `Accept-Encoding: ...`).
+
+Many specific areas, such as caching behavior, have their own sections later in this document. Below is a survey of general security-relevant differences in HTTP protocol implementations:
+
+|| *Test* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
+|| `Content-Length` header value overrides actual content length? || NO || YES || || NO || NO || YES || YES || NO || YES ||
+|| First HTTP header of the same name takes precedence? || YES || YES || || NO || NO || YES || NO || NO || NO ||
+|| First field value in a HTTP header takes precedence? || YES || YES || || YES || YES || YES || YES || YES || YES ||
+|| `Referer` header disclosed on HTTPS → HTTPS navigation? || YES || YES || || YES || YES || YES || NO || YES || YES ||
+|| `Referer` header disclosed on HTTPS → HTTP navigation? || NO || NO || || NO || NO || NO || NO || NO || NO ||
+|| Response body on invalid 30x redirect shown to user? || NO || NO || || YES || YES || NO || YES || YES || broken ||
