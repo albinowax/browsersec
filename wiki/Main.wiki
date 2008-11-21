@@ -65,3 +65,23 @@ In practice, browsers deviate from these standards in many ways, for example acc
 _NOTE: As an anti-phishing mechanism, additional restrictions on the use of `authority` and `password` fields in URLs are imposed by many browsers; see the section on HTTP authentication later on._
 
 Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity decoding] takes place before the link is parsed. Because of this, if a newline is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as Javascript, just as `javascript<TAB>:alert(1)` would be.
+
+==Unicode in URLs==
+
+Much like several related technologies used for web content transport, URLs do not have any particular character set defined by relevant RFCs; [http://www.ietf.org/rfc/rfc3986.txt RFC 3986] ambiguously states: _"In local or regional contexts and with improving technology, users might benefit from being able to use a wider range of characters; such use is not defined by this specification."_ The same dismissive approach is taken in HTTP header specification.
+
+As a result, in the context of web URLs, any high-bit user input may and should be escaped as `%nn` sequences, but there is no specific guidance provided on how to transcode user input in system's native code page when talking to other parties that may not share this code page. On a system that uses UTF-8 and receives an URL containing Unicode `ą` in the path, this corresponds to a sequence of `0xC4 0x85` natively; however, when sent to a server that uses `ISO-8859-2`, the correct value sent should be `0xB1` (or alternatively, additional information about client-specific encoding should be included to make the conversion possible on server side). In practice, most browsers deal with this by sending UTF-8 data by default on any text entered in the URL bar by hand, and using page encoding on all followed links.
+
+Another limitation of URLs traces back to DNS as such; [http://www.ietf.org/rfc/rfc1035.txt RFC 1035] permits only characters `A-Z a-z 0-9 -` in DNS labels, with period (`.`) used as a delimiter; some resolver implementations further permit underscore (`_`) to appear in DNS names, violating the standard, but other characters are almost universally banned. With the growth of the Web, the need to accommodate non-Latin alphabets in host names was perceived by multiple parties - and the use of `%nn` encoding was not an option, because `%` as such was not on the list.
+
+To solve this, [http://tools.ietf.org/html/rfc3490 RFC 3490] lays out a rather contrived encoding scheme that permitted Unicode data to be stored in DNS labels, and [http://tools.ietf.org/html/rfc3492 RFC 3492] outlines a specific implementation within DNS labels - commonly referred to as Punycode - that follows the notation of `xn--[US-ASCII part]-[encoded Unicode data]`. Any Punycode-aware browser faced with non US-ASCII data in a host name is expected to transform it to this notation first, and then perform a traditional DNS lookup for the encoded string.
+
+Putting these two methods together, the following transformation is expected to be made internally by the browser:
+
+{{{
+http://www.ręczniki.pl/?ręcznik=1 → http://www.xn--rczniki-98a.pl/?r%C4%99cznik=1
+}}}
+
+Key security-relevant differences in high-bit URL handling are outlined below:
+
+|| *Test* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
