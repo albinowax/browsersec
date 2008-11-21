@@ -85,3 +85,16 @@ http://www.ręczniki.pl/?ręcznik=1 → http://www.xn--rczniki-98a.pl/?r%C4%99cz
 Key security-relevant differences in high-bit URL handling are outlined below:
 
 || *Test* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
+|| Request URL path encoding when following plain links || UTF-8 || UTF-8 || || page encoding || UTF-8 || UTF-8 || UTF-8 || UTF-8 || UTF-8 ||
+|| Request URL query string encoding when following plain links || *page encoding, no escaping* || *page encoding, no escaping* || || page encoding || page encoding || page encoding || page encoding || page encoding || page encoding ||
+|| Request URL path encoding for `XMLHttpRequest` calls || page encoding || page encoding || || page encoding || page encoding || page encoding || page encoding || page encoding || page encoding ||
+|| Request URL query string encoding for `XMLHttpRequest` calls || *page encoding, no escaping* || *page encoding, no escaping* || || page encoding || page encoding || *mangled* || page encoding || *mangled* || *mangled* || 
+|| Request URL path encoding for manually entered URLs || UTF-8 || UTF-8 || || UTF-8 || UTF-8 || UTF-8 || UTF-8 || UTF-8 || UTF-8 ||
+|| Request URL query string encoding for manually entered URLs || *transcoded to 7-bit* || *transcoded to 7-bit* || || UTF-8 || UTF-8 || UTF-8 || *stripped to `?`* || UTF-8 || UTF-8 ||
+|| Raw Unicode in host names auto-converted to Punycode? || NO || YES || || YES || YES || YES || YES || YES || NO ||
+|| Percent-escaped UTF-8 in host names auto-converted to Punycode? || _n/a_ || YES || || *NO* || *on retry* || YES || YES || YES || _n/a_ ||
+|| URL bar Unicode display method for host names || (Punycode) || Unicode || || Unicode || Unicode || Unicode || Unicode || Punycode || (Punycode) ||
+|| URL bar Unicode display method outside host names || Unicode || Unicode || || `%nn` || Unicode || Unicode || as `?` || Unicode || _n/a_ ||
+
+ 
+_NOTE: As an anti-phishing mechanism, additional restrictions on the use of some or all Unicode characters in certain top-level domains are imposed by many browsers; see domain name restrictions chapter later on._
