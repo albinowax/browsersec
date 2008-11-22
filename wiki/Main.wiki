@@ -9,6 +9,8 @@
 
 <h1>Table of Contents</h1>
 
+<wiki:toc max_depth="10" />
+
 =Introduction=
 
 Hello, and welcome to _Browser Security Handbook_!
