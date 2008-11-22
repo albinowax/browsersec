@@ -1,14 +1,13 @@
 #summary Main wiki page
 #labels Featured
 
-=Browser Security Handbook=
+<h1>Browser Security Handbook</h1>
 
   * Written and maintained by [http://lcamtuf.coredump.cx/ Michal Zalewski] <[mailto:lcamtuf@google.com lcamtuf@google.com]>. 
   * Copyright 2008 Google Inc, rights reserved.
   * Released under terms and conditions of the [http://creativecommons.org/licenses/by/3.0 CC-3.0-BY] license.
 
-=Table of Contents=
-<wiki:toc max_depth="10" />
+<h1>Table of Contents</h1>
 
 =Introduction=
 
@@ -56,11 +55,11 @@ On top of the aforementioned documents, a W3C draft [http://www.w3.org/Addressin
 In practice, browsers deviate from these standards in many ways, for example accepting URLs with technically forbidden, and then trying to escape them automatically; or applying heuristics to handle incomplete or seemingly broken URLs. Here are some of the key differences that often need to be accounted for:
 
 || *Test* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
-|| Non-standard characters permitted in URL scheme fields (excluding `0-9 A-Z a-z + - .`) || \t \r \n || \t \r \n || || \t \r \n || \t \r \n || _none_ || \r \n *+UTF8* || *\0* \t \r \n || _none_ ||
-|| Non-standard characters kept as-is, with no escaping, in URL queries (excluding `0-9 A-Z a-z - . _ ~ : / ? # [ ] @ ! $ & ' ( ) * + , ; =`) || *" < > \* ^ ` { | } \x7F || *" < > \* ^ ` { | } \x7F || || *\* ^ { | } || *\* ^ { | } || ^ { | } || ^ { | } \x7F || *" \* ^ ` { | } || _tbd_ ||
+|| Non-standard characters permitted in URL scheme fields (excluding `0-9 A-Z a-z + - .`) || \t \r \n || \t \r \n || || \t \r \n || \t \r \n || _none_ || \r \n <font color="#ff0000">+UTF8</font> || <font color="#ff0000">\0</font> \t \r \n || _none_ ||
+|| Non-standard characters kept as-is, with no escaping, in URL queries (excluding `0-9 A-Z a-z - . _ ~ : / ? # [ ] @ ! $ & ' ( ) * + , ; =`) || <font color="#ff0000">" < > \</font> ^ ` { | } \x7F || <font color="#ff0000">" < > \</font> ^ ` { | } \x7F || || <font color="#ff0000">\</font> ^ { | } || <font color="#ff0000">\</font> ^ { | } || ^ { | } || ^ { | } \x7F || <font color="#ff0000">" \</font> ^ ` { | } || _tbd_ ||
 || Non-standard characters fully ignored in host names || \t \r \n || \t \r \n \xAD || || \t \r \n \xAD || \t \r \n \xAD || \xAD || \x0A-\x0D \xA0 \xAD || \t \r \n \xAD || _none_ ||
 || Types of partial or broken URLs auto-corrected to fully qualified ones || //y \\y || //y \\y || || //y x:///y x://`[y]` || //y x:///y x://`[y]` || //y \\y x:/y x:///y || //y \\y x://`[y]` || //y \\y x:///y || //y \\y ||
-|| Fragment ID (hash) encoded by applying RFC-mandated URL escaping rules? || *NO* || *NO* || || *PARTLY* || *PARTLY* || YES || *NO* || *NO* || YES ||
+|| Fragment ID (hash) encoded by applying RFC-mandated URL escaping rules? || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">PARTLY</font> || <font color="#ff0000">PARTLY</font> || YES || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES ||
 
 _NOTE: As an anti-phishing mechanism, additional restrictions on the use of `authority` and `password` fields in URLs are imposed by many browsers; see the section on HTTP authentication later on._
 
@@ -86,13 +85,13 @@ Key security-relevant differences in high-bit URL handling are outlined below:
 
 || *Test* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
 || Request URL path encoding when following plain links || UTF-8 || UTF-8 || || page encoding || UTF-8 || UTF-8 || UTF-8 || UTF-8 || UTF-8 ||
-|| Request URL query string encoding when following plain links || *page encoding, no escaping* || *page encoding, no escaping* || || page encoding || page encoding || page encoding || page encoding || page encoding || page encoding ||
+|| Request URL query string encoding when following plain links || <font color="#ff0000">page encoding, no escaping</font> || <font color="#ff0000">page encoding, no escaping</font> || || page encoding || page encoding || page encoding || page encoding || page encoding || page encoding ||
 || Request URL path encoding for `XMLHttpRequest` calls || page encoding || page encoding || || page encoding || page encoding || page encoding || page encoding || page encoding || page encoding ||
-|| Request URL query string encoding for `XMLHttpRequest` calls || *page encoding, no escaping* || *page encoding, no escaping* || || page encoding || page encoding || *mangled* || page encoding || *mangled* || *mangled* || 
+|| Request URL query string encoding for `XMLHttpRequest` calls || <font color="#ff0000">page encoding, no escaping</font> || <font color="#ff0000">page encoding, no escaping</font> || || page encoding || page encoding || <font color="#ff0000">mangled</font> || page encoding || <font color="#ff0000">mangled</font> || <font color="#ff0000">mangled</font> || 
 || Request URL path encoding for manually entered URLs || UTF-8 || UTF-8 || || UTF-8 || UTF-8 || UTF-8 || UTF-8 || UTF-8 || UTF-8 ||
-|| Request URL query string encoding for manually entered URLs || *transcoded to 7-bit* || *transcoded to 7-bit* || || UTF-8 || UTF-8 || UTF-8 || *stripped to `?`* || UTF-8 || UTF-8 ||
+|| Request URL query string encoding for manually entered URLs || <font color="#ff0000">transcoded to 7 bit</font> || <font color="#ff0000">transcoded to 7-bit</font> || || UTF-8 || UTF-8 || UTF-8 || <font color="#ff0000">stripped to `?`</font> || UTF-8 || UTF-8 ||
 || Raw Unicode in host names auto-converted to Punycode? || NO || YES || || YES || YES || YES || YES || YES || NO ||
-|| Percent-escaped UTF-8 in host names auto-converted to Punycode? || (NO) || YES || || *NO* || *on retry* || YES || YES || YES || (NO) ||
+|| Percent-escaped UTF-8 in host names auto-converted to Punycode? || (NO) || YES || || <font color="#ff0000">NO</font> || <font color="#ff0000">on retry</font> || YES || YES || YES || (NO) ||
 || URL bar Unicode display method for host names || (Punycode) || Unicode || || Unicode || Unicode || Unicode || Unicode || Punycode || (Punycode) ||
 || URL bar Unicode display method outside host names || Unicode || Unicode || || `%nn` || Unicode || Unicode || as `?` || Unicode || _n/a_ ||
 
@@ -266,13 +265,13 @@ Not all `HTTP-EQUIV` directives are meaningful - for example, the determination 
 Key security-relevant differences between HTML parsing modes in the aforementioned engines are shown below:
 
 || *Test* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
-|| Nested HTML tags will be parsed (`<FOO <BAR...`)? || NO || NO || || *YES* || *YES* || *YES* || *YES* || *YES* || *YES* ||
+|| Nested HTML tags will be parsed (`<FOO <BAR...`)? || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
 || Nested parsing features recursive recovery (both `FOO` and `BAR` interpreted)? || (NO) || (NO) || || YES || YES || YES || NO || YES || YES ||
-|| Parser resets out on invalid tag names (`<FOO="<BAR...`)? || NO || NO || || *YES* || *YES* || *YES* || NO || *YES* || *YES* ||
-|| Trace-back recovery on missing tag closure (`<FOO BAR="<BAZ(EOF)`)? || NO || NO || || *YES* || *YES* || NO || *YES* || NO || NO ||
-|| SGML-style comment parsing permitted in strict mode (`--` and `>` may be split)? || NO || NO || || *YES* || *YES* || NO || NO || NO || NO ||
-|| !-type tags are parsed in a non-HTML manner (`<!FOO BAR="-->"...` breaks)? || NO || NO || || *YES* || *YES* || NO || *YES* || NO || NO ||
-|| Characters accepted as tag name / parameter separators (excluding `\t \r \n \x20`) || \x0B \x0C */* || \x0B \x0C */* || || */* || */* || \x0B \x0C || \x0B \x0C \xA0 || \x0B \x0C || \x0B \x0C ||
-|| Characters ignored between parameter name, equals sign, and value (excluding `\t \r \n`) || \x0B \x0C \x20 || \x0B \x0C \x20 || || \x20 || \x20 || \0 \x0B \x0C \x20 */* || \x20 \xA0 || \0 \x0B \x0C \x20 */* || \0 \x0B \x0C \x20 */* ||
-|| Characters accepted in lieu of quotes for HTML parameters (excluding `"`) || ' *`* || ' *`* || || ' || ' || ' || ' || ' || ' || 
-|| Characters accepted in tag names (excluding `A-Z / ? !`) || \0 *%* || \0 *%* || || _none_ || _none_ || _none_ || \0 || _none_ || _none_ ||
+|| Parser resets out on invalid tag names (`<FOO="<BAR...`)? || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
+|| Trace-back recovery on missing tag closure (`<FOO BAR="<BAZ(EOF)`)? || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO ||
+|| SGML-style comment parsing permitted in strict mode (`--` and `>` may be split)? || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
+|| !-type tags are parsed in a non-HTML manner (`<!FOO BAR="-->"...` breaks)? || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO ||
+|| Characters accepted as tag name / parameter separators (excluding `\t \r \n \x20`) || \x0B \x0C <font color="#ff0000">/</font> || \x0B \x0C <font color="#ff0000">/</font> || || <font color="#ff0000">/</font> || <font color="#ff0000">/</font> || \x0B \x0C || \x0B \x0C \xA0 || \x0B \x0C || \x0B \x0C ||
+|| Characters ignored between parameter name, equals sign, and value (excluding `\t \r \n`) || \x0B \x0C \x20 || \x0B \x0C \x20 || || \x20 || \x20 || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> || \x20 \xA0 || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> ||
+|| Characters accepted in lieu of quotes for HTML parameters (excluding `"`) || ' <font color="#ff0000">`</font> || ' <font color="#ff0000">`</font> || || ' || ' || ' || ' || ' || ' || 
+|| Characters accepted in tag names (excluding `A-Z / ? !`) || <font color="#ff0000">\0 %*</font>|| <font color="#ff0000">\0 %</font> || || _none_ || _none_ || _none_ || <font color="#ff0000">\0</font> || _none_ || _none_ ||
