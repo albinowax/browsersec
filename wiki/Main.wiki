@@ -71,7 +71,7 @@ Please note that when links are embedded within HTML documents, [http://www.w3.o
 
 Much like several related technologies used for web content transport, URLs do not have any particular character set defined by relevant RFCs; [http://www.ietf.org/rfc/rfc3986.txt RFC 3986] ambiguously states: _"In local or regional contexts and with improving technology, users might benefit from being able to use a wider range of characters; such use is not defined by this specification."_ The same dismissive approach is taken in HTTP header specification.
 
-As a result, in the context of web URLs, any high-bit user input may and should be escaped as `%nn` sequences, but there is no specific guidance provided on how to transcode user input in system's native code page when talking to other parties that may not share this code page. On a system that uses UTF-8 and receives an URL containing Unicode `ą` in the path, this corresponds to a sequence of `0xC4 0x85` natively; however, when sent to a server that uses `ISO-8859-2`, the correct value sent should be `0xB1` (or alternatively, additional information about client-specific encoding should be included to make the conversion possible on server side). In practice, most browsers deal with this by sending UTF-8 data by default on any text entered in the URL bar by hand, and using page encoding on all followed links.
+As a result, in the context of web URLs, any high-bit user input may and should be escaped as `%nn` sequences, but there is no specific guidance provided on how to transcode user input in system's native code page when talking to other parties that may not share this code page. On a system that uses UTF-8 and receives a URL containing Unicode `ą` in the path, this corresponds to a sequence of `0xC4 0x85` natively; however, when sent to a server that uses `ISO-8859-2`, the correct value sent should be `0xB1` (or alternatively, additional information about client-specific encoding should be included to make the conversion possible on server side). In practice, most browsers deal with this by sending UTF-8 data by default on any text entered in the URL bar by hand, and using page encoding on all followed links.
 
 Another limitation of URLs traces back to DNS as such; [http://www.ietf.org/rfc/rfc1035.txt RFC 1035] permits only characters `A-Z a-z 0-9 -` in DNS labels, with period (`.`) used as a delimiter; some resolver implementations further permit underscore (`_`) to appear in DNS names, violating the standard, but other characters are almost universally banned. With the growth of the Web, the need to accommodate non-Latin alphabets in host names was perceived by multiple parties - and the use of `%nn` encoding was not an option, because `%` as such was not on the list.
 
@@ -310,7 +310,50 @@ http://example.com/?p1=v1&p2=v2
 Should be technically always encoded in HTML parameters (but not in Javascript code) as:
 
 {{{
-<a href="http://example.com/?p1=v1&amp;amp;p2=v2">Click here</a>
+<a href="http://example.com/?p1=v1&amp;p2=v2">Click here</a>
 }}}
 
 In practice, however, the convention is almost never followed by web developers, and browsers compensate for it by treating invalid HTML entities as literal `&`-containing strings.
+
+==Document Object Model==
+
+As the Web matured and the concept of client-side programming gained traction, the need arose for HTML document to be programatically accessible and modifiable on the fly in response to user actions. One technology, [http://www.w3.org/DOM/DOMTR Document Object Model] (also referred to as "dynamic HTML"), emerged as the prevailing method for accomplishing this task.
+
+In the context of web browsers, Document Object Model is simply an object-based representation of HTML document layout, and by a natural extension much of the browser internals, in a hierarchical structure with various read and write properties, and callable methods. To illustrate, to access the value of the first `<INPUT>` tag in a document through DOM, the following Javascript code could be used:
+
+{{{
+document.getElementsByTagName('INPUT')[0].value
+}}}
+
+Document Object Model also permits third-party documents to be referenced, subject to certain security checks discussed later on; for example, the following code accesses the `<INPUT>` tag in the second `<IFRAME>` on a current page:
+
+{{{
+document.getElementsByTagName('IFRAME')[1].contentDocument.getElementsByTagName('INPUT')[0].value
+}}}
+
+DOM object hierarchy - as seen by programmers - begins with an implicit "root" object, sometimes named `defaultView` or `global`; all the scripts running on a page have `defaultView` as their default scope. This root object has the following members:
+
+  * Various properties and methods relating to current document-specific window or frame ([http://www.w3schools.com/HTMLDOM/dom_obj_window.asp reference]). Properties include window dimensions, status bar text, references to parent, top-level, and owner (opener) `defaultView` objects. Methods permit scripts to resize, move, change focus, or decor of current windows, display certain UI widgets, or - oddly enough - set up Javascript timers to execute code after a certain "idle" interval.
+
+  * All the current script's global variables and functions.
+
+  * `defaultView.document` ([http://www.w3schools.com/HTMLDOM/dom_obj_document.asp reference]) - a top-level object for the actual, proper _document_ object model. This hierarchy represents all of the document elements, along with their specific methods and properties, and document-wide object lookup functions (e.g., `getElementById`, `getElementsByTagName`, etc).
+
+  * `defaultView.location` ([http://www.w3schools.com/HTMLDOM/dom_obj_location.asp reference]) - a simple object describing document's current location, both as an unparsed string, and split into parsed segments; provides methods and property setters that allow scripts to navigate away to other sites.
+
+  * `defaultView.history` ([http://www.w3schools.com/HTMLDOM/dom_obj_history.asp reference]) - another simple object offering three methods to enable pages to navigate back to previously visited pages.
+
+  * `defaultView.screen` ([http://www.w3schools.com/HTMLDOM/dom_obj_screen.asp reference]) - yet another modestly sized object with a bunch of mostly read-only properties describing properties of the current display device, including pixel and DPI resolution, and so forth.
+
+  * `defaultView.navigator` ([http://www.w3schools.com/HTMLDOM/dom_obj_navigator.asp reference]) - an object containing read-only properties such as browser make and version, operating platform, or plugin configuration.
+
+  * `defaultView.window` - a self-referential entry that points back to the root object; this is the name by which the `defaultView` object is most commonly known. In general, `screen`, `navigator`, and `window` DOM hierarchies combined usually contain enough information to very accurately fingerprint any given machine.
+
+With the exception of cross-domain, cross-document access permissions outlined in later chapters, the operation of DOM bears relatively little significance to site security. It is, however, worth noting that DOM methods are wrappers providing access to highly implementation-specific internal data structures that may or may not obey the usual rules of Javascript language. Because of this, multiple seemingly inexplicable oddities and quirks plague DOM data structures in every browsers - and some of these may interfere with client-side security mechanisms. Several such quirks are documented below:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Is `window` the same object as `window.window`?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Is `document.URL` writable?</font> || NO || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Can builtin DOM objects be clobbered?</font> || shadowing || shadowing || || shadowing || shadowing || shadowing || shadowing || shadowing || shadowing ||
+
+_Trivia: traversing `document.*` is a possible approach to look up specific input or output fields when modifying complex pages from within scripts, but it is not a very practical one; because of this, most scripts resort to `document.getElementById()` method to uniquely identify elements regardless of their current location on the page. Although `ID=` parameters for tags within HTML documents are expected to be unique, there is no such guarantee. Currently, all major browsers seem to give the first occurrence a priority._
