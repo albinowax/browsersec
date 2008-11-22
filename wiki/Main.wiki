@@ -288,7 +288,7 @@ HTML features a special encoding scheme called [http://en.wikipedia.org/wiki/Lis
 
   * Hexadecimal entities, `&#x<nn>;`, likewise - for example `&#x3c;` for `<`, `&#x2192;` for `→`.
 
-In every browser, HTML entities are decoded only in parameter values and stray text between tags. Entities have no effect on how the general structure of a document is understood, and no special meaning in sections such as =&lt;SCRIPT&gt;=. The ability to understand and parse the syntax is still critical to properly understanding the value of a particular HTML parameter, however. For example, as hinted in one of the earlier sections, `<A HREF="javascript&#09;:alert(1)">` may need to be parsed as an absolute reference to `javascript<TAB>:alert(1)`, as opposed to a link to something called `javascript&` with a local URL hash string part of `#09;alert(1)`.
+In every browser, HTML entities are decoded only in parameter values and stray text between tags. Entities have no effect on how the general structure of a document is understood, and no special meaning in sections such as `<SCRIPT>`. The ability to understand and parse the syntax is still critical to properly understanding the value of a particular HTML parameter, however. For example, as hinted in one of the earlier sections, `<A HREF="javascript&#09;:alert(1)">` may need to be parsed as an absolute reference to `javascript<TAB>:alert(1)`, as opposed to a link to something called `javascript&` with a local URL hash string part of `#09;alert(1)`.
 
 Unfortunately, various browsers follow different parsing rules to these HTML entity notations; all rendering engines recognize entities with no proper `;` terminator, and all permit entities with excessively long, zero-padded notation, but with various thresholds:
 
