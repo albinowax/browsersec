@@ -19,10 +19,10 @@ Although all browsers implement roughly the same set of baseline features, there
 
 The current version of this document is based on the following versions of web browsers:
 
-|| *Browser* || *Version* || *Test date* || *Notes* ||
+|| <font color="#3050a0">*Browser*</font> || <font color="#3050a0">*Version*</font> || <font color="#3050a0">*Test date*</font> || <font color="#3050a0">*Notes*</font> ||
 || Microsoft Internet Explorer 6 || 6.0.2900.5512 || Nov 18, 2008 || ||
 || Microsoft Internet Explorer 7 || 7.0.5730.11 || Nov 18, 2008 || ||
-|| Microsoft Internet Explorer 8 (beta) || || || Not tested (pending stabilization). ||
+|| <font color="#909090">Microsoft Internet Explorer 8 (beta)</font> || || || <font color="#909090">Not tested - pending stabilization.</font> ||
 || Mozilla Firefox 2 || 2.0.0.17 || Nov 6, 2008 || ||
 || Mozilla Firefox 3 || 3.0.3 || Nov 18, 2008 || ||
 || Apple Safari || 3.2 || Nov 18, 2008 || ||
@@ -54,10 +54,10 @@ On top of the aforementioned documents, a W3C draft [http://www.w3.org/Addressin
 
 In practice, browsers deviate from these standards in many ways, for example accepting URLs with technically forbidden, and then trying to escape them automatically; or applying heuristics to handle incomplete or seemingly broken URLs. Here are some of the key differences that often need to be accounted for:
 
-|| *Test* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
-|| Non-standard characters permitted in URL scheme fields (excluding `0-9 A-Z a-z + - .`) || \t \r \n || \t \r \n || || \t \r \n || \t \r \n || _none_ || \r \n <font color="#ff0000">+UTF8</font> || <font color="#ff0000">\0</font> \t \r \n || _none_ ||
-|| Non-standard characters kept as-is, with no escaping, in URL queries (excluding `0-9 A-Z a-z - . _ ~ : / ? # [ ] @ ! $ & ' ( ) * + , ; =`) || <font color="#ff0000">" < > \</font> ^ ` { | } \x7F || <font color="#ff0000">" < > \</font> ^ ` { | } \x7F || || <font color="#ff0000">\</font> ^ { | } || <font color="#ff0000">\</font> ^ { | } || ^ { | } || ^ { | } \x7F || <font color="#ff0000">" \</font> ^ ` { | } || _tbd_ ||
-|| Non-standard characters fully ignored in host names || \t \r \n || \t \r \n \xAD || || \t \r \n \xAD || \t \r \n \xAD || \xAD || \x0A-\x0D \xA0 \xAD || \t \r \n \xAD || _none_ ||
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| Non-standard characters permitted in URL scheme fields (excluding `0-9 A-Z a-z + - .`) || \t \r \n || \t \r \n || || \t \r \n || \t \r \n || <font color="#909090">none</font> || \r \n <font color="#ff0000">+UTF8</font> || <font color="#ff0000">\0</font> \t \r \n || <font color="#909090">none</font> ||
+|| Non-standard characters kept as-is, with no escaping, in URL queries (excluding `0-9 A-Z a-z - . _ ~ : / ? # [ ] @ ! $ & ' ( ) * + , ; =`) || <font color="#ff0000">" < > \</font> ^ ` { | } \x7F || <font color="#ff0000">" < > \</font> ^ ` { | } \x7F || || <font color="#ff0000">\</font> ^ { | } || <font color="#ff0000">\</font> ^ { | } || ^ { | } || ^ { | } \x7F || <font color="#ff0000">" \</font> ^ ` { | } || <font color="#909090">tbd</font> ||
+|| Non-standard characters fully ignored in host names || \t \r \n || \t \r \n \xAD || || \t \r \n \xAD || \t \r \n \xAD || \xAD || \x0A-\x0D \xA0 \xAD || \t \r \n \xAD || <font color="#909090">none</font> ||
 || Types of partial or broken URLs auto-corrected to fully qualified ones || //y \\y || //y \\y || || //y x:///y x://`[y]` || //y x:///y x://`[y]` || //y \\y x:/y x:///y || //y \\y x://`[y]` || //y \\y x:///y || //y \\y ||
 || Fragment ID (hash) encoded by applying RFC-mandated URL escaping rules? || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">PARTLY</font> || <font color="#ff0000">PARTLY</font> || YES || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES ||
 
@@ -83,7 +83,7 @@ http://www.ręczniki.pl/?ręcznik=1 → http://www.xn--rczniki-98a.pl/?r%C4%99cz
 
 Key security-relevant differences in high-bit URL handling are outlined below:
 
-|| *Test* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || Request URL path encoding when following plain links || UTF-8 || UTF-8 || || page encoding || UTF-8 || UTF-8 || UTF-8 || UTF-8 || UTF-8 ||
 || Request URL query string encoding when following plain links || <font color="#ff0000">page encoding, no escaping</font> || <font color="#ff0000">page encoding, no escaping</font> || || page encoding || page encoding || page encoding || page encoding || page encoding || page encoding ||
 || Request URL path encoding for `XMLHttpRequest` calls || page encoding || page encoding || || page encoding || page encoding || page encoding || page encoding || page encoding || page encoding ||
@@ -93,7 +93,7 @@ Key security-relevant differences in high-bit URL handling are outlined below:
 || Raw Unicode in host names auto-converted to Punycode? || NO || YES || || YES || YES || YES || YES || YES || NO ||
 || Percent-escaped UTF-8 in host names auto-converted to Punycode? || (NO) || YES || || <font color="#ff0000">NO</font> || <font color="#ff0000">on retry</font> || YES || YES || YES || (NO) ||
 || URL bar Unicode display method for host names || (Punycode) || Unicode || || Unicode || Unicode || Unicode || Unicode || Punycode || (Punycode) ||
-|| URL bar Unicode display method outside host names || Unicode || Unicode || || `%nn` || Unicode || Unicode || as `?` || Unicode || _n/a_ ||
+|| URL bar Unicode display method outside host names || Unicode || Unicode || || `%nn` || Unicode || Unicode || as `?` || Unicode || <font color="#909090">n/a</font> ||
 
  
 _NOTE: As an anti-phishing mechanism, additional restrictions on the use of some or all Unicode characters in certain top-level domains are imposed by many browsers; see domain name restrictions chapter later on._
@@ -106,7 +106,7 @@ Back in 1994, [http://www.ietf.org/rfc/rfc1738.txt RFC 1738] laid out several UR
 
 To broadly survey the capabilities of modern browsers, it makes sense to divide URL schemes into a group natively supported by the software, and another group supported by a plethora of plugins, extensions, or third-party programs. The first list is relatively short:
 
-|| *Scheme name* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
+|| <font color="#3050a0">*Scheme name*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || HTTP ([http://www.ietf.org/rfc/rfc2616.txt RFC 2616]) || YES || YES || || YES || YES || YES || YES || YES || YES ||
 || HTTPS ([http://www.ietf.org/rfc/rfc2616.txt RFC 2818]) || YES || YES || || YES || YES || YES || YES || YES || YES ||
 || SHTTP ([http://www.ietf.org/rfc/rfc2660.txt RFC 2660]) || as HTTP || as HTTP || || NO || NO || NO || NO || NO || NO ||
@@ -156,7 +156,7 @@ jar:http://www.example.com/archive.jar!/resource.html
 
 Common encapsulating schemes are shown in the table below.
 
-|| *Scheme name* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
+|| <font color="#3050a0">*Scheme name*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || feed (RSS, [http://www.brindys.com/winrss/feedformat.html draft spec]) || NO || NO || || NO || NO || YES || NO || NO || NO ||
 || hcp, its, mhtml, mk, ms-help, ms-its, ms-itss (Windows Help archive parsing) || YES || YES || || NO || NO || NO || NO || NO || NO ||
 || jar ([http://docs.sun.com/source/819-0913/author/jar.html Java archive parsing]) || NO || NO || || YES || YES || NO || NO || NO || NO ||
@@ -167,7 +167,7 @@ In addition to encapsulating schemes enumerated above, there are various schemes
 
 Finally, several pseudo-schemes exist specifically to enable scripting or URL-contained data rendering in the security context inherited from the caller, without actually referencing any additional external or internal content. It is particularly unsafe to output attacker-controlled URLs of this type on pages that may contain any sensitive content. Known schemes of this type include:
 
-|| *Scheme name* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
+|| <font color="#3050a0">*Scheme name*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || data ([http://www.ietf.org/rfc/rfc2397.txt RFC 2397]) || NO || NO || || YES || YES || YES || YES || YES || YES ||
 || javascript ([http://developer.mozilla.org/en/docs/JavaScript scripting]) || YES || YES || || YES || YES || YES || YES || YES || YES ||
 || vbscript ([http://msdn.microsoft.com/en-us/library/sx7b3k7y(VS.85).aspx scripting]) || YES || YES || || NO || NO || NO || NO || NO || NO ||
@@ -218,7 +218,7 @@ This, in conjunction with the fact that HTTP supports proxying and content cachi
 
 Many specific areas, such as caching behavior, have their own sections later in this document. Below is a survey of general security-relevant differences in HTTP protocol implementations:
 
-|| *Test* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || `Content-Length` header value overrides actual content length? || NO || YES || || NO || NO || YES || YES || NO || YES ||
 || First HTTP header of the same name takes precedence? || YES || YES || || NO || NO || YES || NO || NO || NO ||
 || First field value in a HTTP header takes precedence? || YES || YES || || YES || YES || YES || YES || YES || YES ||
@@ -264,7 +264,7 @@ Not all `HTTP-EQUIV` directives are meaningful - for example, the determination 
 
 Key security-relevant differences between HTML parsing modes in the aforementioned engines are shown below:
 
-|| *Test* || *MSIE6* || *MSIE7* || *MSIE8* || *FF2* || *FF3* || *Safari* || *Opera* || *Chrome* || *Android* ||
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || Nested HTML tags will be parsed (`<FOO <BAR...`)? || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
 || Nested parsing features recursive recovery (both `FOO` and `BAR` interpreted)? || (NO) || (NO) || || YES || YES || YES || NO || YES || YES ||
 || Parser resets out on invalid tag names (`<FOO="<BAR...`)? || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
@@ -274,4 +274,4 @@ Key security-relevant differences between HTML parsing modes in the aforemention
 || Characters accepted as tag name / parameter separators (excluding `\t \r \n \x20`) || \x0B \x0C <font color="#ff0000">/</font> || \x0B \x0C <font color="#ff0000">/</font> || || <font color="#ff0000">/</font> || <font color="#ff0000">/</font> || \x0B \x0C || \x0B \x0C \xA0 || \x0B \x0C || \x0B \x0C ||
 || Characters ignored between parameter name, equals sign, and value (excluding `\t \r \n`) || \x0B \x0C \x20 || \x0B \x0C \x20 || || \x20 || \x20 || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> || \x20 \xA0 || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> ||
 || Characters accepted in lieu of quotes for HTML parameters (excluding `"`) || ' <font color="#ff0000">`</font> || ' <font color="#ff0000">`</font> || || ' || ' || ' || ' || ' || ' || 
-|| Characters accepted in tag names (excluding `A-Z / ? !`) || <font color="#ff0000">\0 %*</font>|| <font color="#ff0000">\0 %</font> || || _none_ || _none_ || _none_ || <font color="#ff0000">\0</font> || _none_ || _none_ ||
+|| Characters accepted in tag names (excluding `A-Z / ? !`) || <font color="#ff0000">\0 %*</font>|| <font color="#ff0000">\0 %</font> || || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#ff0000">\0</font> || <font color="#909090">none</font> || <font color="#909090">none</font> ||
