@@ -73,7 +73,7 @@ _NOTE: As an anti-phishing mechanism, additional restrictions on the use of `aut
 
 Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity decoding] takes place before the link is parsed. Because of this, if a newline is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as Javascript, just as `javascript<TAB>:alert(1)` would be.
 
-==Unicode in URLs==
+===Unicode in URLs===
 
 Much like several related technologies used for web content transport, URLs do not have any particular character set defined by relevant RFCs; [http://www.ietf.org/rfc/rfc3986.txt RFC 3986] ambiguously states: _"In local or regional contexts and with improving technology, users might benefit from being able to use a wider range of characters; such use is not defined by this specification."_ The same dismissive approach is taken in HTTP header specification.
 
@@ -284,7 +284,7 @@ Key security-relevant differences between HTML parsing modes in the aforemention
 || <font color="#3050a0">Characters accepted in lieu of quotes for HTML parameters (excluding `"`)</font> || ' <font color="#ff0000">`</font> || ' <font color="#ff0000">`</font> || || ' || ' || ' || ' || ' || ' || 
 || <font color="#3050a0">Characters accepted in tag names (excluding `A-Z / ? !`)</font> || <font color="#ff0000">\0 %*</font>|| <font color="#ff0000">\0 %</font> || || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#ff0000">\0</font> || <font color="#909090">none</font> || <font color="#909090">none</font> ||
 
-==HTML entity encoding==
+===HTML entity encoding===
 
 HTML features a special encoding scheme called [http://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references HTML entities]. The purpose of this scheme is to make it possible to safely render certain reserved HTML characters (e.g., `< > &`) within documents, as well as to carry high bit characters safely over 7-bit media. The scheme nominally permits three types of notation:
 
