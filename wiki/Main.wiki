@@ -30,7 +30,7 @@ The current version of this document is based on the following versions of web b
 || Apple Safari || 3.2 || Nov 18, 2008 || ||
 || Opera || 9.62 || Nov 18, 2008 || ||
 || Google Chrome || 0.3.154.9 || Nov 18, 2008 || ||
-|| Android  built-in browser || SDK 1.0 RC1 || Nov 10, 2008 || Tests requiring `file:///` targets not executed. ||
+|| Android  embedded browser || SDK 1.0 RC1 || Nov 10, 2008 || Tests requiring `file:///` targets not executed. ||
 
 <b></b>
 
@@ -363,3 +363,57 @@ With the exception of cross-domain, cross-document access permissions outlined i
 || <font color="#3050a0">Can builtin DOM objects be clobbered?</font> || shadowing || shadowing || || shadowing || shadowing || shadowing || shadowing || shadowing || shadowing ||
 
 _Trivia: traversing `document.*` is a possible approach to look up specific input or output fields when modifying complex pages from within scripts, but it is not a very practical one; because of this, most scripts resort to `document.getElementById()` method to uniquely identify elements regardless of their current location on the page. Although `ID=` parameters for tags within HTML documents are expected to be unique, there is no such guarantee. Currently, all major browsers seem to give the first occurrence a priority._
+
+==Browser-side Javascript==
+
+[http://en.wikipedia.org/wiki/Javascript Javascript] is a relatively simple but rich, object-based imperative scripting language tightly integrated with HTML, and supported by all contemporary web browsers. Authors claim that the language has roots with [http://en.wikipedia.org/wiki/Scheme_(programming_language) Scheme] and [http://en.wikipedia.org/wiki/Self_(programming_language) Self] programming languages, although it is often characterized in a more down-to-earth way as resembling a crossover of [http://en.wikipedia.org/wiki/Objective-C Objective C] and [http://en.wikipedia.org/wiki/Visual_Basic Visual Basic]. Confusingly, except for the common C syntax, it shares relatively few unique features with [http://en.wikipedia.org/wiki/Java_(programming_language) Java]; the naming is simply a marketing gimmick devised by Netscape and Sun in the 90s.
+
+The language is a creation of Netscape engineers, originally marketed under the name of Mocha, then Livescript, and finally rebranded to Javascript; Microsoft embraced the concept shortly thereafter, under the name of JScript. The language, as usual with web technologies, got standardized only post factum, under a yet another name - ECMAScript. Additional, sometimes overlapping efforts to bring new features and extensions of the language - for example, [http://wiki.ecmascript.org/doku.php ECMAScript 4], [http://developer.mozilla.org/Special:Tags?tag=JavaScript_version_overviews&language=en Javascript versions 1.6-1.8], [http://developer.mozilla.org/En/E4X native XML objects], etc - are taking place, although neither of these concepts managed to win broad acceptance and following.
+
+Browser-side Javascript is invoked from within HTML documents in four primary ways: 
+
+  # Standalone `<SCRIPT>` tags that enclose code blocks,
+  # Event handlers tied to HTML tags (e.g. `onmouseover="..."`),
+  # Stylesheet `expression(...)` blocks that permit Javascript syntax in some browsers,
+  # Special URL schemes specified as targets for certain resources or actions (`javascript:...`),
+
+Note that the first option does not always work when such a string is dynamically added by running Javascript to an existing document. That said, any of the remaining options might be used as a comparable substitute.
+
+Regardless of their source (`<SCRIPT SRC="...">`), remote scripts always execute in the security context of the document they are attached to. As noted earlier, once called, Javascript has full access to the current DOM, and limited access to DOMs of other windows; it may also further invoke new Javascript by calling `eval()`, configuring timers (`setTimeout(...)` and `setInterval(...)`), or producing Javascript-invoking HTML. Javascript may also configure self to launch when its objects are interacted with by third-party Javascript code, by configuring watches, setters, or getters, or cross contexts by calling same-origin functions belonging to other documents.
+
+Javascript enjoys very limited input and output capabilities. Interacting with same-origin document data and drawing [http://developer.mozilla.org/en/Canvas_tutorial CANVASes], displaying `window.*` pop-up dialogs, and writing script console errors aside, there are relatively few I/O facilities available. File operations or access to other persistent storage is generally not possible, although some [https://developer.mozilla.org/en/DOM/Storage experimental features] are being experimented with. Scripts may send and receive data from the originating server using the [http://www.w3.org/TR/XMLHttpRequest/ XMLHttpRequest] extension, which permits scripts to send and read arbitrary payloads; and may also automatically send requests and read back properly-formatted responses by issuing `<SCRIPT SRC="...">`, or `<LINK REL="Stylesheet" HREF="...">`, even across domains. Lastly, Javascript may send information to third-party servers by spawning objects such as `<IMG>`, `<IFRAME>`, `<OBJECT>`, `<APPLET>`, or by triggering page transitions, and encoding information in the URL that would be automatically requested by the browser immediately thereafter - but it may not read back the returned data. Some side channels related to browser caching mechanisms and lax DOM security checks also exist, providing additional side channels between cooperating parties.
+
+Some of the other security-relevant characteristics of Javascript environments in modern browsers include:
+
+  * *Dynamic, runtime code interpretation with no strict code caching rules*. Any code snippets located in-line with HTML tags would be interpreted and executed, and Javascript itself has a possibility to either directly evaluate strings as Javascript code (`eval(...)`), or to produce new HTML that in turn may contain more Javascript (`.innerHTML` and `.outerHTML` properties, `document.write()`, event handlers). The behavior of code that attempts to modify own container while executing (through DOM) is not well-defined, and varies between browsers.
+
+  * *Somewhat inconsistent exception support*. Although within the language itself, exception-throwing conditions are well defined, it is not so when interacting with DOM structures. Depending on the circumstances, some DOM operations may fail silently (with writes or reads ignored), return various magic responses (`undefined`, `null`, `object inaccessible`), throw a non-standardized exception, or even abort execution unconditionally.
+
+  * *Somewhat inconsistent, but modifiable builtins and prototypes*. The behavior of many language constructs might be redefined by programs within the current context by modifying object setters, getters, or overwriting prototypes. Because of this, reliance on any specific code - for example a security check - executing in a predictable manner in the vicinity of a potentially malicious payload is risky. Notably, however, not all builtin objects may be trivially tampered with - for example, `Array` prototype setters may be modifiable, but `XML` not so. There is no fully-fledged operator overloading in Javascript 1.x.
+
+  * *Typically synchronous execution*. Within a single document, browser-side Javascript usually executes synchronously and in a single thread, and asynchronous timer events are not permitted to fire until the scripting engine enters idle state. No strict guarantees of synchronous execution exist, however, and multi-process rendering of Chrome or MSIE8 may permit cross-domain access to occur more asynchronously.
+
+  * *Global function lookups not dependent on ordering or execution flow*. Functions may be invoked in a block of code before they are defined, and are indexed in a pass prior to execution. Because of this, reliance on top-level no-return statements such as `while (1);` to prevent subsequent code from being interpreted might be risky.
+
+  * *Endless loops that terminate*. As a security feature, when the script executes for too long, the user is prompted to abort execution. This merely causes current execution to be stopped, but does not prevent scripts from being re-entered.
+
+  * *Broad, quickly evolving syntax*. For example, E4X extensions in Firefox [http://code.google.com/p/doctype/wiki/ArticleE4XSecurity well-structured XHTML or XML to be interpreted] as a Javascript object, also executing any nested Javascript initializers within such a block. This makes it very difficult to assume that a particular format of data would not constitute valid Javascript syntax in a future-proof manner.
+
+Inline script blocks embedded within HTML are somewhat tricky to sanitize if permitted to contain user-controlled strings, because, much like `<TEXTAREA>`, `<STYLE>`, and several other HTML tags, they follow a counterintuitive CDATA-style parsing: a literal sequence of `</SCRIPT>` ends the script block regardless of its location within the Javascript syntax as such. For example, the following code block would be ended prematurely, and lead to unauthorized, additional Javascript block being executed:
+
+{{{
+<SCRIPT>
+var user_string = 'Hello world</SCRIPT><SCRIPT>alert(1)</SCRIPT>';
+</SCRIPT>
+}}}
+
+Various differences between browser implementations are outlined below:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Is setter and getter support present?</font> || NO || NO || || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Is access to prototypes via `__proto__` possible?</font> || NO || NO || || YES || YES || YES || NO || YES || YES ||
+|| <font color="#3050a0">Is it possible to alias `eval()` function? || YES || YES || || PARTLY || PARTLY || YES || PARTLY || NO || YES ||
+|| <font color="#3050a0">Are watches on objects supported?</font> || NO || NO || || YES || YES || NO || NO || NO || NO ||
+|| <font color="#3050a0">May currently executing code blocks modify self?</font> || read-only || read-only || || NO || NO || NO || YES || NO || NO ||
+|| <font color="#3050a0">Is E4X extension supported?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is `charset=` honored on `<SCRIPT SRC="...">`?</gont> || <font color="#3050a0">YES</font> || <font color="#3050a0">YES</font> || || <font color="#3050a0">YES</font> || <font color="#3050a0">YES</font> || <font color="#3050a0">YES</font> || NO || <font color="#3050a0">YES</font> || <font color="#3050a0">YES</font> ||
