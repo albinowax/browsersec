@@ -372,9 +372,9 @@ The language is a creation of Netscape engineers, originally marketed under the 
 
 Browser-side Javascript is invoked from within HTML documents in four primary ways: 
 
-  # Standalone `<SCRIPT>` tags that enclose code blocks,
-  # Event handlers tied to HTML tags (e.g. `onmouseover="..."`),
-  # Stylesheet `expression(...)` blocks that permit Javascript syntax in some browsers,
+  # Standalone `<SCRIPT>` tags that enclose code blocks,<p />
+  # Event handlers tied to HTML tags (e.g. `onmouseover="..."`),<p />
+  # Stylesheet `expression(...)` blocks that permit Javascript syntax in some browsers,<p />
   # Special URL schemes specified as targets for certain resources or actions (`javascript:...`),
 
 Note that the first option does not always work when such a string is dynamically added by running Javascript to an existing document. That said, any of the remaining options might be used as a comparable substitute.
@@ -422,10 +422,10 @@ Various differences between browser implementations are outlined below:
 
 To permit handling of strings that otherwise contain restricted literal text (such as `</SCRIPT>`, `"`, `'`, `CL` or `LF`, other non-printable characters), Javascript offers five character encoding strategies:
 
-  # Three-digit, zero-padded, 8-bit octal numerical representations, C-style (`"test"` →  `"t\145st"`),
-  # Two-digit, zero-padded, 8-bit hexadecimal numerical representations, with C-style `\x` prefix (`"test"` → `"t\x65st"`),
-  # Four-digit, zero-padded, 16-bit hexadecimal numerical Unicode representations, with `\u` prefix (`"test"` → `"t\u0065st"`),
-  # Raw `\` prefix before a literal (`"test"` → `"t\est"`),
+  # Three-digit, zero-padded, 8-bit octal numerical representations, C-style (`"test"` →  `"t\145st"`),<p />
+  # Two-digit, zero-padded, 8-bit hexadecimal numerical representations, with C-style `\x` prefix (`"test"` → `"t\x65st"`),<p />
+  # Four-digit, zero-padded, 16-bit hexadecimal numerical Unicode representations, with `\u` prefix (`"test"` → `"t\u0065st"`),<p />
+  # Raw `\` prefix before a literal (`"test"` → `"t\est"`),<p />
   # Special C-style `\` shorthand notation for certain control characters (such as `\n` or `\t`).
 
 The fourth scheme is most space-efficient, although generally error-prone; for example, a failure to escape `\` as `\\` may lead to a string of `\" + alert(1);"` being converted to `\\" + alert(1)`, and getting interpreted incorrectly; it also partly collides with the remaining `\`-prefixed escaping schemes, and is not compatible with C syntax.
@@ -443,3 +443,50 @@ Unlike in some C implementations, stray multi-line string literals are not permi
 [http://msdn.microsoft.com/en-us/library/sx7b3k7y(VS.85).aspx VBScript] is a language envisioned by Microsoft as a general-purpose "hosted" scripting environment, incorporated within Windows as such, Microsoft IIS, and supported by Microsoft Internet Explorer via `vbscript:` URL scheme, and through `<SCRIPT>` tags. As far as client-side scripting is considered, the language did not seem to offer any significant advantages over the competing Javascript technology, and lagged in several areas.
 
 Presumably because of this, the technology never won any browser support outside MSIE (with all current versions supporting it), and is very seldom relied upon. Where permitted to go through, however, it has roughly the same security consequences as Javascript. The attack surface and security controls within VBScript are poorly studied in comparison to Javascript, however.
+
+==Cascading stylesheets==
+
+As the initial HTML designs evolved to include a growing body of eye candy, the language ended up mixing very specific visual presentation cues with content classification directives; for example, a similar inline syntax would denote that the following piece of text is an element of a numbered list, or that it needs to be shown in 72 pt <font face="Comic Sans MS">Comic Sans</font> font. This notation, although convenient to use on new pages, made it very difficult to automatically adjust appearance of a document without altering its structure (for example to account for mobile devices, printable views, or accessibility requirements), or to accurately preserve document structure when moving the data to non-HTML media or new site layouts.
+
+[http://www.w3.org/Style/CSS/ Cascading Style Sheets] is a simple concept that corrects this problem, and also provides a much more uniform and featured set of tools to alter the visual appearance of any portion of the document, far surpassing the original set of kludgy HTML tag attributes. A stylesheet outlines visual rendering rules for various functional types of document elements, such as lists, tables, links, or quotations, using a separate block of data with a relatively simple syntax. Although the idea of style sheets as such predates HTML, the current design used for the Web stabilized in the form of W3C proposals only around 1998 - and because of the complex changes required to renderers, it took several years for reasonably robust implementations to become widespread. 
+
+There are three distinct ways to place CSS directives in HTML documents: 
+
+  # The use of an inline `STYLE="..."` parameter attached to HTML tags of any type; attributes specified this way apply to this and nested tags only (and largely defeat the purpose of the entire scheme when it comes to making it easy to alter the appearance of a document),<p />
+  # Introduction of a block of CSS code with `<STYLE>...</STYLE>` in any portion of the document. This block may change the default appearance of any tag, or define named rulesets that may be explicitly applied to specific tags with a `CLASS="..."` parameter,<p />
+  # Inclusion of a remote stylesheet with a <`LINK REL="stylesheet" HREF="...">`, with the same global effect as a `<STYLE>` block.
+
+Because CSS provides a powerful and standardized method to control the visual appearance of a block of HTML, many applications strive to let third parties control a subset of CSS syntax emitted in documents. Unfortunately, the task is fairly tricky; the most important security consequences of attacker-controlled stylesheets are:
+
+  * *The risk of Javascript execution*. As a little-known feature, some CSS implementations permit Javascript code to be embedded in stylesheets. There are at least three ways to achieve this goal: by using the `expression(...)` directive, which gives the ability to evaluate arbitrary Javascript statements and use their value as a CSS parameter; by using the `url('javascript:...')` directive on properties that support it; or by invoking browser-specific features such as the [http://www.securiteam.com/securitynews/5LP051FHPE.html `-moz-binding`] mechanism of Firefox.
+
+  * *The ability to freely position text*. If user-controlled stylesheets are permitted on a page, various powerful CSS positioning directives may be invoked to move text outside the bounds of its current container, and mimick trusted UI elements or approximate them very accurately. Some examples of absolute positioning directives include `z-index`, `margin`, `padding`, `bottom`, `left`, `position`, `right`, `top`, or `text-indent` (many of them with sub-variants, such as `margin-left`).
+
+  * *The ability to reuse trusted classes*. If user-controlled `CLASS="..."` attributes are permitted in HTML syntax, the attacker may have luck "borrowing" a class used to render elements of the trusted UI and impersonate them.
+
+Much like Javascript, stylesheets are also tricky to sanitize, because they follow CDATA-style parsing: a literal sequence of `</STYLE>` ends the stylesheet regardless of its location within the CSS syntax as such. For example, the following stylesheet would be ended prematurely, and lead to Javascript code being executed:
+
+{{{
+<STYLE>
+body {
+  background-image: url('http://example.com/foo.jpg?</STYLE><SCRIPT>alert(1)</SCRIPT>');
+}
+</STYLE>
+}}}
+
+Another interesting property specific to `<STYLE>` handling is that when two CDATA-like types overlap, no particular outcome is guaranteed; for example, the following may be interpreted as a script, or as an empty stylesheet, depending on the browser:
+
+{{{
+<STYLE>
+<!-- </STYLE><SCRIPT>alert(1)</SCRIPT> -->
+</STYLE>
+}}}
+
+Various differences in style parsing between common browsers are outlined below:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Is Javascript `expression(...)` supported?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is script-targeted `url(...)` supported?</font> || <font color="#ff0000">YES</font> || NO || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is script-executing `-moz-binding` supported?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Does `</STYLE>` take precedence over comment block parsing?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
+|| <font color="#3050a0">Characters permitted as CSS field-value separators (excluding `\t \r \n \x20`)</font> || \x0B \x0C \ \xA0 || \x0B \x0C \ \xA0 || || \x0B \x0C \ || \x0C \ || \x0C \ || \x0C \ \xA0 || \x0C \ \xA0 || \x0C \ ||
