@@ -511,8 +511,8 @@ HTML aside, modern browser renderers usually natively support an additional set 
 
   * *Pure data formats.* These include plain text data or images (JPEG, GIF, BMP, etc), where the browser simply provides a basic rendering canvas and populates it with static data. In principle, no security consequences arise with these data types, as no malicious payloads may be embedded in the message - short of major and fairly rare implementation flaws. Common image formats aside, some browsers may also support other oddball or legacy media formats natively, such as the ability to play [http://en.wikipedia.org/wiki/Musical_Instrument_Digital_Interface MID] files specified by `<BGSOUND>` tags.
 
-  * *Rich data formats.* This category is primarily populated by non-HTML XML namespace parsers ([http://www.w3.org/Graphics/SVG/ SVG], [http://www.rssboard.org/rss-specification RSS], [http://tools.ietf.org/html/rfc4287 Atom]); beyond raw data, these document formats contain various rendering instructions, hints, or conditionals. Because of how XML works, each of the XML-based formats has two important security consequences:
-    * Firstly, nested XML namespaces may be defined, and are usually not verified against MIME type intents, permitting HTML to be embedded for example inside `image/svg+xml`,
+  * *Rich data formats.* This category is primarily populated by non-HTML XML namespace parsers ([http://www.w3.org/Graphics/SVG/ SVG], [http://www.rssboard.org/rss-specification RSS], [http://tools.ietf.org/html/rfc4287 Atom]); beyond raw data, these document formats contain various rendering instructions, hints, or conditionals. Because of how XML works, each of the XML-based formats has two important security consequences:<p />
+    * Firstly, nested XML namespaces may be defined, and are usually not verified against MIME type intents, permitting HTML to be embedded for example inside `image/svg+xml`.<p />
     * Secondly, these formats may actually come with provisions for non-standard embedded HTML payloads or scripts built in, permitting HTML injection even if the attacker has no direct control over XML document structure.
 
 One example of a document that, even if served as `image/svg+xml`, would still execute scripts in many current browsers despite MIME type clearly stating a different intent, is as follows:
@@ -719,7 +719,7 @@ The original design for HTTP cookies has multiple problems and drawbacks that re
 
   * *Perceived Javascript-related problems:* the aforementioned `document.cookie` Javascript API permits for Javascript embedded on pages to access sensitive authentication cookies. If malicious scripts may be planted on a page due to insufficient escaping of user input, these cookies could be stolen and disclosed to the attacker. The concern for this possibility resulted in [http://msdn.microsoft.com/en-us/library/ms533046.aspx httponly cookie flag] being incorporated into Microsoft Internet Explorer, and later other browsers; such cookies would not be visible through `document.cookie` (but, as noted in the previous section, are not always adequately hidden in `XMLHttpRequest` calls). In reality, the degree of protection afforded this way is minimal, given the ability to interact with same-origin content through DOM.
 
-  * *Problems with "protected" cookie clobbering:* as indicated earlier, `secure` and `httponly` cookies are meant to be not visible in certain situations, but no specific thought was given to preventing Javascript from overwriting `httponly` cookies, or non-encrypted pages from overwriting `secure` cookies. This oversight could be abused to subvert at least some usage scenarios.
+  * *Problems with "protected" cookie clobbering:* as indicated earlier, `secure` and `httponly` cookies are meant not to be visible in certain situations, but no specific thought was given to preventing Javascript from overwriting `httponly` cookies, or non-encrypted pages from overwriting `secure` cookies. This oversight could be abused to subvert at least some usage scenarios.
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Does `document.cookie` work on `ftp` URLs?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
@@ -733,3 +733,92 @@ The original design for HTTP cookies has multiple problems and drawbacks that re
 || <font color="#3050a0">Maximum number of cookies per site</font> || 50 || 50 || || <font color="#ff0000">∞</font> || 100 || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || ~70 || 50 ||
 || <font color="#3050a0">Are cookies for right-hand IP address fragments accepted?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || NO ||
 || <font color="#3050a0">Overly permissive ccTLD behavior test results (3 tests)</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#ff0000">1/3 FAIL</font> || || <font color="#ff0000">2/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">2/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">2/3 FAIL</font> || 
+
+===Same-origin policy for Flash===
+
+[http://en.wikipedia.org/wiki/Adobe_Flash Adobe Flash], a plugin believed to be installed on about [http://www.adobe.com/products/player_census/flashplayer/ 99% of all desktops], incorporates a security model generally inspired by browser same-origin checks. Flash applets have their security context derived from the URL they are loaded from (as opposed to the site that embeds them with `<OBJECT>` or `<EMBED>` tags), and within this realm, permission control follows the same basic principle as applied by browsers to DOM access: protocol, host name, and port of the requested resource is compared with that of the requestor, with universal access privileges granted to content stored on local disk. That said, there are important differences - and some interesting extensions - that make Flash capable of initiating cross-domain interactions to a degree greater than typically permitted for native browser content.
+
+Some of the unique properties and gotchas of the current Flash security model include:
+
+  * The ability for sites to provide a [http://livedocs.adobe.com/flex/3/html/05B_Security_03.html#122782 cross-domain policy], often referred to as `crossdomain.xml`, to allow a degree of interaction from non-same-origin content. Any non-same-origin Flash applet may specify a location on the target server at which this XML-based specification should be looked up; if it matches a specific format, it would be interpreted as a permission to carry out cross-domain actions.<p />Historically, the mechanism, due to extremely lax XML parser and no other security checks in place, posed a major threat: many types of user content, for example images or text files, could be trivially made to mimick such data without site owner's knowledge or consent. [http://www.adobe.com/devnet/flashplayer/articles/fplayer9_security_02.html Recent security improvements] enabled a better control of cross-domain policies; this includes a more rigorous XML parser; a requirement for MIME type on policies to match `text/*`, `application/xml`, or `application/xhtml+xml`; or the concept of [http://www.adobe.com/devnet/flashplayer/articles/fplayer9_security_03.html site-wide meta-policies], stored at a fixed top-level location - `/crossdomain.xml`. These policies would specify global security rules, and for example prevent any lower-order policies from being interpreted, or require MIME type on all policies to non-ambiguously match `text/x-cross-domain-policy`.
+
+  * The ability to make cookie-bearing cross-domain HTTP `GET` and `POST` requests via the browser stack, with fewer constraints than typically seen elsewhere in browsers. This is achieved through the [http://livedocs.adobe.com/flex/3/langref/flash/net/URLRequest.html URLRequest] API. The functionality, most notably, includes the ability to specify arbitrary `Content-Type` values, and to send binary payloads. Historically, Flash would also permit nearly arbitrary headers to be appended to cross-domain traffic via the `requestHeaders` property, although this had changed with [http://www.adobe.com/devnet/flashplayer/articles/flash_player9_security_update.html a series of recent security updates], now requiring an explicit `crossdomain.xml` directive to re-enable the feature.
+
+  * The ability to make same-origin HTTP requests, including setting and reading back HTTP headers to an extent greater than that of `XMLHttpRequest` ([http://livedocs.adobe.com/flex/3/langref/flash/net/URLRequestHeader.html list of banned headers]).
+
+  * The ability to [http://livedocs.adobe.com/flex/3/html/05B_Security_10.html#145624 access to raw TCP sockets] via `XMLSockets`, to connect back to the same-origin host on any high port (> 1024), or to access third-party systems likewise. Following recent security updates, this requires explicit cross-domain rules, although these may be easily provided for same-origin traffic. In conjunction with [http://crypto.stanford.edu/dns/ DNS rebinding attacks] or the behavior of certain firewall helpers, the mechanism could be abused to punch holes in the firewall or [http://scan.flashsec.org/ probe local and remote systems], although certain mitigations were incorporated since then.
+
+  * The ability for applet-embedding pages to restrict certain permissions for the included content by specifying `<OBJECT>` or `<EMBED>` parameters:<p />
+    * The ability to load external files and navigate the current browser window ([http://livedocs.adobe.com/flex/3/html/help.html?content=05B_Security_05.html#150192 allowNetworking] attribute).<p />
+    * The ability to interact with on-page Javascript context ([http://livedocs.adobe.com/flex/3/html/05B_Security_14.html#131683 allowScriptAccess] attribute; previously unrestricted by default, now limited to `sameDomain`, which requires the accessed page to be same origin with the applet).<p />
+    * The ability to run in full-screen mode ([http://livedocs.adobe.com/flex/3/html/05B_Security_06.html#152029 allowFullScreen] attribute).
+
+This model is further mired with other bugs and oddities, such as the reliance on [http://my.opera.com/hallvors/blog/2007/10/22/a-malicious-thought-how-to-imagine-a-security-issue location.* DOM being tamper-proof] for the purpose of executing same-origin security checks,
+
+Flash applets running from the Internet do not have any specific permissions to access local files or input devices devices, although depending on user configuration decisions, some or all sites may use a limited quota within a virtualized data storage sandbox, or access the microphone.
+
+===Same-origin policy for Java===
+
+Much like Adobe Flash, [http://java.sun.com/applets/ Java applets], reportedly supported on about 80% of all desktop systems, follow the basic concept of same-origin checks applied to a runtime context derived from the site the applet is downloaded from. The documentation for Java security model available on the Internet appears to be remarkably poor and spotty, so the information provided in this section is in large part based on empirical testing. According to this research, the following permissions are available to Java applets:
+
+  * The ability to interact with Javascript on the embedding page through the [http://java.sun.com/j2se/1.4.2/docs/guide/plugin/developer_guide/java_js.html JSObject] API, with no specific same-origin checks. This mechanism is disabled by default, but may be enabled with the `MAYSCRIPT` parameter within the `<APPLET>` tag.
+
+  * In some browsers, the ability to interact with the embedding page through the [http://java.sun.com/j2se/1.4.2/docs/guide/plugin/developer_guide/java_js.html DOMService] API. The documentation does not state what, if any, same-origin checks should apply; based on the aforementioned tests, no checks are carried out, and cross-domain embedding pages may be accessed freely with no need for `MAYSCRIPT` opt-in. This directly contradicts the logic of `JSObject` API.
+
+  * The ability to send same-origin HTTP requests using the browser stack via the [http://java.sun.com/j2se/1.4.2/docs/api/java/net/URLConnection.html URLConnection] API, with virtually no security controls, including the ability to set `Host` headers, or insert conflicting caching directives. On the upside, it appears that there is no ability to read 30x redirect bodies or `httponly` cookies from within applets.
+
+  * The ability to initiate unconstrained TCP connections back to the originating host, and that host only, using the [http://java.sun.com/j2se/1.4.2/docs/api/java/net/Socket.html Socket] API. These connections do not go through the browser, and are not subject to any additional security checks (e.g., ports such as `25/tcp` are permitted).
+
+Depending on the configuration, the user may be prompted to give signed applets greater privileges, including the ability to read and write local files, or access specific devices. Unlike Flash, Java has no cross-domain policy negotiation features.
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Is `DOMService` supported?</font> || YES || YES || || NO || NO || YES || NO || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does `DOMService` permit cross-domain access to embedding page?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
+
+<b></b>
+
+===Same-origin policy for Silverlight===
+
+[http://en.wikipedia.org/wiki/Silverlight Microsoft Silverlight] 2.0 is a recently introduced content rendering browser plugin, and a competitor to Adobe Flash. 
+
+There is some uncertainty about how likely the technology is to win widespread support, and relatively little external security research and documentation available, so this section serves as a placeholder for time being. In principle, however, Silverlight appears to closely mimick the same-origin model implemented for Flash:
+
+  * Security context for the application is derived from the URL it is included from. Access to the embedding HTML document is permitted by default for same-origin HTML, and controlled by [http://msdn.microsoft.com/en-us/library/cc838264(VS.95).aspx enableHtmlAccess] parameter elsewhere. Microsoft security documentation does not clearly state if scripts have permission to navigate browser windows in absence of `enableHtmlAccess`, however.
+
+  * Same-origin HTTP requests may be issued via `HttpWebRequest` API, and may contain arbitrary payloads - but there are certain restrictions on which HTTP headers may be modified. The exact list of restrictions headers is not given by Microsoft, however ([http://msdn.microsoft.com/en-us/library/system.net.httpwebrequest.headers(VS.95).aspx reference]).
+
+  * Cross-domain HTTP and network access is not permitted until a policy compatible with Flash `crossdomain.xml` or Silverlight `clientaccesspolicy.xml` format, is furnished by the target host. Microsoft documentation implies that "unexpected" MIME types are rejected, but this is not elaborated upon; it is also not clear how strict the parser is ([http://msdn.microsoft.com/en-us/library/cc645032(VS.95).aspx reference]).
+
+  * Non-HTTP network connectivity uses `System.Net.Sockets`. Raw connections to same-origin systems are not permitted until an appropriate cross-domain policy is furnished ([http://msdn.microsoft.com/en-us/library/cc645032(VS.95).aspx reference]).
+
+  * Acess between HTTP and HTTPS schemes is apparently considered same-origin, and does not require a cross-domain specification ([http://msdn.microsoft.com/en-us/library/cc189008(VS.95).aspx reference]).
+
+===Origin inheritance rules===
+
+As hinted earlier, certain types of pseudo-URLs, such as `javascript:`, `data:`, or `about:blank`, do not have any inherent same-origin context associated with them the way `http://` URLs have - which poses a special problem in the context of same-origin checks. 
+
+If a shared "null" security context is bestowed upon all these resources, and checks against this context always succeed, a risk arises that blank windows spawned by completely unrelated sites and used for different purposes could interfere with each other. The possibility is generally prevented in most browsers these days, but had caused a fair number of problems in the past (see [https://bugzilla.mozilla.org/show_bug.cgi?id=343168 Mozilla bug 343168] and [http://crypto.stanford.edu/websec/frames/navigation/ related work] by Adam Barth and Collin Jackson for a historical perspective). On the other hand, if all access to such windows is flat out denied, this would go against the expectation of legitimate sites to be able to scriptually access own `data:` or `about:blank` windows.
+
+Various browsers accommodate this ambiguity in different ways, often with different rules for document-embedded `<IFRAME>` containers, for newly opened windows, and for descendants of these windows. 
+
+A quick survey of implementations is shown below:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Inherited context for domain-less IFRAMEs</font> || parent || parent || || parent || parent || parent || parent || parent || parent ||
+|| <font color="#3050a0">Inherited context for `about:blank` windows</font> || parent || parent || || no access || no access || parent || parent || parent || parent ||
+|| <font color="#3050a0">Inherited context for `javascript:` windows</font> || parent || parent || || parent || parent || <font color="#909090">n/a</font> || parent || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || 
+|| <font color="#3050a0">Inherited context for `data:` windows</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || || parent || parent || no access || blank || no access || no access ||
+
+<b></b>
+
+===Cross-site scripting and same-origin policies===
+
+Same-origin policies are generally perceived as one of most significant bottlenecks associated with contemporary web browsers. To application developers, the policies are too strict and inflexible, serving as a major annoyance and stifling innovation; the developers push for solutions such as cross-domain `XMLHttpRequest` or `crossdomain.xml` in order to be able to build and seamlessly integrate modern applications that span multiple domains and data feeds. To security engineers, on the other hand, these very same policies are too loose, putting user data at undue risk in case of minor and in practice nearly unavoidable programming errors.
+
+The security concern traces back to the fact that the structure of HTML as such, and the practice for rendering engines to implement very lax and poorly documented parsing of legacy HTML features, including extensive and incompatible error recovery attempts, makes it remarkably difficult for web site developers to render any user-controlled information on served pages without eventually falling prey to [http://code.google.com/p/doctype/wiki/ArticleXSS HTML and script injection flaws]. In addition, a number of poorly designed, browser-side content sniffing and character set strategies (discussed later in this document), further contributes to the problem by making it likely for non-HTML content to be misinterpreted and rendered as HTML anyway.
+
+Because of this, nearly every major web service routinely suffers from numerous HTML injection flaws; [http://xssed.com/archive xssed.com], an external site dedicated to tracking publicly reported issues of this type, amassed over 50,000 entries in under two years.
+
+The problem clearly demonstrates the inadequateness of same-origin policies as statically bound to a single domain: not all content shown on a particular site should or may be trusted the same, and permitted to do the same. The ability to either isolate, or restrict privileges for portions of data that currently enjoy unconstrained same-origin privileges, would mitigate the impact of HTML parsing problems and developer errors, and also enable new types of applications to be securely built, and is the focus of many experimental security mechanisms proposed for future browsers (as outlined later on).
+
+==Life outside same-origin rules==
