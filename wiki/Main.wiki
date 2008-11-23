@@ -13,9 +13,9 @@
 
 =Introduction=
 
-Hello, and welcome to _Browser Security Handbook_!
+Hello, and welcome to the _Browser Security Handbook_!
 
-Browser Security Handbook is meant to provide web application developers, browser engineers, and information security researchers with a one-stop reference to key security properties of contemporary web browsers. Insufficient understanding of these often poorly-documented characteristics is a major contributing factor to the prevalence of several classes of security vulnerabilities.
+This document is meant to provide web application developers, browser engineers, and information security researchers with a one-stop reference to key security properties of contemporary web browsers. Insufficient understanding of these often poorly-documented characteristics is a major contributing factor to the prevalence of several classes of security vulnerabilities.
 
 Although all browsers implement roughly the same set of baseline features, there is relatively little conformance to standards when it comes to many of the less apparent characteristics. Furthermore, vendors routinely introduce poorly documented, proprietary tweaks or improvements that may interfere with existing features in non-obvious ways. For these reasons, it seemed prudent to compile this reference.
 
@@ -42,7 +42,7 @@ Through the document, <font color="#ff0000">red color</font> is used to bring at
 
 =Basic concepts behind web browsers=
 
-This section provides a review of core standards and technologies behind modern browsers, and their security-relevant properties. No specific attention is given to features implemented explicitly for security purposes; these are discussed in later in the document.
+This section provides a review of core standards and technologies behind current browsers, and their security-relevant properties. No specific attention is given to features implemented explicitly for security purposes; these are discussed in later in the document.
 
 ==Uniform Resource Locators==
 
@@ -160,7 +160,7 @@ Encapsulating schemes are of interest to any link-handling applications, as thes
 jar:http://www.example.com/archive.jar!/resource.html
 }}}
 
-...will be retrieved over HTTP from `http://www.example.com/archive.jar`. Because of the encapsulating protocol, the browser will then attempt to interpret the obtained file as a standard Sun Java ZIP archive (`JAR`), and extract, then display `/resource.html` from within that archive.
+...will be retrieved over HTTP from `http://www.example.com/archive.jar`. Because of the encapsulating protocol, the browser will then attempt to interpret the obtained file as a standard Sun Java ZIP archive (`JAR`), and extract, then display `/resource.html` from within that archive, in the context of `example.com`.
 
 Common encapsulating schemes are shown in the table below.
 
@@ -249,7 +249,7 @@ This day, the four prevailing HTML document rendering implementations are:
 
 The ability for various applications to accurately understand HTML document structure, as it would be seen by a browser, is an important security challenge. The serial nature of the HTML blends together code (Javascript, Flash, Java applets) and the actual data to be displayed - making it easy for attackers to smuggle dangerous directives along with useful layout information in any external content. Knowing exactly what is being rendered is often crucial to site security (see [http://code.google.com/p/doctype/wiki/ArticleXSS this article] for a broader discussion of the threat).
 
-Sadly, for compatibility reasons, parsers operating in non-XML mode tend are generally remarkably lax and feature proprietary, incompatible, poorly documented recovery modes that make it very difficult for any platform to anticipate how a third-party HTML document would be interpreted. Any of the following grossly malformed examples may be interpreted as a scripting directive by some, but usually not all, renderers:
+Sadly, for compatibility reasons, parsers operating in non-XML mode tend are generally lax and feature proprietary, incompatible, poorly documented recovery modes that make it very difficult for any platform to anticipate how a third-party HTML document would be interpreted. Any of the following grossly malformed examples may be interpreted as a scripting directive by some, but usually not all, renderers:
 
 {{{
 1: <B <SCRIPT>alert(1)</SCRIPT>>
@@ -307,7 +307,7 @@ Unfortunately, various browsers follow different parsing rules to these HTML ent
 
 _^*^ Entries one byte longer than this limit still get parsed, but incorrectly; for example, `&#000000065;` becomes a sequence of three characters, `\x06 5 ;`. Two characters and more do not get parsed at all - `&#0000000065;` is displayed literally)._
 
-An interesting piece of trivia is that as per HTML entity encoding requirements, links such as:
+An interesting piece of trivia is that, as per HTML entity encoding requirements, links such as:
 
 {{{
 http://example.com/?p1=v1&p2=v2
@@ -368,7 +368,7 @@ _Trivia: traversing `document.*` is a possible approach to look up specific inpu
 
 [http://en.wikipedia.org/wiki/Javascript Javascript] is a relatively simple but rich, object-based imperative scripting language tightly integrated with HTML, and supported by all contemporary web browsers. Authors claim that the language has roots with [http://en.wikipedia.org/wiki/Scheme_(programming_language) Scheme] and [http://en.wikipedia.org/wiki/Self_(programming_language) Self] programming languages, although it is often characterized in a more down-to-earth way as resembling a crossover of [http://en.wikipedia.org/wiki/Objective-C Objective C] and [http://en.wikipedia.org/wiki/Visual_Basic Visual Basic]. Confusingly, except for the common C syntax, it shares relatively few unique features with [http://en.wikipedia.org/wiki/Java_(programming_language) Java]; the naming is simply a marketing gimmick devised by Netscape and Sun in the 90s.
 
-The language is a creation of Netscape engineers, originally marketed under the name of Mocha, then Livescript, and finally rebranded to Javascript; Microsoft embraced the concept shortly thereafter, under the name of JScript. The language, as usual with web technologies, got standardized only post factum, under a yet another name - ECMAScript. Additional, sometimes overlapping efforts to bring new features and extensions of the language - for example, [http://wiki.ecmascript.org/doku.php ECMAScript 4], [http://developer.mozilla.org/Special:Tags?tag=JavaScript_version_overviews&language=en Javascript versions 1.6-1.8], [http://developer.mozilla.org/En/E4X native XML objects], etc - are taking place, although neither of these concepts managed to win broad acceptance and following.
+The language is a creation of Netscape engineers, originally marketed under the name of Mocha, then Livescript, and finally rebranded to Javascript; Microsoft embraced the concept shortly thereafter, under the name of JScript. The language, as usual with web technologies, got standardized only post factum, under a yet another name - ECMAScript. Additional, sometimes overlapping efforts to bring new features and extensions of the language - for example, [http://wiki.ecmascript.org/doku.php ECMAScript 4], [http://developer.mozilla.org/Special:Tags?tag=JavaScript_version_overviews&language=en Javascript versions 1.6-1.8], [http://developer.mozilla.org/En/E4X native XML objects], etc - are taking place, although none of these concepts managed to win broad acceptance and following.
 
 Browser-side Javascript is invoked from within HTML documents in four primary ways: 
 
@@ -381,7 +381,7 @@ Note that the first option does not always work when such a string is dynamicall
 
 Regardless of their source (`<SCRIPT SRC="...">`), remote scripts always execute in the security context of the document they are attached to. As noted earlier, once called, Javascript has full access to the current DOM, and limited access to DOMs of other windows; it may also further invoke new Javascript by calling `eval()`, configuring timers (`setTimeout(...)` and `setInterval(...)`), or producing Javascript-invoking HTML. Javascript may also configure self to launch when its objects are interacted with by third-party Javascript code, by configuring watches, setters, or getters, or cross contexts by calling same-origin functions belonging to other documents.
 
-Javascript enjoys very limited input and output capabilities. Interacting with same-origin document data and drawing [http://developer.mozilla.org/en/Canvas_tutorial CANVASes], displaying `window.*` pop-up dialogs, and writing script console errors aside, there are relatively few I/O facilities available. File operations or access to other persistent storage is generally not possible, although some [https://developer.mozilla.org/en/DOM/Storage experimental features] are being introduced and quickly scraped. Scripts may send and receive data from the originating server using the [http://www.w3.org/TR/XMLHttpRequest/ XMLHttpRequest] extension, which permits scripts to send and read arbitrary payloads; and may also automatically send requests and read back properly-formatted responses by issuing `<SCRIPT SRC="...">`, or `<LINK REL="Stylesheet" HREF="...">`, even across domains. Lastly, Javascript may send information to third-party servers by spawning objects such as `<IMG>`, `<IFRAME>`, `<OBJECT>`, `<APPLET>`, or by triggering page transitions, and encoding information in the URL that would be automatically requested by the browser immediately thereafter - but it may not read back the returned data. Some side channels related to browser caching mechanisms and lax DOM security checks also exist, providing additional side channels between cooperating parties.
+Javascript enjoys very limited input and output capabilities. Interacting with same-origin document data and drawing [http://developer.mozilla.org/en/Canvas_tutorial CANVASes], displaying `window.*` pop-up dialogs, and writing script console errors aside, there are relatively few I/O facilities available. File operations or access to other persistent storage is generally not possible, although some [https://developer.mozilla.org/en/DOM/Storage experimental features] are being introduced and quickly scraped. Scripts may send and receive data from the originating server using the [http://www.w3.org/TR/XMLHttpRequest/ XMLHttpRequest] extension, which permits scripts to send and read arbitrary payloads; and may also automatically send requests and read back properly formatted responses by issuing `<SCRIPT SRC="...">`, or `<LINK REL="Stylesheet" HREF="...">`, even across domains. Lastly, Javascript may send information to third-party servers by spawning objects such as `<IMG>`, `<IFRAME>`, `<OBJECT>`, `<APPLET>`, or by triggering page transitions, and encoding information in the URL that would be automatically requested by the browser immediately thereafter - but it may not read back the returned data. Some side channels related to browser caching mechanisms and lax DOM security checks also exist, providing additional side channels between cooperating parties.
 
 Some of the other security-relevant characteristics of Javascript environments in modern browsers include:
 
