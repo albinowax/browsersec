@@ -307,7 +307,7 @@ Unfortunately, various browsers follow different parsing rules to these HTML ent
 || <font color="#3050a0">Maximum length of an incorrectly terminated hex entity</font> || 0 || 0 || || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">8</font>^*^ || <font color="#ff0000">∞</font> || <font color="#ff0000">8</font>^*^ || <font color="#ff0000">8</font>^*^ ||
 || <font color="#3050a0">Characters permitted in entity names]] (excluding `A-Z a-z 0-9`)</font> || <font color="#909090">none</font> || <font color="#909090">none</font> || || <font color="#ff0000">- . _</font> || <font color="#ff0000">- . _</font> || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#909090">none</font> ||
 
-_^*^ Entries one byte longer than this limit still get parsed, but incorrectly; for example, `&#000000065;` becomes a sequence of three characters, `\x06 5 ;`. Two characters and more do not get parsed at all - `&#0000000065;` is displayed literally)._
+^*^ Entries one byte longer than this limit still get parsed, but incorrectly; for example, `&#000000065;` becomes a sequence of three characters, `\x06 5 ;`. Two characters and more do not get parsed at all - `&#0000000065;` is displayed literally).
 
 An interesting piece of trivia is that, as per HTML entity encoding requirements, links such as:
 
@@ -603,17 +603,17 @@ In theory, the model seems simple and robust enough to ensure proper separation 
 
 On top of this, the specification is simplistic enough to actually omit quite corner cases; among other things:
 
-  * The `document.domain` behavior when hosts are addressed by IP addresses, as opposed to fully-qualified domain names, is not specified,
+  * The `document.domain` behavior when hosts are addressed by IP addresses, as opposed to fully-qualified domain names, is not specified.
 
-  * The `document.domain` behavior with extremely vague specifications (e.g., `com` or `co.uk`) is not specified,
+  * The `document.domain` behavior with extremely vague specifications (e.g., `com` or `co.uk`) is not specified.
 
-  * Many one-off exceptions to the model were historically made, be it intentionally to permit certain types of desirable interaction, such as the ability to point own frames or script-spawned windows to new locations, or by omission - and these are not well-documented,
+  * Many one-off exceptions to the model were historically made, be it intentionally to permit certain types of desirable interaction, such as the ability to point own frames or script-spawned windows to new locations, or by omission - and these are not well-documented.
  
-  * The algorithms of context inheritance for pseudo-protocol windows, such as `about:blank`, are not specified,
+  * The algorithms of context inheritance for pseudo-protocol windows, such as `about:blank`, are not specified.
 
-  * The behavior for URLs that do not meaningfully have a host name associated with them (e.g., `file://`) is not defined, causing some browsers to permit locally saved files to access every document on the disk or on the web; users are generally not aware of this risk, potentially exposing themselves,
+  * The behavior for URLs that do not meaningfully have a host name associated with them (e.g., `file://`) is not defined, causing some browsers to permit locally saved files to access every document on the disk or on the web; users are generally not aware of this risk, potentially exposing themselves.
 
-  * The behavior when a single name resolves to vastly different IP addresses (for example, one on an internal network, and another on the Internet) is not specified, permitting [http://crypto.stanford.edu/dns/ DNS rebinding] attacks and related tricks put certain mechanisms (captchas, ad click tracking, etc) at extra risk.
+  * The behavior when a single name resolves to vastly different IP addresses (for example, one on an internal network, and another on the Internet) is not specified, permitting [http://crypto.stanford.edu/dns/ DNS rebinding] attacks and related tricks that put certain mechanisms (captchas, ad click tracking, etc) at extra risk.
 
 All this ambiguity leads to a significant degree of variation between browsers, and historically, resulted in a large number of browser security flaws. A detailed analysis of DOM actions permitted across domains, as well as context inheritance rules, is given in later sections. A quick survey of several core same-origin differences between browsers is given below:
 
@@ -623,3 +623,68 @@ All this ambiguity leads to a significant degree of variation between browsers, 
 || <font color="#3050a0">Do port numbers wrap around in same origin checks?</font> || NO || NO || || uint32 || uint32 || uint16/32 || uint16 || NO || <font color="#909090">tbd</font> ||
 || <font color="#3050a0">May local HTML access unrelated local files via DOM?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">tbd</font> ||
 || <font color="#3050a0">May local HTML access sites on the Internet via DOM?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">tbd</font> ||
+
+<b></b>
+
+===Same-origin policy for XMLHttpRequest===
+
+On top of scripted DOM access, all of the contemporary browsers also provide the [http://www.w3.org/TR/XMLHttpRequest/ XMLHttpRequest] Javascript API, by which scripts may make HTTP requests to their originating site, and read back data as needed. The mechanism was originally envisioned primarily to make it possible to read back XML responses (hence the name, and the `responseXML` property), but currently, is perhaps more often used to read back JSON messages, HTML, and arbitrary custom communication protocols, and serves as the foundation for much of the _web 2.0_ behavior of rapid UI updates not dependent on full-page transitions.
+
+The set of security-relevant features provided by `XMLHttpRequest`, and not seen in other browser mechanisms, is as follows:
+
+  * The ability to specify an arbitrary HTTP request method (via the `open()` method),
+  * The ability to set custom HTTP headers on a request (via `setRequestHeader()`),
+  * The ability to read back full response headers (via `getResponseHeader()` and =getAllResponseHeaders()=),
+  * The ability to read back full response body as Javascript string (via `responseText` property).
+
+Since all requests sent via `XMLHttpRequest` include a browser-maintained set of cookies for the target site, and given that the mechanism provides a far greater ability to interact with server-side components than any other feature available to scripts, it is extremely important to build in proper security controls. The set of checks implemented in all browsers for `XMLHttpRequest` is a close variation of DOM same-origin policy, with the following changes:
+
+  * Checks for =XMLHttpRequest= targets do not take `document.domain` into account, making it impossible for third-party sites to mutually agree to permit cross-domain requests between them.
+
+  * In some implementations, there are additional restrictions on protocols, header fields, and HTTP methods for which the functionality is available, or HTTP response codes which would be shown to scripts (see later).
+
+Since the removal of `document.domain` made any sort of client-side cross-domain communications through `XMLHttpRequest` impossible, as a much-demanded extension, [http://www.w3.org/TR/access-control/ W3C proposal for cross-domain XMLHttpRequest] access control would permit cross-site traffic to happen under certain additional conditions. The scheme envisioned by the proponents is as follows:
+
+   * `GET` requests with custom headers limited to a whitelist would be sent to the target system immediately, with no advance verification, based on the assumption that `GET` traffic is not meant to change server-side application state, and thus will have no lasting side effects. This assumption is theoretically sound, as per the "SHOULD NOT" recommendation spelled out in [http://www.faqs.org/rfcs/rfc2616.html RFC 2616], though is seldom observed in practice. Unless an appropriate HTTP header or XML directive appears in the response, the result would not be revealed to the requester, though.
+
+   * Non-`GET` requests (`POST`, etc) would be preceded by a "preflight" `OPTIONS` request, again with only whitelisted headers permitted. Unless an appropriate HTTP header or XML directive is seen in response, the actual request would not be issued.
+
+Even in its current shape, the mechanism would open some RFC-ignorant web sites to new attacks; some of the earlier drafts had more severe problems, too. As such, the functionality ended up being [https://bugzilla.mozilla.org/show_bug.cgi?id=424923 scraped in Firefox 3], and currently, is not available in any browser, pending further work. A [http://code.msdn.microsoft.com/xdsecuritywp competing proposal] from Microsoft, scheduled to make an appearance in Microsoft Internet Explorer 8, would implement a completely incompatible, safer, but less useful scheme, permitting sites to issue anonymous (cookie-less) cross-domain requests only. There seems to be an [http://ajaxian.com/archives/the-fight-for-cross-domain-xmlhttprequest ongoing feud] between these two factions, so it may take a longer while for any particular API to succeed, and it is not clear what security properties it would posses.
+
+As noted earlier, although there is a great deal of flexibility in what data may be submitted via `XMLHttpRequest` to same-origin targets, various browsers blacklist subsets of HTTP headers to prevent ambiguous or misleading requests from being issued to servers and cached by the browser or by any intermediaries . These restrictions, often contradictory or incomplete, are as follows:
+
+|| <font color="#3050a0">*HTTP header*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">`Accept`</font> || OK || OK || || OK || OK || OK || OK || OK || OK ||
+|| <font color="#3050a0">`Accept-Charset`</font> || OK || OK || || OK || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> ||
+|| <font color="#3050a0">`Accept-Encoding`</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || || OK || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> ||
+|| <font color="#3050a0">`Accept-Language`</font> || OK || OK || || OK || OK || OK || OK || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> ||
+|| <font color="#3050a0">`Cache-Control`</font> || OK || OK || || OK || OK || OK || <font color="#30ff30">BANNED</font> || OK || OK ||
+|| <font color="#3050a0">`Cookie`</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || || OK || OK || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || OK ||
+|| <font color="#3050a0">`If-*` family (`If-Modified-Since`, etc)</font> || OK || OK || || OK || OK || OK || <font color="#30ff30">BANNED</font> || OK || OK ||
+|| <font color="#3050a0">`Host`</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> ||
+|| <font color="#3050a0">`Range`</font> || OK || OK || || OK || OK || OK || <font color="#30ff30">BANNED</font> || OK || OK ||
+|| <font color="#3050a0">`Referer`</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> ||
+|| <font color="#3050a0">`Transfer-Encoding`</font> || OK || OK || || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> ||
+|| <font color="#3050a0">`User-Agent`</font> || OK || OK || || OK || OK || <font color="#30ff30">BANNED</font> || OK || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> ||
+|| <font color="#3050a0">`Via`</font> || OK || OK || || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> ||
+
+A long-standing [http://www.securityfocus.com/archive/1/434931 security flaw] in Microsoft Internet Explorer 6 permits stray newline characters to appear in some `XMLHttpRequest` fields, permitting arbitrary headers (such as `Host`) to be injected into outgoing requests. This behavior needs to be accounted for in any scenarios where a considerable population of legacy MSIE6 users is expected.
+
+Other important security properties of `XMLHttpRequest` are outlined below:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Banned HTTP methods</font> || `TRACE` || `CONNECT` `TRACE`^*^ || || `TRACE` || `TRACE` || `CONNECT` `TRACE` || <font color="#ff0000">none</font> || `CONNECT` `TRACE` || `CONNECT` `TRACE` ||
+|| <font color="#3050a0">`XMLHttpRequest` may see `httponly` cookies?</font> || <font color="#ff0000">YES</font> || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO ||
+|| <font color="#3050a0">`XMLHttpRequest` may see invalid HTTP 30x responses</font>? || NO || NO || || YES || YES || NO || NO || YES || NO ||
+|| <font color="#3050a0">`XMLHttpRequest` may see cross-domain HTTP 30x responses</font>? || NO || NO || || YES || YES || NO || NO || NO || NO ||
+|| <font color="#3050a0">`XMLHttpRequest` may see other HTTP non-200 responses?</font> || YES || YES || || YES || YES || YES || YES || YES || NO ||
+|| <font color="#3050a0">May local HTML access unrelated local files via `XMLHttpRequest`?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">May local HTML access sites on the Internet via `XMLHttpRequest`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#909090">tbd</font> ||
+
+^*^ Implements a whitelist of known schemes, rejects made up values.
+
+*WARNING:* Microsoft Internet Explorer 7 may be forced to partly regress to the less secure behavior of the previous version by invoking a proprietary, legacy `ActiveXObject('MSXML2.XMLHTTP')` in place of the new, native `XMLHttpRequest` API.
+
+Please note that the degree of flexibility offered by `XMLHttpRequest`, and not seen in other cross-domain content referencing schemes, may be actually used as a simple security mechanism: a check for a custom HTTP header may be carried out on server side to confirm that a cookie-authenticated request comes from Javascript code that invoked `XMLHttpRequest.setRequestHeader()`, and hence must be triggered by same-origin content, as opposed to a random third-party site. This provides a coarse [http://en.wikipedia.org/wiki/Cross-site_request_forgery cross-site request forgery] defense, although the mechanism may be potentially subverted by the incompatible same-origin logic within some plugin-based programming languages, as discussed later on.
+
+===Same-origin policy for cookies===
