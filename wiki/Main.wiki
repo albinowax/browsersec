@@ -554,7 +554,7 @@ Common document-embeddable plugins can be generally divided into several primary
 
   * *Drop-in integration for non-HTML document formats*. Some popular document editors or viewers, including [http://en.wikipedia.org/wiki/Adobe_Acrobat Acrobat Reader] and [http://en.wikipedia.org/wiki/Microsoft_Office Microsoft Office], add the ability to embed their supported document formats as objects on HTML pages, or to view content, full-window, directly within the browser. The interesting property of this mechanism is that many such document formats either feature scripting capabilities, or offer interactive features (e.g., clickable links) that may result in data passed back to the browser in unusual ways. This property makes such document formats roughly equivalent to programming language engines proper.
 
-  * *Specialized HTML-integrated markup languages*. In addition to kludgy drop-in integration for document formats very different from HTML, specialized markup languages such as [http://en.wikipedia.org/wiki/VRML VRML], [http://www.w3.org/TR/NOTE-VML.html VML], or [http://en.wikipedia.org/wiki/MathML MathML], are also supported in some browsers through plugins, and meant to discretely supplement regular HTML documents; these may enable HTML smuggling vectors similar to these of renderer-handled XML formats (see previous section).
+  * *Specialized HTML-integrated markup languages*. In addition to kludgy drop-in integration for document formats very different from HTML, specialized markup languages such as [http://en.wikipedia.org/wiki/VRML VRML], [http://www.w3.org/TR/NOTE-VML.html VML], or [http://en.wikipedia.org/wiki/MathML MathML], are also supported in some browsers through plugins, and meant to discretely supplement regular HTML documents; these may enable HTML smuggling vectors similar to those of renderer-handled XML formats (see previous section).
 
   * *Rich multimedia formats*. A variety of plugins brings the ability to play video and audio clips directly within the browser, without opening a new media player window. Plugin-driven browser integration is offered by almost all contemporary media players, including [http://en.wikipedia.org/wiki/Windows_Media_Player Windows Media Player], [http://en.wikipedia.org/wiki/QuickTime QuickTime], [http://en.wikipedia.org/wiki/RealPlayer RealPlayer], or [http://en.wikipedia.org/wiki/VLC VLC], again making it a widely available capability. Most of such formats bear no immediate security consequences for the hosting party per se, although in practice, this type of integration is plagued by implementation-specific bugs.
 
@@ -584,3 +584,42 @@ Perhaps the most important security concept within modern browsers is the idea o
 In practice, there is no single same-origin policy, but rather, a set of mechanisms with some superficial resemblance, but quite a few important differences. These flavors are discussed below.
 
 ===Same-origin policy for DOM access===
+
+With no additional qualifiers, the term "same-origin policy" most commonly refers to a mechanism that governs the ability for Javascript and other scripting languages to access DOM properties and methods across domains ([http://developer.mozilla.org/En/Same_origin_policy_for_JavaScript reference]). In essence, the model boils down to this three-step decision process:
+
+  * If protocol, host name, and port number for two interacting pages match, access is granted with no further checks.
+
+  * Any page may set `document.domain` parameter to a right-hand, fully-qualified fragment of its current host name (e.g., `foo.bar.example.com` may set it to `example.com`, but not `ample.com`). If two pages explicitly and _mutually_ set their respective `document.domain` parameters to the same value, access is granted with no further checks.
+
+  * If neither of the above conditions is satisfied, access is denied.
+
+In theory, the model seems simple and robust enough to ensure proper separation between unrelated pages, and serve as a method for sandboxing potentially untrusted or risky content within a particular domain; upon closer inspection, quite a few drawbacks arise, however:
+
+  * Firstly, the `document.domain` mechanism functions as a security tarpit: once any two legitimate subdomains in `example.com`, e.g. `www.example.com` and `payments.example.com`, choose to cooperate this way, any other resource in that domain, such as `user-pages.example.com`, may then set own `document.domain` likewise, and arbitrarily mess with `payments.example.com`. This means that in many scenarios, `document.domain` may not be used safely at all.
+
+  * Whenever `document.domain` cannot be used - either because pages live in completely different domains, or because of the aforementioned security problem - legitimate client-side communication between, for example, embeddable page gadgets, is completely forbidden in theory, and in practice very difficult to arrange, requiring developers to resort to the abuse of known browser bugs, or to latency-expensive server-side channels, in order to build legitimate web applications.
+
+  * Whenever tight integration of services within a single host name is pursued to overcome these communication problems, because of the inflexibility of same-origin checks, there is no usable method to sandbox any untrusted or particularly vulnerable content to minimize the impact of security problems.
+
+On top of this, the specification is simplistic enough to actually omit quite corner cases; among other things:
+
+  * The `document.domain` behavior when hosts are addressed by IP addresses, as opposed to fully-qualified domain names, is not specified,
+
+  * The `document.domain` behavior with extremely vague specifications (e.g., `com` or `co.uk`) is not specified,
+
+  * Many one-off exceptions to the model were historically made, be it intentionally to permit certain types of desirable interaction, such as the ability to point own frames or script-spawned windows to new locations, or by omission - and these are not well-documented,
+ 
+  * The algorithms of context inheritance for pseudo-protocol windows, such as `about:blank`, are not specified,
+
+  * The behavior for URLs that do not meaningfully have a host name associated with them (e.g., `file://`) is not defined, causing some browsers to permit locally saved files to access every document on the disk or on the web; users are generally not aware of this risk, potentially exposing themselves,
+
+  * The behavior when a single name resolves to vastly different IP addresses (for example, one on an internal network, and another on the Internet) is not specified, permitting [http://crypto.stanford.edu/dns/ DNS rebinding] attacks and related tricks put certain mechanisms (captchas, ad click tracking, etc) at extra risk.
+
+All this ambiguity leads to a significant degree of variation between browsers, and historically, resulted in a large number of browser security flaws. A detailed analysis of DOM actions permitted across domains, as well as context inheritance rules, is given in later sections. A quick survey of several core same-origin differences between browsers is given below:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">May `document.domain` be set to TLD alone?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || <font color="#f0000">YES</font> || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">May `document.domain` be set to right-hand IP address fragments?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Do port numbers wrap around in same origin checks?</font> || NO || NO || || uint32 || uint32 || uint16/32 || uint16 || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">May local HTML access unrelated local files via DOM?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">May local HTML access sites on the Internet via DOM?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">tbd</font> ||
