@@ -572,3 +572,15 @@ The precedence of inputs for deciding how to interpret the content in various br
 || <font color="#3050a0">Content sniffing if `TYPE=` is missing</font> || ignored || ignored || || ignored || ignored || (#3) || ignored || (#3) || <font color="#909090">n/a</font> ||
 
 The approach to determining how to handle the data with no attention to the intent indicated by the hosting server is a problematic design concept, as it makes it impossible for servers to opt out from having any particular resource being treated as a plugin-interpreted document in response to actions of a malicious third-party site. In conjunction with lax syntax parsers within browser plugins, this resulted in a number of long-standing vulnerabilities, such as valid Java archive files (JARs) [http://www.infoworld.com/article/08/08/01/A_photo_that_can_steal_your_online_credentials_1.html doubling as valid images].
+
+=Browser security features=
+
+This section provides a detailed discussion of explicit security mechanisms and restrictions implemented within browser. Long-standing design deficiencies are discussed, but no specific consideration is given to short-lived vulnerabilities.
+
+==Same-origin policy=
+
+Perhaps the most important security concept within modern browsers is the idea of same-origin security policies. The principal intent for these mechanisms is to make it possible for largely unrestrained scripting and other interactions between pages served as a part of the same site (understood as having a particular DNS host name, or part thereof), whilst almost completely preventing any interference between unrelated sites.
+
+In practice, there is no single same-origin policy, but rather, a set of mechanisms with some superficial resemblance, but quite a few important differences. These flavors are discussed below.
+
+===Same-origin policy for DOM access===
