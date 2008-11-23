@@ -634,12 +634,12 @@ The set of security-relevant features provided by `XMLHttpRequest`, and not seen
 
   * The ability to specify an arbitrary HTTP request method (via the `open()` method),
   * The ability to set custom HTTP headers on a request (via `setRequestHeader()`),
-  * The ability to read back full response headers (via `getResponseHeader()` and =getAllResponseHeaders()=),
+  * The ability to read back full response headers (via `getResponseHeader()` and `getAllResponseHeaders()`),
   * The ability to read back full response body as Javascript string (via `responseText` property).
 
 Since all requests sent via `XMLHttpRequest` include a browser-maintained set of cookies for the target site, and given that the mechanism provides a far greater ability to interact with server-side components than any other feature available to scripts, it is extremely important to build in proper security controls. The set of checks implemented in all browsers for `XMLHttpRequest` is a close variation of DOM same-origin policy, with the following changes:
 
-  * Checks for =XMLHttpRequest= targets do not take `document.domain` into account, making it impossible for third-party sites to mutually agree to permit cross-domain requests between them.
+  * Checks for `XMLHttpRequest` targets do not take `document.domain` into account, making it impossible for third-party sites to mutually agree to permit cross-domain requests between them.
 
   * In some implementations, there are additional restrictions on protocols, header fields, and HTTP methods for which the functionality is available, or HTTP response codes which would be shown to scripts (see later).
 
