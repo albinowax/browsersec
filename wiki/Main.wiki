@@ -417,3 +417,29 @@ Various differences between browser implementations are outlined below:
 || <font color="#3050a0">May currently executing code blocks modify self?</font> || read-only || read-only || || NO || NO || NO || YES || NO || NO ||
 || <font color="#3050a0">Is E4X extension supported?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
 || <font color="#3050a0">Is `charset=` honored on `<SCRIPT SRC="...">`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
+
+===Javascript character encoding===
+
+To permit handling of strings that otherwise contain restricted literal text (such as `</SCRIPT>`, `"`, `'`, `CL` or `LF`, other non-printable characters), Javascript offers five character encoding strategies:
+
+  # Three-digit, zero-padded, 8-bit octal numerical representations, C-style (`"test"` →  `"t\145st"`),
+  # Two-digit, zero-padded, 8-bit hexadecimal numerical representations, with C-style `\x` prefix (`"test"` → `"t\x65st"`),
+  # Four-digit, zero-padded, 16-bit hexadecimal numerical Unicode representations, with `\u` prefix (`"test"` → `"t\u0065st"`),
+  # Raw `\` prefix before a literal (`"test"` → `"t\est"`),
+  # Special C-style `\` shorthand notation for certain control characters (such as `\n` or `\t`).
+
+The fourth scheme is most space-efficient, although generally error-prone; for example, a failure to escape `\` as `\\` may lead to a string of `\" + alert(1);"` being converted to `\\" + alert(1)`, and getting interpreted incorrectly; it also partly collides with the remaining `\`-prefixed escaping schemes, and is not compatible with C syntax.
+
+The parsing of these schemes is uniform across all browsers if fewer than the expected number of input digits is seen: the value is interpreted correctly, and no subsequent text is consumed (`"\1test"` is accepted and becomes `"\001test"`).
+
+HTML entity encoding has no special meaning within HTML-embedded `<SCRIPT>` blocks. 
+
+Amusingly, although all the four aforementioned schemes are supported in Javascript proper, a proposed informational standard for Javascript Object Notation (JSON), a transport-oriented serialization scheme for Javascript objects and arrays ([http://www.ietf.org/rfc/rfc4627.txt RFC 4627]), technically permits only the `\u` notation and a seemingly arbitrary subset of `\` control character shorthand codes (options 3 and 5 on the list above). In practice, since JSON objects are almost always simply passed to `eval(...)` in client-side Javascript code to convert them back to native data structures, the limitation is not enforced in a vast majority of uses. Because of the advice provided in the RFC, some non-native `parseJSON` implementations (such as the [http://json.org/json2.js current example reference implementation] from [http://json.org json.org]) may not handle traditional `\x` escape codes properly, however. It is also not certain what approach would be followed by browsers in the currently discussed [http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2008-June/015078.html native, non-executing parsers] proposed for performance and security reasons.
+
+Unlike in some C implementations, stray multi-line string literals are not permitted by Javascript, but lone `\` at the end of a line may be used to break long lines in a seamless manner.
+
+==Other document scripting languages==
+
+[http://msdn.microsoft.com/en-us/library/sx7b3k7y(VS.85).aspx VBScript] is a language envisioned by Microsoft as a general-purpose "hosted" scripting environment, incorporated within Windows as such, Microsoft IIS, and supported by Microsoft Internet Explorer via `vbscript:` URL scheme, and through `<SCRIPT>` tags. As far as client-side scripting is considered, the language did not seem to offer any significant advantages over the competing Javascript technology, and lagged in several areas.
+
+Presumably because of this, the technology never won any browser support outside MSIE (with all current versions supporting it), and is very seldom relied upon. Where permitted to go through, however, it has roughly the same security consequences as Javascript. The attack surface and security controls within VBScript are poorly studied in comparison to Javascript, however.
