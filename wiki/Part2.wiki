@@ -738,4 +738,4 @@ Relevant tests:
 
 ==Protocol-level encryption facilities==
 
-_)[http://code.google.com/p/browsersec/wiki/Part3 Continue to experimental and legacy mechanisms...])_
+_([http://code.google.com/p/browsersec/wiki/Part3 Continue to experimental and legacy mechanisms...])_
