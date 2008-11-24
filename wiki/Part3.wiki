@@ -1,0 +1,32 @@
+#summary Browser Security Handbook, part 3
+
+<h1>Browser Security Handbook, part 3</h1>
+
+  * Written and maintained by [http://lcamtuf.coredump.cx/ Michal Zalewski] <[mailto:lcamtuf@google.com lcamtuf@google.com]>. 
+  * Copyright 2008 Google Inc, rights reserved.
+  * Released under terms and conditions of the [http://creativecommons.org/licenses/by/3.0 CC-3.0-BY] license.
+
+<h1>Table of Contents</h1>
+
+  * _[http://code.google.com/p/browsersec/wiki/Part2 ← Back to browser security features]_
+<wiki:toc max_depth="10" />
+
+=Experimental and legacy security mechanisms=
+
+==HTTP authentication==
+
+==Microsoft Internet Explorer zone model==
+
+==Microsoft Internet Explorer frame restrictions==
+
+==Microsoft Internet Explorer XSS filtering==
+
+==Script restriction frameworks==
+
+==Origin headers==
+
+==Mozilla content security policies==
+
+=Open browser engineering issues=
+
+_([http://code.google.com/p/browsersec/wiki/Main Go back to the beginning])_
