@@ -914,6 +914,39 @@ Relevant tests:
 || <font color="#3050a0">Is cross-domain =scrollBy= scrolling permitted?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is cross-domain anchor-based frame positioning permitted?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
 
+<b></b>
+
 ===Gaps in DOM access control===
+
+For compatibility or usability reasons, and sometimes out of simple oversight, certain DOM properties and methods may be invoked across domains without the usual same-origin check carried out elsewhere. These exceptions to DOM security rules include:
+
+  * *The ability to look up named third-party windows by their name:* by design, all documents have the ability to obtain handles of all standalone windows and `<IFRAME>` objects they spawn from within Javascript. Special builtin objects also permit them to look up the handle of the document that embeds them as a sub-resource, if any (`top` and `parent`); and the document that spawned their window (`opener`).<p />On top of this, however, many browsers permit arbitrary other named window to be looked up using `window.open('',<name>)`, regardless of any relation - or lack thereof - between the caller and the target of this operation. This poses a potential security problem (or at least may be an annoyance) when multiple sites are open simultaneously, one of them rogue: although most of user-created windows and tabs are not named, many script-opened windows, IFRAMEs, or "open in new window" link targets, have specific names.
+
+  * *The ability to navigate windows with known handles or names:* subject to certain browser-specific restrictions, browsers may also change the location of windows for which names or Javascript handles may be obtained. Name-based location changes may be achieved through `window.open(<url>,<name>)` or - outside Javascript - via `<A HREF="..." TARGET="...">` links (which, as discussed earlier, in some browsers may be automatically clicked by scripts). Handle-based updates rely on accessing `<win>.location.*` or `document.URL` properties, calling `<win>.location.assign()` or `<win>.location.replace()`, invoking `<win>.history.*` methods, or employing `<win>.document.write`.
+
+  * *Assorted coding errors:* a number of other errors and omissions exists, some of which are even depended on to implement legitimate cross-domain communication channels. This category includes missing security checks on `window.opener`, `window.name`, or `window.on*` properties, the ability for parent frames to call functions in child's context, and so forth. [http://lcamtuf.coredump.cx/dom_checker/ DOM Checker] is a tool designed to enumerate many of these exceptions and omissions.<p />An important caveat of these mechanisms is that the missing checks might be just as easily used to establish much needed cross-domain communication channels, as they might be abused by third-party sites to inject rogue data into these streams.
+
+  * *[https://developer.mozilla.org/En/DOM:window.postMessage window.postMessage API]:* this new mechanism introduced in several browsers permits two willing windows who have each other's handles to exchange text-based messages across domains as an explicit feature. The receiving party must opt in by registering an appropriate event handler (via `window.addEventListener()`), and has the opportunity to examine `MessageEvent.origin` property to make rudimentary security decisions.
+
+A survey of these exceptions is summarized below:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Can `window.open()` look up unrelated windows]]</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Can `frames[]` look up unrelated windows]]</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Can `<win>.frames[]` access third-party IFRAMEs?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Is `<win>.frames[]` iterator permitted?</font> ||  <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || (NO) || NO || NO ||
+|| <font color="#3050a0">Can `window.open()` reposition unrelated windows?</font> ||  <font color=magenta>YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Can `<win>.history.*` methods be called on unrelated targets?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Can `<win>.location.*` properties be set on unrelated targets?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Can `<win>.location.*` methods be called on unrelated targets?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Can `<win>.document.write()` be called on unrelated targets?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Can `TARGET=` links reposition unrelated targets?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Is setting `window.on*` properties possible across domains?</font> || YES (?) || YES (?) || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is setting `window.opener` possible across domains?</font> || YES || YES || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is setting `window.name` possible across domains?</font> || YES || YES || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is calling `frameElements` methods possible across domains?</font> || NO || NO || || YES || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is `postMessage` API supported?</font> || NO || NO || || NO || YES || NO || YES || NO || NO ||
+
+^*^ In Chrome, this succeeds only if the both tabs share a common renderer process, which limits the scope of possible attacks.
 
 ===Privacy-related side channels===
