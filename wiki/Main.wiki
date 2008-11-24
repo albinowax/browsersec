@@ -1,4 +1,4 @@
-#summary Main wiki page
+#summary Browser Security Handbook landing page
 #labels Featured
 
 <h1>Browser Security Handbook</h1>
