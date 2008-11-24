@@ -59,9 +59,9 @@ All this ambiguity leads to a significant degree of variation between browsers, 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">May `document.domain` be set to TLD alone?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || <font color="#f0000">YES</font> || <font color="#ff0000">YES</font> ||
 || <font color="#3050a0">May `document.domain` be set to right-hand IP address fragments?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Do port numbers wrap around in same origin checks?</font> || NO || NO || || uint32 || uint32 || uint16/32 || uint16 || NO || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">May local HTML access unrelated local files via DOM?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">May local HTML access sites on the Internet via DOM?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Do port numbers wrap around in same origin checks?</font> || NO || NO || || uint32 || uint32 || uint16/32 || uint16 || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">May local HTML access unrelated local files via DOM?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">May local HTML access sites on the Internet via DOM?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">n/a</font> ||
 
 <b></b>
 
@@ -117,8 +117,8 @@ Other important security properties of `XMLHttpRequest` are outlined below:
 || <font color="#3050a0">`XMLHttpRequest` may see invalid HTTP 30x responses</font>? || NO || NO || || YES || YES || NO || NO || YES || NO ||
 || <font color="#3050a0">`XMLHttpRequest` may see cross-domain HTTP 30x responses</font>? || NO || NO || || YES || YES || NO || NO || NO || NO ||
 || <font color="#3050a0">`XMLHttpRequest` may see other HTTP non-200 responses?</font> || YES || YES || || YES || YES || YES || YES || YES || NO ||
-|| <font color="#3050a0">May local HTML access unrelated local files via `XMLHttpRequest`?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">May local HTML access sites on the Internet via `XMLHttpRequest`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">May local HTML access unrelated local files via `XMLHttpRequest`?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">May local HTML access sites on the Internet via `XMLHttpRequest`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
 
 ^*^ Implements a whitelist of known schemes, rejects made up values.
 
@@ -162,7 +162,7 @@ The original design for HTTP cookies has multiple problems and drawbacks that re
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Does `document.cookie` work on `ftp` URLs?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Does `document.cookie` work on `file` URLs?</font> || YES || YES || || YES || YES || YES || YES || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Does `document.cookie` work on `file` URLs?</font> || YES || YES || || YES || YES || YES || YES || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is `Cookie2` standard supported?</font> || NO || NO || || NO || NO || NO || <font color="#30ff30">YES</font> || NO || NO ||
 || <font color="#3050a0">Are multiple comma-separated `Set-Cookie` pairs accepted?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || NO ||
 || <font color="#3050a0">Is `httponly` flag supported?</font> || YES || YES || || YES || YES || <font color="#ff0000">NO</font> || YES || YES || <font color="#ff0000">NO</font> ||
@@ -476,12 +476,12 @@ In the case of `file:`, web sites are generally prevented from navigating to loc
 Browser behavior when handling `file:` URLs in Internet content is summed up in the following table:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Are `<IMG>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">Are `<SCRIPT>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">Are `<IFRAME>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Are `<IMG>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are `<SCRIPT>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are `<IFRAME>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Are `<EMBED>` `file:` targets allowed to load?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Are `<APPLET>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Are stylesheet `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Are stylesheet `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 
 _NOTE: For Microsoft Internet Explorer, the exact behavior for `file:` references is controlled by the "Websites in less privileged web content zone can navigate into this zone" setting for "My computer" zone._
 
@@ -504,10 +504,10 @@ Similar to the checks placed on `javascript:` URLs in some HTML tags, HTTP `Loca
 A survey of current implementations is documented below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is `Location` redirection to `file:` permitted?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Is `Location` redirection to `file:` permitted?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is `Location` redirection to `javascript:` permitted?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is `Location` redirection to `data:` permitted?</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO ||
-|| <font color="#3050a0">Is `Refresh` redirection to `file:` permitted?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Is `Refresh` redirection to `file:` permitted?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is `Refresh` redirection to `javascript:` permitted?</font> || NO || NO || || NO || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
 || <font color="#3050a0">Is `Refresh` redirection to `data:` permitted?</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO ||
 || <font color="#3050a0">Same-origin XMLHttpRequest redirection permitted?</font> || YES || YES || || YES || YES || YES || YES || YES || NO ||
@@ -630,7 +630,7 @@ In addition, the behavior for non-HTML resources is as follows (to test for thes
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">File type detection for `ftp://` resources</font> || content sniffing || content sniffing || || content sniffing || content sniffing || content sniffing || <font color="#30ff30">extension matching</font> || content sniffing || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">File type detection for `file://` resources</font> || content sniffing || <font color="#30ff30">sniffing w/o HTML</font> || || content sniffing || content sniffing || content sniffing || content sniffing || <font color="#30ff30">extension matching</font> || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">File type detection for `file://` resources</font> || content sniffing || <font color="#30ff30">sniffing w/o HTML</font> || || content sniffing || content sniffing || content sniffing || content sniffing || <font color="#30ff30">extension matching</font> || <font color="#909090">n/a</font> ||
 
 <b></b>
 
@@ -772,13 +772,13 @@ All these properties make it an extremely good idea to always use explicit, care
 Relevant tests:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is `Expires` relative to `Date`?</font> || NO || NO || || YES || NO || NO || YES || NO || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">Does invalid `Expires` value stop caching?</font> || <font color="#ff0000">NO</font> || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">Is `Date` needed for `Expires` to work?</font> || NO || NO || || NO || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">Does invalid `max-age` stop caching?</font> || NO || NO || || NO || YES || NO || <font color="#30ff30">YES</font> || NO || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">Does `Cache-Control` override `Expires` in HTTP/1.0?</font> || YES || NO || || NO || NO || NO || YES || NO || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">Does `no-cache` win on `Cache-Control` conflicts?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">Does `Pragma: no-cache` work?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Is `Expires` relative to `Date`?</font> || NO || NO || || YES || NO || NO || YES || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does invalid `Expires` value stop caching?</font> || <font color="#ff0000">NO</font> || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is `Date` needed for `Expires` to work?</font> || NO || NO || || NO || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does invalid `max-age` stop caching?</font> || NO || NO || || NO || YES || NO || <font color="#30ff30">YES</font> || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does `Cache-Control` override `Expires` in HTTP/1.0?</font> || YES || NO || || NO || NO || NO || YES || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does `no-cache` win on `Cache-Control` conflicts?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does `Pragma: no-cache` work?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">n/a</font> ||
 
 _NOTE: In addition to caching network resources as-is, many modern web browsers also cache rendered page state, so that "back" and "forward" navigation buttons work without having to reload and reinitialize the entire document; and some of them further provide form field caching and autocompletion that persists across sessions. These mechanisms are not subject to traditional HTTP cache controls, but may be at least partly limited by employing the [http://www.htmlcodetutorial.com/forms/_INPUT_AUTOCOMPLETE.html AUTOCOMPLETE=OFF] HTML attribute._
 
