@@ -980,10 +980,6 @@ Assorted tests related to the aforementioned side channels:
 
 <b></b>
 
-==Document caching mechanisms==
-
-==Third-party cookie rules==
-
 ==Various network-related restrictions==
 
 On top of the odd mix of same-origin security policies and one-off exceptions to these rules, there is a set of very specific and narrow connection-related security rules implemented in browsers through the years to address various security flaws. This section provides an overview of these limitations.
@@ -1000,6 +996,8 @@ On top of the odd mix of same-origin security policies and one-off exceptions to
 
 ===Simultaneous connection limits===
 
+==Third-party cookie rules==
+
 ==Content handling mechanisms==
 
 ===Survey of content sniffing behaviors===
@@ -1007,6 +1005,8 @@ On top of the odd mix of same-origin security policies and one-off exceptions to
 ===Downloads and Content-Disposition===
 
 ===Character set handling and detection===
+
+===Document caching===
 
 ==Defenses against disruptive scripts==
 
