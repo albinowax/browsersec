@@ -106,6 +106,57 @@ Several tests that outline key `Content-Disposition` handling differences are sh
 
 ===Character set handling and detection===
 
+When displaying any renderable, text-based content - such as `text/html`, `text/plain`, and many others - browsers are capable of recognizing and interpreting a large number of both common and relatively obscure character sets. Some of the most important cases include:
+
+  * A basic fixed-width 7-bit `us-ascii` charset ([http://www.columbia.edu/kermit/ascii.html reference]). The charset is defined only for character values of `\x00` to `\x7F`, although it is technically transmitted as 8-bit data. High bit values are not permitted; in practice, if they appear in text, their most significant bit may be zeroed upon parsing, or they may be treated as `iso-8859-1` or any other 8-bit encoding.
+
+  * An assortment of legacy, fixed-width 8-bit character sets built on top of `us-ascii` by giving a meaning to character codes of `\x80` to `\xFF`. Examples here include `iso-8859-1` (default fallback value for most browsers) and the rest of `iso-8859-*` family, `KOI8-*` family, `windows-*` family, and so forth. Although different glyphs are assigned to the same 8-bit code in each variant, all these character sets are identical from the perspective of document structure parsing.
+
+  * A range of non-Unicode variable-width encodings, such as [http://en.wikipedia.org/wiki/Shift-JIS Shift-JIS], [http://en.wikipedia.org/wiki/EUC-JP EUC-* family], [http://en.wikipedia.org/wiki/Big5 Big5], and so forth. In a majority of these encodings, single bytes in the `\x00` to `\x7F` range are used to represent `us-ascii` values, while high-bit and multibyte values represent more complex non-Latin characters.
+
+  * A now-common variable-width 8-bit `utf-8` encoding scheme ([http://en.wikipedia.org/wiki/UTF-8 reference]), where special prefixes of `\x80` to `\xFD` are used on top of `us-ascii` to begin high-bit multibyte sequences of anywhere between 2 and 6 bytes, encoding a full range of [http://en.wikipedia.org/wiki/Unicode Unicode] characters.
+
+  * A less popular variable-width 16-bit `utf-16` encoding ([http://en.wikipedia.org/wiki/UTF-16 reference]), where single words are used to encode `us-ascii` and the primary planes of Unicode, and word pairs are used to encode supplementary planes. The encoding has little and big endian flavors. 
+
+  * A somewhat inefficient, fixed-width 32-bit `utf-32` encoding ([http://en.wikipedia.org/wiki/UTF-32 reference]), where every Unicode character is stored as a double word. Again, little and big endian flavors are present.
+
+  * An unusual variable-width 7-bit `utf-7` encoding scheme ([http://en.wikipedia.org/wiki/UTF-7 reference]) that permits any Unicode characters to be encoded using `us-ascii` text using a special `+...-` string. Literal `+` and some other values (such as `~` or `\`) must be encoded likewise. Behavior on stray high bit characters may vary, similar to that of `us-ascii`.
+
+There are multiple security considerations for many of these schemes, including:
+
+  * Unless properly accounted for, any scheme that may clip high bit values could potentially cause unexpected control characters to appear in unexpected places. For example, in `us-ascii`, a high-bit character of `\xBC` (`ź`), appearing in user input, may suddenly become `\x3C` (`<`). This does not happen in modern browsers for HTML parsing, but betting on this behavior being observed everywhere is not a safe assumption to make.
+
+  * Unicode-based variable-width `utf-7` and `utf-8` encodings technically make it permit to encode `us-ascii` values using multibyte sequences - for example, `\xC0\xBC` in `utf-8`, or `+ADw-` in `utf-7`, may both decode to `\x3C` (`<`). Specifications formally do not permit such notation, but not all parsers pay attention to this requirement. Modern browsers tend to reject such syntax for some encodings, but not for others.
+
+  * Variable-width decoders may indiscriminately consume a number of bytes following a multibyte sequence prefix, even if not enough data was in place to begin with - potentially causing portions of document structure to disappear. This may easily result in server's and browser's understanding of HTML structure getting dangerously out of sync. With `utf-8`, most browsers follow avoid over-consumption of non-high-bit values; with `utf-7`, `EUC-JP`, `Big5`, and many other legacy or exotic encodings, this is not always the case.
+
+  * All Unicode-based encodings permit certain special codes that function as layout controls to be encoded. Some of these controls override text display direction or positioning ([http://unicode.org/charts/PDF/U2000.pdf reference]). In some uses, permitting such characters to go through might be disruptive.
+
+The pitfalls of specific, mutually negotiated encodings aside, any case where server's understanding of the current character set might be not in sync with that of the browser is a disaster waiting to happen. Since the same string might have very different meanings depending on which decoding procedure is applied to it, the document might be perceived very differently by the generator, and by the renderer. Browsers tend to auto-detect a wide variety of character sets (see: [http://msdn.microsoft.com/en-us/library/ms537500(VS.85).aspx Internet Explorer list], [http://www.mozilla.org/projects/intl/chardet.html Firefox list]) based on very liberal and undocumented heuristics, historically including even parent character set inheritance ([http://www.hardened-php.net/advisory_032007.142.html advisory]); just as frighteningly, Microsoft Internet Explorer applies character set auto-detection prior to content sniffing.
+
+This behavior makes it inherently unsafe to return any renderable, user-controlled data with no character set explicitly specified. There are two primary ways to explicitly declare a character set for any served content; first of them is the inclusion of a `charset=` attribute in `Content-Type` headers:
+
+{{{
+Content-Type: text/html; charset=utf-8
+}}}
+
+The other option is an equivalent `<META HTTP-EQUIV="...">` directive (supported for HTML only):
+
+{{{
+<META HTTP-EQUIV="Content-Type" CONTENT="text/plain; charset=utf-8">
+}}}
+
+_NOTE: Somewhat confusingly, XML `<?xml version="1.0" encoding="UTF-8">` directive does not authoritatively specify the character set for the purpose of rendering XHTML documents - in absence of one of the aforementioned declarations, character set detection may still take place regardless of this tag._
+
+That said, if an appropriate character set declaration is provided, browsers thankfully tend to obey a specified character set value, with two caveats:
+
+  * Invalid character set names cause character set detection to kick in. Sadly, there is little or no consistency in how flexibly character set name might be specified, leading to unnecessary mistakes - for example, `iso-8859-2` and `iso8859-2` are both a valid character set to most browsers, and so many developers learned to pay no attention to how they enter the name; but `utf8` is *not* a valid alias for `utf-8`. 
+
+  * As noted in the section on [http://code.google.com/p/browsersec/wiki/Main#Hypertext_Markup_Language HTML language], the precedence of `META HTTP-EQUIV` and `Content-Type` character specifications is not well-defined in any specific place - so if the two directives disagree, it is difficult to authoritatively predict the outcome of this conflict in all current and future browsers.
+
+Relevant tests:
+
+
 ===Document caching===
 
 ==Defenses against disruptive scripts==
