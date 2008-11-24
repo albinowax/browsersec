@@ -792,9 +792,22 @@ This section provides a quick overview of default restrictions currently impleme
 
 Virtually all browsers attempt to limit the ability for sites to open new windows (popups), permitting this to take place only in response to `onclick` events within a short timeframe; some also attempt to place restrictions on other similarly disruptive `window.*` methods - although most browsers do fail in one way or another. A survey of current features and implemented limits is shown below:
 
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Is popup blocker present?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Are popups permitted on non-`onclick` events?</font> || NO || NO || || NO || NO || NO || NO || NO || YES ||
+|| <font color="#3050a0">Maximum delay between click and popup</font> || 0 ms || 0 ms || || 1 sec || 1 sec || 0 ms || <font color="#ff0000">> 5 sec</font> || 0 ms || 0 ms ||
+|| <font color="#3050a0">Maximum number of per-click popups opened</font> || 1 || 1 || || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || 1 ||
+|| <font color="#3050a0">Is `window.alert()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
+|| <font color="#3050a0">Is `window.print()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is `window.confirm()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
+|| <font color="#3050a0">Is `window.prompt()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || YES || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
 
+<b></b>
 
 ===Window appearance restrictions===
+
+A number of restrictions is also placed on `window.open()` features originally meant to make the appearance of browser windows more flexible ([http://www.w3schools.com/HTMLDOM/met_win_open.asp reference]), but in practice had the unfortunate effect of making it easy to spoof system prompts, mimick [http://www.squarefree.com/2004/08/01/preventing-browser-ui-spoofing/ trusted browser chrome], and cause other trouble. The following is a survey of these and related `window.*` limitations:
+
 
 ===Execution timeouts and memory limits===
 
