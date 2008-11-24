@@ -559,10 +559,10 @@ Although any third-party cookie restrictions are not a sufficient method to prev
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Are restrictions on third-party cookies on in default config?</font> || YES || YES || || NO || NO || YES || NO || NO || NO ||
-|| <font color="#3050a0">Option to change third-party cookie handling?</font> || YES || YES || || NO || YES || YES || persistent only || NO || NO ||
-|| <font color="#3050a0">Is P3P policy override supported?</font> || YES || YES || || <font color="#909090">n/a</font> || NO || NO || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Are third-party cookies permitted within same domain?</font> || YES || YES || || <font color="#909090">n/a</font> || YES || YES || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || 
-|| <font color="#3050a0">Behavior of minimal domains in ccTLDs (3 tests)</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#ff0000">1/3 FAIL</font> || || <font  color="#909090">n/a</font> || 3/3 PASS || <font color="#ff0000">1/3 FAIL</font> || <font  color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Option to change third-party cookie handling?</font> || YES || YES || || NO || YES || YES || persistent only || YES || NO ||
+|| <font color="#3050a0">Is P3P policy override supported?</font> || YES || YES || || <font color="#909090">n/a</font> || NO || NO || <font color="#909090">n/a</font> || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are third-party cookies permitted within same domain?</font> || YES || YES || || <font color="#909090">n/a</font> || YES || YES || <font color="#909090">n/a</font> || YES || <font color="#909090">n/a</font> || 
+|| <font color="#3050a0">Behavior of minimal domains in ccTLDs (3 tests)</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#ff0000">1/3 FAIL</font> || || <font  color="#909090">n/a</font> || 3/3 PASS || <font color="#ff0000">1/3 FAIL</font> || <font  color="#909090">n/a</font> || 3/3 PASS || <font color="#909090">n/a</font> ||
 
 <b></b>
 
