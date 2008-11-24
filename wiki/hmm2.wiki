@@ -34,7 +34,7 @@ The exact logic implemented here is usually contrived and as poorly documented -
 
   * If `Content-Type` is valid but not recognized - for example, not handled by the browser internally, not registered by any plugins, and not seen in system registry - some browsers may again attempt to second-guess how to handle the resource, based on a more conservative set of rules.
 
-  * For certain `Content-Type` values, browser-specific quirks may also kick in. For example, Microsoft Internet Explorer 6 would try to detect HTML on any `image/png` responses, even if a valid PNG signature is found.
+  * For certain `Content-Type` values, browser-specific quirks may also kick in. For example, Microsoft Internet Explorer 6 would try to detect HTML on any `image/png` responses, even if a valid PNG signature is found (this was recently fixed).
 
   * At this point, the content is either routed to the appropriate renderer, or triggers an open / download prompt if no method to internally handle the data could be located.<p>An important caveat is that if `Content-Type` indicates any of XML document varieties, the content may be routed to a general XML parser and interpreted in a manner inconsistent with the apparent `Content-Type` intent. For example, `image/svg+xml` may be rendered as XHTML, depending on top-level or nested XML namespace definitions, despite the fact that `Content-Type` clearly states a different purpose.
 
@@ -54,7 +54,6 @@ Some of the interesting corner cases of content sniffing behavior are captured b
 || <font color="#3050a0">Is HTML sniffed on unknown MIME when `.html` seen in URL path?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is HTML sniffed on `text/plain` documents under any circumstances?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is HTML sniffed on GIF served as `image/jpeg`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Is HTML sniffed on `image/png` files?</font> || <font color="#ff0000">YES</font> || NO || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Content sniffing buffer size for second-guessing MIME type</font> || 256 B || 256 B || || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">May image/svg+xml document contain HTML xmlns payload?</font> || <font color="#ff0000">(YES)</font> || <font color="#ff0000">(YES)</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">(YES)</font> ||
 || <font color="#3050a0">HTTP error codes ignored on sub-resources?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
