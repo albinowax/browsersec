@@ -865,7 +865,7 @@ Related tests:
 
 Note that neither of the aforementioned methods permits any control over HTTP headers. As noted earlier, more permissive mechanisms may be available to plugin-interpreted programs and other non-HTML data, however.
 
-===Arbitrary UI mashups===
+===Arbitrary page mashups (UI redressing)===
 
 Yet another operation permitted across domains with no specific security checks is the ability to seamlessly merge `<IFRAME>` containers displaying chunks of third-party sites (in their respective security contexts) inside the current document. Although this feature has no security consequences for static content - and in fact, might be desirable - it poses a significant concern with complex web applications where the user is authenticated with cookies: the attacker may cleverly decorate portions of such a third-party UI to make it appear as if they belong to his site instead, and then trick his visitors into interacting with this mashup. If successful, clicks would be directed to the attacked domain, rather than attacker's page - and may result in undesirable and unintentional actions being taken in the context of victim's account.
 
@@ -977,3 +977,65 @@ Assorted tests related to the aforementioned side channels:
 || <font color="#3050a0">Does CSS parser accept HTML documents as stylesheets?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Does `onerror` fire on all common HTTP errors?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Is `delete <win>.var` probe possible?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
+
+<b></b>
+
+==Document caching mechanisms==
+
+==Third-party cookie rules==
+
+==Various network-related restrictions==
+
+On top of the odd mix of same-origin security policies and one-off exceptions to these rules, there is a set of very specific and narrow connection-related security rules implemented in browsers through the years to address various security flaws. This section provides an overview of these limitations.
+
+===Local network / remote network divide===
+
+===Port access restrictions===
+
+===URL scheme access rules===
+
+===Redirection restrictions===
+
+===International Domain Name checks===
+
+===Simultaneous connection limits===
+
+==Content handling mechanisms==
+
+===Survey of content sniffing behaviors===
+
+===Downloads and Content-Disposition===
+
+===Character set handling and detection===
+
+==Defenses against disruptive scripts==
+
+===Popup and dialog filtering logic===
+
+===Window appearance restrictions===
+
+===Execution timeouts and memory limits===
+
+===Page transition logic===
+
+==Protocol-level encryption facilities==
+
+=Experimental and legacy security mechanisms=
+
+==HTTP authentication==
+
+==Microsoft Internet Explorer zone model==
+
+==Microsoft Internet Explorer frame restrictions==
+
+==Microsoft Internet Explorer XSS filtering==
+
+==Script restriction frameworks==
+
+==Origin headers==
+
+==Mozilla content security policies==
+
+=Open browser engineering issues=
+
+=Acknowledgments=
