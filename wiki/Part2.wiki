@@ -775,7 +775,7 @@ Relevant tests:
 || <font color="#3050a0">Is `Expires` relative to `Date`?</font> || NO || NO || || YES || NO || NO || YES || NO || <font color="#909090">tbd</font> ||
 || <font color="#3050a0">Does invalid `Expires` value stop caching?</font> || <font color="#ff0000">NO</font> || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">tbd</font> ||
 || <font color="#3050a0">Is `Date` needed for `Expires` to work?</font> || NO || NO || || NO || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#909090">tbd</font> ||
-|| <font color="#3050a0">Does invalid `max-age` stops caching?</font> || NO || NO || || NO || YES || NO || <font color="#30ff30">YES</font> || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Does invalid `max-age` stop caching?</font> || NO || NO || || NO || YES || NO || <font color="#30ff30">YES</font> || NO || <font color="#909090">tbd</font> ||
 || <font color="#3050a0">Does `Cache-Control` override `Expires` in HTTP/1.0?</font> || YES || NO || || NO || NO || NO || YES || NO || <font color="#909090">tbd</font> ||
 || <font color="#3050a0">Does `no-cache` win on `Cache-Control` conflicts?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">tbd</font> ||
 || <font color="#3050a0">Does `Pragma: no-cache` work?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">tbd</font> ||
@@ -784,7 +784,15 @@ _NOTE: In addition to caching network resources as-is, many modern web browsers 
 
 ==Defenses against disruptive scripts==
 
+Javascript and other browser scripting languages make it very easy to carry out annoying, disruptive, or confusing actions, such as hogging the CPU or memory, opening or moving windows faster than the user can respond, preventing the user from navigating away from a page, or displaying modal dialogs in an endless loop. Historically, most developers would pay little or no attention to this possibility - but as browsers moved toward running more complex and sensitive applications (including web mail, text editors, online games, and so forth), it became less acceptable for one rogue page to trash the entire browser and potentially cause data loss.
+
+This section provides a quick overview of default restrictions currently implemented in browsers to counter such abuse; it is important to note that many of these properties are highly customizable in some browsers, however.
+
 ===Popup and dialog filtering logic===
+
+Virtually all browsers attempt to limit the ability for sites to open new windows (popups), permitting this to take place only in response to `onclick` events within a short timeframe; some also attempt to place restrictions on other similarly disruptive `window.*` methods - although most browsers do fail in one way or another. A survey of current features and implemented limits is shown below:
+
+
 
 ===Window appearance restrictions===
 
