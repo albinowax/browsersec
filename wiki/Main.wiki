@@ -1100,7 +1100,34 @@ Experimental solutions to the problem that could potentially offer better securi
 
 ===Simultaneous connection limits===
 
+For performance reasons, most browsers regularly issue requests simultaneously, by opening multiple TCP connections. To prevent overloading servers with excessive traffic, and to minimize the risk of abuse, the number of connections to the same target is usually capped. The following table captures these limits, as well as default read timeouts for network resources:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Maximum number of same-origin connections</font> || 4 || 4 || || 2 || 6 || 4 || 4 || 6 || 4 ||
+|| <font color="#3050a0">Network read timeout</font> || 5 min || 5 min || || 5 min || 10 min || 1 min || 5 min || 5 min || 2 min ||
+
+<b></b>
+
 ==Third-party cookie rules==
+
+Another interesting security control built on top of the existing mechanisms is the concept of restricting third-party cookies. For the privacy reasons noted earlier, there appeared to be a demand for a seemingly simple improvement: restricting the ability for any domain other than the top-level one displayed in the URL bar, to set cookies while a page is being visited. This was to prevent third-party content (advertisements, etc) included via `<IMG>`, `<IFRAME>`, `<SCRIPT>`, and similar tags, from setting tracking cookies that could identify the user across unrelated sites relying on the same ad technology.
+
+A setting to disable third-party cookies is available in many browsers, and in several of them, the option is enabled by default. Microsoft Internet Explorer is a particularly interesting case: it rejects third-party cookies with the default "automatic" setting, but permits sites to override this behavior by declaring a proper, user-friendly intent through [http://www.w3.org/P3P/P3FAQ.html compact P3P privacy policy headers] (a mechanism discussed in more detail [http://www.oreillynet.com/pub/a/network/excerpt/p3p/p3p.html here] and [http://www.oreillynet.com/pub/a/network/excerpt/p3p/p3p.html here]). If a site specifies a privacy policy and the policy implies that personally identifiable information is not collected (e.g., `P3P: CP=NOI NID NOR`), on default security settings, session cookies are permitted to go through regardless of third-party cookie security settings. 
+
+The purpose of this design is to force legitimate businesses to make a (hopefully) binding legal statement through this mechanism, so that violations could be prosecuted. Sadly, the approach has the unfortunate property of being a legislative solution to a technical problem, bestowing potential liability at site owners who often simply copy-and-paste `P3P` header examples from the web without understanding their intended meaning; the mechanism also does nothing to stop shady web sites from making arbitrary claims in these HTTP headers and betting on the mechanism never being tested in court - or even simply [http://www.interesting-people.org/archives/interesting-people/200112/msg00196.html disavowing any responsibility] for untrue, self-contradictory, or nonsensical P3P policies.
+
+The question of what constitues "first-party" domains introduces a yet another, incompatible same-origin check, called [http://msdn.microsoft.com/en-us/library/ms537343(VS.85).aspx#first_and_third_party_context minimal domains]. The idea is that `www1.eu.example.com` and `www2.us.example.com` should be considered first-party, which is not true for all the remaining same-origin logic in other places. Unfortunately, these implementations are generally even more buggy than cookies for country-code TLDs: for example, in Safari, `test1.example.cc` and `test2.example.cc` are _not_ the same minimal domain, while in Internet Explorer, `domain1.waw.pl` and `domain2.waw.pl` are.
+
+Although any third-party cookie restrictions are not a sufficient method to prevent cross-domain user tracking, they prove to be rather efficient in disrupting or impacting the security of some legitimate web site features, most notably certain web gadgets and authentication mechanisms.
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Are restrictions on third-party cookies on in default config?</font> || YES || YES || || NO || NO || YES || NO || NO || NO ||
+|| <font color="#3050a0">Option to change third-party cookie handling?</font> || YES || YES || || NO || YES || YES || persistent only || NO || NO ||
+|| <font color="#3050a0">Is P3P policy override supported?</font> || YES || YES || || <font color="#909090">n/a</font> || NO || NO || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are third-party cookies permitted within same domain?</font> || YES || YES || || <font color="#909090">n/a</font> || YES || YES || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || 
+|| <font color="#3050a0">Behavior of minimal domains in ccTLDs (3 tests)</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#ff0000">1/3 FAIL</font> || || <font  color="#909090">n/a</font> || 3/3 PASS || <font color="#ff0000">1/3 FAIL</font> || <font  color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
+
+<b></b>
 
 ==Content handling mechanisms==
 
