@@ -33,7 +33,7 @@ The current version of this document is based on the following versions of web b
 || Apple Safari || 3.2 || Nov 18, 2008 || 5% || ||
 || Opera || 9.62 || Nov 18, 2008 || ~1% || ||
 || Google Chrome || 0.3.154.9 || Nov 18, 2008 || ~1% || ||
-|| Android  embedded browser || SDK 1.0 RC1 || Nov 10, 2008 || <font color="#909090">n/a</font> || Tests requiring `file:///` targets not executed. ||
+|| Android  embedded browser || SDK 1.0 RC1 || Nov 10, 2008 || <font color="#909090">n/a</font> || ||
 
 ^*^ Approximate browser usage data based on public [http://marketshare.hitslink.com/report.aspx?qprid=3 Net Applications] estimates for October 2008.
 
