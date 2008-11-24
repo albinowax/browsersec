@@ -41,7 +41,7 @@ In practice, browsers deviate from these standards in many ways, for example acc
 || <font color="#3050a0">Types of partial or broken URLs auto-corrected to fully qualified ones</font> || //y \\y || //y \\y || || //y x:///y x://`[y]` || //y x:///y x://`[y]` || //y \\y x:/y x:///y || //y \\y x://`[y]` || //y \\y x:///y || //y \\y ||
 || <font color="#3050a0">Is fragment ID (hash) encoded by applying RFC-mandated URL escaping rules?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">PARTLY</font> || <font color="#ff0000">PARTLY</font> || YES || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES ||
 
-_NOTE: As an anti-phishing mechanism, additional restrictions on the use of `authority` and `password` fields in URLs are imposed by many browsers; see the section on [http://code.google.com/p/browsersec/wiki/Main#HTTP_authentication HTTP authentication] later on._
+_NOTE: As an anti-phishing mechanism, additional restrictions on the use of `authority` and `password` fields in URLs are imposed by many browsers; see the section on [http://code.google.com/p/browsersec/wiki/Part1#HTTP_authentication HTTP authentication] later on._
 
 Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity decoding] takes place before the link is parsed. Because of this, if a newline is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as Javascript, just as `javascript<TAB>:alert(1)` would be.
 
@@ -76,7 +76,7 @@ Key security-relevant differences in high-bit URL handling are outlined below:
 || <font color="#3050a0">URL bar Unicode display method outside host names</font> || Unicode || Unicode || || `%nn` || Unicode || Unicode || as `?` || Unicode || <font color="#909090">n/a</font> ||
 
  
-_NOTE: As an anti-phishing mechanism, additional restrictions on the use of some or all Unicode characters in certain top-level domains are imposed by many browsers; see [http://code.google.com/p/browsersec/wiki/Main#International_Domain_Name_checks domain name restrictions] chapter later on._
+_NOTE: As an anti-phishing mechanism, additional restrictions on the use of some or all Unicode characters in certain top-level domains are imposed by many browsers; see [http://code.google.com/p/browsersec/wiki/Part2#International_Domain_Name_checks domain name restrictions] chapter later on._
 
 ==True URL schemes==
 
@@ -305,7 +305,7 @@ In the context of web browsers, Document Object Model is simply an object-based 
 document.getElementsByTagName('INPUT')[0].value
 }}}
 
-Document Object Model also permits third-party documents to be referenced, subject to certain security checks discussed [http://code.google.com/p/browsersec/wiki/Main#Same-origin_policy_for_DOM_access later on]; for example, the following code accesses the `<INPUT>` tag in the second `<IFRAME>` on a current page:
+Document Object Model also permits third-party documents to be referenced, subject to certain security checks discussed [http://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_DOM_access later on]; for example, the following code accesses the `<INPUT>` tag in the second `<IFRAME>` on a current page:
 
 {{{
 document.getElementsByTagName('IFRAME')[1].contentDocument.getElementsByTagName('INPUT')[0].value
@@ -522,7 +522,7 @@ Unlike the lean and well-defined set of natively supported document formats, the
 
 Common document-embeddable plugins can be generally divided into several primary categories:
 
-  * *Web programming languages*. This includes technologies such as [http://en.wikipedia.org/wiki/Adobe_Flash Adobe Flash], [http://en.wikipedia.org/wiki/Java_programming_language multi-vendor Java], or [http://en.wikipedia.org/wiki/Silverlight Microsoft Silverlight], together present at a vast majority of desktop computers. These languages generally permit extensive scripting, including access to the top-level document and other DOM information, or the ability to send network requests to at least some locations. The security models implemented by these plugins generally diverge from the models of the browser itself in sometimes counterintuitive or underspecified ways (discussed in more detail [http://code.google.com/p/browsersec/wiki/Main#Same-origin_policy_for_Flash later on]).<p />This property makes such web development technologies a major attack surface by themselves if used legitimately. It also creates a security risk whenever a desire to user content arises, as extra steps must be taken to make sure the data could never be accidentally interpreted as a valid input to any of the popular plugins.
+  * *Web programming languages*. This includes technologies such as [http://en.wikipedia.org/wiki/Adobe_Flash Adobe Flash], [http://en.wikipedia.org/wiki/Java_programming_language multi-vendor Java], or [http://en.wikipedia.org/wiki/Silverlight Microsoft Silverlight], together present at a vast majority of desktop computers. These languages generally permit extensive scripting, including access to the top-level document and other DOM information, or the ability to send network requests to at least some locations. The security models implemented by these plugins generally diverge from the models of the browser itself in sometimes counterintuitive or underspecified ways (discussed in more detail [http://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_Flash later on]).<p />This property makes such web development technologies a major attack surface by themselves if used legitimately. It also creates a security risk whenever a desire to user content arises, as extra steps must be taken to make sure the data could never be accidentally interpreted as a valid input to any of the popular plugins.
 
   * *Drop-in integration for non-HTML document formats*. Some popular document editors or viewers, including [http://en.wikipedia.org/wiki/Adobe_Acrobat Acrobat Reader] and [http://en.wikipedia.org/wiki/Microsoft_Office Microsoft Office], add the ability to embed their supported document formats as objects on HTML pages, or to view content, full-window, directly within the browser. The interesting property of this mechanism is that many such document formats either feature scripting capabilities, or offer interactive features (e.g., clickable links) that may result in data passed back to the browser in unusual ways. This property makes such document formats roughly equivalent to programming language engines proper.
 
