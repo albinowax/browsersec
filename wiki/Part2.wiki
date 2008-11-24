@@ -823,6 +823,15 @@ A number of restrictions is also placed on `window.open()` features originally m
 
 ===Execution timeouts and memory limits===
 
+Further restrictions are placed on script execution times and memory usage:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Maximum busy loop time</font> || 1 sec || <font color="#ff0000">∞</font> || || 10 sec || 10 sec || 10 sec || <font color="#30ff30">responsive</font> || <font color="#30ff30">responsive</font> || 10 sec ||
+|| <font color="#3050a0">Call stack size limit</font> || ~2500 || ~2000 || || ~1000 || ~3000 || ~500 || ~1000 || ~18000 || ~500 ||
+|| <font color="#3050a0">Heap size limit</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || || 16M || || 16M || 16M || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> ||
+
+<b></b>
+
 ===Page transition logic===
 
 Note link changes
