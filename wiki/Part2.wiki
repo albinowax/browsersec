@@ -741,6 +741,47 @@ Relevant tests:
 
 ===Document caching===
 
+HTTP requests are expensive: it takes time to carry out a TCP handshake with a distant host, and to produce or transmit the response (which may span dozens or hundreds of kilobytes even for fairly simple documents). For this reason, having the browser or an intermediate system - such as a traditional, transparent, or reverse proxy - maintain a local copy of at least some of the data can be expected to deliver a considerable performance improvement.
+
+The possibility of document caching is acknowledged in [http://www.ietf.org/rfc/rfc1945.txt RFC 1945] (the specification for HTTP/1.0). The RFC asserts that user agents and proxies may apply a set of heuristics to decide what default rules to apply to received content, without providing any specific guidance; and also outlines a set of optional, rudimentary caching controls to supplement whichever default behavior is followed by a particular agent:
+
+  * `Expires` response header, a method for servers to declare an expiration date, past which the document must be dropped from cache, and a new copy must be requested. There is a relationship between `Expires` and `Date` headers, although it is underspecified: on one hand, the RFC states that if `Expires` value is earlier or equal to `Date`, the content must not be cached at all (leaving the behavior undefined if `Date` header is not present); on the other, it is not said whether beyond this initial check, `Expires` date should be interpreted according to browser's local clock, or converted to a new deadline by computing an `Expires` - `Date` delta, then adding it to browser's idea of the current date. The latter would account properly for any differences between clock settings on both endpoints.
+
+  * `Pragma` request header, with a single value of `no-cache` defined, permitting clients to override intermediate systems to re-issue the request, rather than returning cached data. Any support for `Pragma` is optional from the perspective of standard compliance, however.
+
+  * `Pragma` response header, with no specific meaning defined in the RFC itself. In practice, most servers seem to use `no-cache` responses to instruct the browser and intermediate systems not to cache the response, duplicating the backdated `Expires` functionality - although this is not a part of HTTP/1.0 (and as noted, support for `Pragma` directives is optional to begin with).
+
+  * `Last-Modified` response header, permitting the server to indicate when, according to its local clock, the resource was last updated; this is expected to reflect file modification date recorded by the file system. The value may help the client make caching decisions locally, but more importantly, is used in conjunction with `If-Modified-Since` to revalidate cache entries.
+
+  * `If-Modified-Since` request header, permitting the client to indicate what `Last-Modified` header it had seen on the version of the document already present in browser or proxy cache. If in server's opinion, no modification since `If-Modified-Since` date took place, a null `304 Not Modified` response is returned instead of the requested document - and the client should interpret it as a permission to redisplay the cached document.<p />Note that in HTTP/1.0, there is no obligation for the client to ever attempt `If-Modified-Since` revalidation for any cached content, and no way to explicitly request it; instead, it is expected that the client would employ heuristics to decide if and when to revalidate.
+
+The scheme worked reasonably well in the days when virtually all HTTP content was simple, static, and common for all clients. With the arrival of complex web applications, however, this degree of control quickly proved to be inadequate: in many cases, the only choice an application developer would have is to permit content to be cached by anyone and possibly returned to random strangers, or to disable caching at all, and suffer the associated performance impact. [http://www.w3.org/Protocols/rfc2616/rfc2616.txt RFC 2616] (the specification for HTTP/1.1) acknowledges many of these problems, and devotes a good portion of the document to establishing ground rules for well-behaved HTTP/1.1 implementations. Key improvements include:
+
+  * Sections 13.4, 13.9, and 13.10 spell out which HTTP codes and methods may be implicitly cached, and which ones may not; specifically, only `200`, `203`, `206`, `300`, and `301` responses are cacheable, and only if the method is not `POST`, `PUT`, `DELETE`, or `TRACE`.
+
+  * Section 14.9 introduces a new `Cache-Control` header that provides a very fine-grained control of caching strategies for HTTP/1.1 traffic. In particular, caching might be disabled altogether (`no-cache`), only on specific headers (e.g., `no-cache="Set-Cookie"`), or only where it would result in the data being stored on persistent media (`no-store`); caching on intermediate systems might be controlled with `public` and `private` directives; a non-ambiguous maximum time to live might be provided in seconds (`max-age=...`); and `If-Modified-Since` revalidation might be requested for all uses with `must-revalidate`.
+
+  * Sections 3.11, 14.26, and others introduce `ETag` response header, an opaque identifier expected to be sent by clients in a conditional `If-None-Match` request header later on, to implement a mechanism similar to `Last-Modified` / `If-Modified-Since`, but with a greater degree of flexibility for dynamic resource versioning.<p /><i>Trivia: as hinted earlier, `ETag` / `If-None-Match`, as well as `Last-Modified` / `If-Modified-Since` header pairs, particularly in conjunction with `Cache-Control: private, max-age=...` directives, may be all abused to store persistent tokens on client side even when HTTP cookies are disabled or restricted. These headers generally work the same as the `Set-Cookie` / `Cookie` pair, despite a different intent.</i>
+
+  * Lastly, section 14.28 introduces `If-Unmodified-Since`, a conditional request header that makes it possible for clients to request a response only if the requested resource is older than a particular date.
+
+Quite notably, specific guidelines for determining TTLs or revalidation rules in absence of explicit directives are still not given in the new specification. Furthermore, for compatibility, HTTP/1.0 directives may still be used (and in some cases must be, as this is the only syntax recognized by legacy caching engines) - and no clear rules for resolving conflicts between HTTP/1.0 and HTTP/1.1 headers, or handling self-contradictory HTTP/1.1 directives (e.g., `Cache-Control: public, no-cache, max-age=100`), are provided - for example, quoting: _"the result of a request having both an `If-Unmodified-Since` header field and either an `If-None-Match` or an `If-Modified-Since` header fields is undefined by this specification".
+
+All these properties make it an extremely good idea to always use explicit, carefully selected, and *precisely matching* HTTP/1.0 and HTTP/1.1 directives on all sensitive HTTP responses.
+
+Relevant tests:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Is `Expires` relative to `Date`?</font> || NO || NO || || YES || NO || NO || YES || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Does invalid `Expires` value stop caching?</font> || <font color="#ff0000">NO</font> || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Is `Date` needed for `Expires` to work?</font> || NO || NO || || NO || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Does invalid `max-age` stops caching?</font> || NO || NO || || NO || YES || NO || <font color="#30ff30">YES</font> || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Does `Cache-Control` override `Expires` in HTTP/1.0?</font> || YES || NO || || NO || NO || NO || YES || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Does `no-cache` win on `Cache-Control` conflicts?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Does `Pragma: no-cache` work?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">tbd</font> ||
+
+_NOTE: In addition to caching network resources as-is, many modern web browsers also cache rendered page state, so that "back" and "forward" navigation buttons work without having to reload and reinitialize the entire document; and some of them further provide form field caching and autocompletion that persists across sessions. These mechanisms are not subject to traditional HTTP cache controls, but may be at least partly limited by employing the [http://www.htmlcodetutorial.com/forms/_INPUT_AUTOCOMPLETE.html AUTOCOMPLETE=OFF] HTML attribute._
+
 ==Defenses against disruptive scripts==
 
 ===Popup and dialog filtering logic===
