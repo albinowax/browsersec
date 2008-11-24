@@ -864,3 +864,56 @@ Related tests:
 || <font color="#3050a0">Is `ENCTYPE=text/plain` supported on forms</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO ||
 
 Note that neither of the aforementioned methods permits any control over HTTP headers. As noted earlier, more permissive mechanisms may be available to plugin-interpreted programs and other non-HTML data, however.
+
+===Arbitrary UI mashups===
+
+Yet another operation permitted across domains with no specific security checks is the ability to seamlessly merge `<IFRAME>` containers displaying chunks of third-party sites (in their respective security contexts) inside the current document. Although this feature has no security consequences for static content - and in fact, might be desirable - it poses a significant concern with complex web applications where the user is authenticated with cookies: the attacker may cleverly decorate portions of such a third-party UI to make it appear as if they belong to his site instead, and then trick his visitors into interacting with this mashup. If successful, clicks would be directed to the attacked domain, rather than attacker's page - and may result in undesirable and unintentional actions being taken in the context of victim's account.
+
+There are several basic ways to fool users into generating such misrouted clicks:
+
+  * *Decoy UI underneath, proper UI made transparent using CSS `opacity` attribute:* many browsers permit page authors to set transparency on cross-domain `<IFRAME>` tags. Low opacity may result in the attacked cross-domain UI being barely visible, or not visible at all, with the browser showing attacker-controlled content placed underneath instead. Any clicks intended to reach attacker's content would still be routed to the invisible third-party UI overlaid on top, however.
+
+  * *Decoy UI on top, with a small fragment not covered:* the attacker may also opt for showing the entire UI of the targeted application in a large `<IFRAME>`, but then cover portions of this container with opaque `<DIV>` or `<IFRAME>` elements placed on top (higher CSS `z-index` values). These overlays would be showing his misleading content instead, spare for the single button borrowed from the UI underneath.
+
+  * *Keyhole view of the attacked application:* a variant of the previous attack technique is to simply make the `<IFRAME>` very small, and scroll this view to a specific X and Y location where the targeted button is present. Luckily, all current browser no longer permit cross-domain `window.scrollTo()` and `window.scrollBy()` calls - although the attack is still possible if useful [http://webmastercourse.com/articles/anchors/ HTML anchors] on the target page may be repurposed.
+
+  * *Race condition attacks:* lastly, the attacker may simply opt for hiding the target UI underneath his own, and reveal it only miliseconds before the anticipated user click, not giving the victim enough time to notice the switch, or react in any way. Scripts have the ability to track mouse speed and position over the entire document, but it is still relatively difficult to reliably anticipate the timing of single, casual clicks. Timing solicited clicks (e.g. in action games) is easier, but there is a prerequisite of having an interesting and broadly appealing game to begin with.
+
+In all cases, the attack is challenging to carry out given the deficiencies and incompatibilities of CSS implementations, and the associated difficulty of determining the exact positioning for the targeted UI elements. That said, real-world exploitation is not infeasible. In two of the aforementioned attack scenarios, the fact that that the invisible container may follow mouse pointer on the page makes it somewhat easier to achieve this goal, too.
+
+Also note that the same UI redress possibility applies to `<OBJECT>`, `<EMBED>`, and `<APPLET>` containers, although typically with fewer security implications, given the typical uses of these technologies. 
+
+UI redress attacks gained some prominence in 2008, after Jeremiah Grossman and Robert 'RSnake' Hansen coined the term _clickjacking_ and [http://ha.ckers.org/blog/20080915/clickjacking/ presented the attack to the public]. Discussions with browser vendors on possible mitigations are taking place, but no definitive solutions are to be expected in the short run. So far, the only product that offers partial protection against the possibility is [http://hackademix.net/2008/10/08/hello-clearclick-goodbye-clickjacking/ NoScript] (with the recently introduced ClearClick extension). On the flip side, no real-world cases of active exploitation are publicly known as of this writing.
+
+There are no particularly reliable and non-intrusive ways for applications to prevent attacks; one possibility is to include Javascript to detect having the page rendered within a cross-domain `<IFRAME>`, and try to break out of it, e.g.:
+
+{{{
+try {
+  if (top.location.hostname != self.location.hostname) throw 1;
+} catch (e) {
+  top.location.href = self.location.href;
+}
+}}}
+
+It should be noted that there is no strict guarantee that the update of `top.location` would always work, particularly if dummy setters are defined, or if there are collaborating, attacker-controlled `<IFRAME>` containers performing conflicting location updates through various mechanisms. A more drastic solution would be to also overwrite or hide the current document pending page transition, or to perform `onclick` checks on all UI actions, and deny them from within frames. All of these mechanisms also fail if the user has Javascript disabled globally, or for the attacked site. 
+
+Likewise, because of the features of Javascript, the following is enough to prevent frame busting in Microsoft Internet Explorer 7:
+
+{{{
+<script>
+var location = "clobber";
+</script>
+<iframe src="http://www.example.com/frame_busting_code.html"></iframe>
+}}}
+
+Relevant tests:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Is CSS `opacity` supported ("decoy underneath")?</font> || NO || NO || YES || YES || || YES || YES || YES || YES ||
+|| <font color="#3050a0">Are partly obstructed `IFRAME` containers clickable ("decoy on top")?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Is cross-domain =scrollBy= scrolling permitted?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is cross-domain anchor-based frame positioning permitted?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
+
+===Gaps in DOM access control===
+
+===Privacy-related side channels===
