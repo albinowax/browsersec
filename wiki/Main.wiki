@@ -1,0 +1,62 @@
+#summary Main wiki page
+#labels Featured
+
+<h1>Browser Security Handbook</h1>
+
+  * Written and maintained by [http://lcamtuf.coredump.cx/ Michal Zalewski] <[mailto:lcamtuf@google.com lcamtuf@google.com]>. 
+  * Copyright 2008 Google Inc, rights reserved.
+  * Released under terms and conditions of the [http://creativecommons.org/licenses/by/3.0 CC-3.0-BY] license.
+
+<h1>Table of Contents</h1>
+
+<wiki:toc max_depth=10 />
+   * _[http://code.google.com/p/browsersec/wiki/Part1 → Part 1: Basic concepts behind web browsers]_
+   * _[http://code.google.com/p/browsersec/wiki/Part2 → Part 2: Standard browser security features]_
+   * _[http://code.google.com/p/browsersec/wiki/Part3 → Part 3: Experimental and legacy security mechanisms]_
+
+=Introduction=
+
+Hello, and welcome to the _Browser Security Handbook_!
+
+This document is meant to provide web application developers, browser engineers, and information security researchers with a one-stop reference to key security properties of contemporary web browsers. Insufficient understanding of these often poorly-documented characteristics is a major contributing factor to the prevalence of several classes of security vulnerabilities.
+
+Although all browsers implement roughly the same set of baseline features, there is relatively little conformance to standards when it comes to many of the less apparent characteristics. Furthermore, vendors routinely introduce poorly documented, proprietary tweaks or improvements that may interfere with existing features in non-obvious ways.
+
+The current version of this document is based on the following versions of web browsers:
+
+|| <font color="#3050a0">*Browser*</font> || <font color="#3050a0">*Version*</font> || <font color="#3050a0">*Test date*</font> || <font color="#3050a0">*Usage*</font>^*^ || <font color="#3050a0">*Notes*</font> ||
+|| Microsoft Internet Explorer 6 || 6.0.2900.5512 || Nov 18, 2008 || 23% || ||
+|| Microsoft Internet Explorer 7 || 7.0.5730.11 || Nov 18, 2008 || 47% || ||
+|| <font color="#909090">Microsoft Internet Explorer 8 (beta)</font> || || || <font color="#909090">n/a</font> || <font color="#909090">Not tested - pending release.</font> ||
+|| Mozilla Firefox 2 || 2.0.0.17 || Nov 6, 2008 || 5% || ||
+|| Mozilla Firefox 3 || 3.0.3 || Nov 18, 2008 || 15% || ||
+|| Apple Safari || 3.2 || Nov 18, 2008 || 5% || ||
+|| Opera || 9.62 || Nov 18, 2008 || ~1% || ||
+|| Google Chrome || 0.3.154.9 || Nov 18, 2008 || ~1% || ||
+|| Android  embedded browser || SDK 1.0 RC1 || Nov 10, 2008 || <font color="#909090">n/a</font> || Tests requiring `file:///` targets not executed. ||
+
+^*^ Approximate browser usage data based on public [http://marketshare.hitslink.com/report.aspx?qprid=3 Net Applications] estimates for October 2008.
+
+=Disclaimers and typographical conventions=
+
+*Please note that although we tried to make this document as accurate as possible, some errors might have slipped through. Use this document only as an initial reference, and independently verify any characteristics you wish to depend upon. All the test cases featured in this document are [http://browsersec.googlecode.com/files/browser_tests-1.0.tar.gz freely available for download].*
+
+The document attempts to capture the risks and security considerations present for general populace of users accessing the web with default browser settings in place. Although occasionally noted, the degree of flexibility offered through non-standard settings is by itself not a subject of this comparative study.
+
+Through the document, <font color="#ff0000">red color</font> is used to bring attention to browser properties seeem particularly tricky or unexpected, and need to be carefully accounted for in server-side implementations. Whenever status quo appears to bear no significant security consequences and is well-understood, but a particular browser implementation takes additional steps to protect application developers, we use <font color="#30ff30">green color</font> to denote this, likewise. Rest assured, neither of these color codes implies that a particular browser is less or more secure than its counterparts.
+
+=Acknowledgments=
+
+_Browser Security Handbook_ would not be possible without the ideas and assistance from the following contributors:
+
+  * Filipe Almeida
+  * Chris Evans
+  * Drew Hintz
+  * Tavis Ormandy
+  * Marius Schilder
+  * Parisa Tabriz
+  * Berend-Jan Wever
+
+The document builds on years of previous security research by Adam Barth, Collin Jackson, Amit Klein, Jesse Ruderman, and many other security experts who painstakingly dissected browser internals for the past few years. 
+
+_([http://code.google.com/p/browsersec/wiki/Part1 Continue to basic concepts behind web browsers...])_
