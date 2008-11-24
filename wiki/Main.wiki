@@ -1185,7 +1185,7 @@ Some of the interesting corner cases of content sniffing behavior are captured b
 || <font color="#3050a0">Is HTML sniffed on unknown MIME when `.html` seen in URL path?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is HTML sniffed on `text/plain` documents under any circumstances?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is HTML sniffed on GIF served as `image/jpeg`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Is HTML sniffed on `image/png` files?</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is HTML sniffed on `image/png` files?</font> || <font color="#ff0000">YES</font> || NO || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Content sniffing buffer size for second-guessing MIME type</font> || 256 B || 256 B || || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">May image/svg+xml document contain HTML xmlns payload?</font> || <font color="#ff0000">(YES)</font> || <font color="#ff0000">(YES)</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">(YES)</font> ||
 || <font color="#3050a0">HTTP error codes ignored on sub-resources?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
@@ -1199,6 +1199,41 @@ In addition, the behavior for non-HTML resources is as follows (to test for thes
 <b></b>
 
 ===Downloads and Content-Disposition===
+
+Browsers automatically present the user with the option to download any documents for which the returned `Content-Type` is:
+
+  * Not claimed by any internal feature,
+  * Not recognized by MIME sniffing or extension matching routines,
+  * Not handled by any loaded plugins,
+  * Not associated with a whitelisted external program (such as a media player).
+
+Quite importantly, however, the server may also explicitly instruct the browser not to attempt to display a document inline by employing [http://www.ietf.org/rfc/rfc2183.txt RFC 2183] `Content-Disposition: attachment` functionality. This forces a download prompt even if one or more of the aforementioned criteria is satisfied - but only for top-level windows and `<IFRAME>` containers.
+
+An explicit use of `Content-Disposition: attachment` as a method of preventing inline rendering of certain documents became a commonly employed _de facto_ security feature. The most important property that makes it useful for mitigating the risk of content sniffing is that when included in HTTP headers returned for `XMLHttpRequest`, `<SCRIPT SRC="...">`, or <`IMG SRC="...">` callbacks, it has absolutely no effect on the intended use; but it prevents the attacker from making any direct reference to these callbacks in hope of having them interpreted as HTML.
+
+Closer to its intended use - triggering browser download prompts in response to legitimate and expected user actions - `Content-Disposition` offers fewer benefits, and any reliance on it for security purposes is a controversial practice. Although such a directive makes it possible to return data such as unsanitized `text/html` or `text/plain` without immediate security risks normally associated with such operations, it is not without its problems:
+
+  * *Real security gain might be less than expected:* because of the relaxed security rules for `file://` URLs in some browsers - including the ability to access arbitrary sites on the Internet - the benefit of having the user save a file prior to opening it might be illusory: even though the original context is abandoned, the new one is powerful enough to wreak the same havoc on the originating site.<p />Recent versions of Microsoft Internet Explorer mitigate the risk by storing [http://msdn.microsoft.com/en-us/library/ms537628(VS.85).aspx mark-of-the-web] and [http://msdn.microsoft.com/en-us/library/ms537029(VS.85).aspx ADS Zone.Identifier] tags on all saved content; the same practice is followed by Chrome. These tags are later honored by Internet Explorer, Windows Explorer, and a handful of other Microsoft applications to either restrict the permissions for downloaded files, or display security warnings and request a confirmation prior to displaying the data. Any benefit of these mechanisms is lost if the data is stored or opened using a third-party browser, or sent to any other application that does not carry out additional checks, however.
+
+  * *Loss of MIME metadata may turn harmless files into dangerous ones:* `Content-Type` information is discarded the moment a resource is saved to disk. Unless a careful control is exercised either by the explicit `filename=` field included in `Content-Disposition` headers, or the name derived from apparent URL path, undesired content type promotion may occur (e.g., JPEG becoming an EXE that, to the user, appears to be coming from `www.example-bank.com` or other trusted site). Some, but not all, browsers take measures to mitigate the risk by matching `Content-Type` with file extensions prior to saving files.
+
+  * *No consistent rules for escaping cause usability concerns:* certain characters are dangerous in `Content-Disposition` headers, but not necessarily undesirable in local file names (this includes `"` and `;`, or high-bit UTF-8). Unfortunately, there is no reliable approach to encoding non-ASCII values in this header: some browsers support [http://www.faqs.org/rfcs/rfc2047.html RFC 2047] (`?q?` / `?b?` notation), some support [http://www.faqs.org/rfcs/rfc2231.html RFC 2231] (a bizarre `*=` syntax), some support stray `%nn` hexadecimal encoding, and some do not support any known escaping scheme at all. As a result, quite a few applications take potentially insecure ways out, or cause problems in non-English speaking countries.
+
+  * *Browser bugs further contribute to the misery:* browsers are plagued by implementation flaws even in such a simple mechanism. For example, Opera ignores `Content-Disposition: attachment` after the initial correctly handled attempt to open a resource, while Microsoft Internet Explorer violates [http://www.ietf.org/rfc/rfc2183.txt RFC 2183] and [http://www.ietf.org/rfc/rfc2045.txt RFC 2045] by stopping file name parsing on first `;` character, even within a quoted string (e.g., `Content-Disposition: attachment; filename="hello.exe;world.jpg"` → `"hello.exe"`). Historically, Microsoft Internet Explorer 6, and Safari permitted `Content-Disposition` to be bypassed altogether, too, although these problems appear to be fixed. In Opera, the behavior appears to be inconsistent.
+
+Several tests that outline key `Content-Disposition` handling differences are shown below:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Is `Content-Disposition` supported correctly?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || YES ||
+|| <font color="#3050a0">Is Mark-of-the-Web / Zone.Identifier supported?</font> || <font color="#30ff30">YES</font> || <font color="#30ff30">YES</font> || || NO || NO || NO || NO || <font color="#30ff30">write-only</font> || NO ||
+|| <font color="#3050a0">Types of file name encodings supported</font> || `%nn` || `%nn` || || `?b? ?q? *=` || `?b? ?q? *=` || `*=` || `*=` || `?b? ?q? %nn` || <font color="#ff0000">none</font> ||
+|| <font color="#3050a0">Does `filename=test.html` override `Content-Type`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Does `filename=test.exe` override `Content-Type`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || YES ||
+|| <font color="#3050a0">Does URL-derived `test.html` filename override `Content-Type`?</font> || <font color="#ff0000">YES</font> || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Does URL-derived `test.exe` filename override `Content-Type`?</font> || <font color="#ff0000">YES</font> || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || YES ||
+|| <font color="#3050a0">Is `;` handled correctly in file names?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || YES || YES || YES || YES || YES || YES ||
+
+<b></b>
 
 ===Character set handling and detection===
 
