@@ -13,20 +13,111 @@
 
 =Experimental and legacy security mechanisms=
 
+Through the years, browsers accrued a fair number of security mechanisms that had either fallen into disuse, or never caught on; as well as a number of ongoing proposals and enhancements that are yet to prove their worth. This section provides a brief overview of several technologies that could fall into this class.
+
+_Fun fact: when it comes to newly proposed features, many of them essentially introduce new security boundaries and permission systems mostly orthogonal, yet intertwined, with same-origin controls. Although this appears to be a good idea at first sight, some researchers [http://crypto.stanford.edu/websec/origins/fgo.pdf warn about the pitfalls] of finer-grained origins as difficult to understand to users, and hard to fully examine for potential side effects and interactions with existing code._
+
 ==HTTP authentication==
+
+HTTP authentication is an ancient mechanism most recently laid out in [http://www.ietf.org/rfc/rfc2617 RFC 2617]. It is a simple extension of HTTP:
+
+  * Any resource for which the server requires the user to provide valid credentials would initially return a `401 Unauthorized` HTTP error code, with a `WWW-Authenticate` header describing parameters such as the authentication realm, supported authentication modes, and other method-specific parameters.
+
+  * Upon receiving a `401` code, the client is expected to prompt the user for login and password, or obtain the data from in-memory cache or another credential store (where according to the RFC, it should be looked up by authentication realm name alone; although for security purposes, it should be bound to the host name as well, preferably also to port and protocol).
+
+  *  User's credentials are then encoded and sent back in a new request with an additional `Authorization` header, which the server is expected to examine, and grant access or return an error message as appropriate.
+
+Two key authentication schemes are supported by virtually all clients: `basic` and `digest`. The former simply sends user names and passwords in plain (`base64`) text - and hence the data is vulnerable to snooping, unless the process takes place over HTTPS. The latter uses a simple nonce-based challenge-response mechanism that prevents immediate password disclosure. Microsoft further extended the mechanism to include two proprietary `NTML` and `Negotiate` schemes ([http://www.innovation.ch/personal/ronald/ntlm.html reference]) that integrate seamlessly with Microsoft Windows domain authentication.
+
+As hinted in the section on [http://code.google.com/p/browsersec/wiki/Part1#Uniform_Resource_Identifiers URL syntax], URLs are permitted to have an optional `user[:password]@` segment immediately before the host name, to enable pre-authenticated bookmarks or shared links. In practice, the mechanism would be seldom used for legitimate purposes, but became immensely popular with phishers - who would often construct URLs such as `http://`<font color="#ff0000">`www.example-bank.com:something_something@`</font>`www.evilsite.com/` in hopes of confusing the user. This led to this URL syntax being banned in Microsoft Internet Explorer, and often resulting in security prompts elsewhere.
+
+Because of these limitations and the relative inflexibility of this scheme to begin with, HTTP authentication was almost completely extinct on the Internet, and replaced with custom solutions built around HTTP cookies (it is still sometimes used for intranet applications or for simple access control for personal resources). 
+
+Amusingly, its ghost still haunts modern web applications: HTTP authentication prompts often come up in browsers when viewing trusted pages where a minor authentication-requiring sub-resource, such as `<IMG>`, is included from a rogue site - but these prompts usually do a poor job of clearly explaining who is asking for the credentials. This poses a phishing risk for services, such as blogs or discussion forums, that allow users to embed external content.
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Is HTTP authentication supported?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> ||
+|| <font color="#3050a0">Does link-embedded authentication work?</font> || NO || NO || || prompt || prompt || YES || prompt || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is authentication data bound to realms?</font> || NO || NO || || NO || NO || <font color="#30ff30">YES</font> || NO || <font color="#30ff30">YES</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is authentication bound to host name?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is authentication bound to protocol or port?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Do password prompts come up on `<IMG>`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Do password prompts come up on `<EMBED>` / `<APPLET>`?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Do password prompts come up on `<SCRIPT>` and stylesheets?</font>  || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Do password prompts come up on `<IFRAME>`?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
 
 ==Microsoft Internet Explorer zone model==
 
+All current versions of Internet Explorer utilize an interesting concept of [http://support.microsoft.com/kb/174360 security zones], not shared with any other browser on the market. The idea behind the approach is to compartmentalize resources into various categories, depending on the degree of trust given - and then control almost all security settings for these groups separately. The following zones are defined:
+
+  * *My computer:* a container for all `file:///` resources, with the exception of documents annotated with mark-of-the-web tags. The user has no control over what gets included into this zone.
+
+  * *Local intranet:* a container for all sites determined by simple configurable heuristics to belong to the local network (non-FQDN host names, proxy server exception list, content accessed over SMB). The user may list additional host names to include in this zone.
+
+  * *Trusted sites:* an empty container for trusted pages. This group enjoys certain elevated privileges, particularly to run ActiveX controls, install desktop elements, or programatically access the clipboard. The user is expected to populate the zone with trusted sites that require these permissions to operate.
+
+  * *Restricted sites:* an empty container for untrusted pages. This group has many of the rudimentary permissions, such as the ability to initiate file downloads or use `<META HTTP-EQUIV="Refresh" ...>`, taken away. The user is expected to populate the zone with sites he would rather approach with caution (presumably ahead of the first planned visit).
+
+  * *Internet:* a default container for all sites on the Internet not included in any of the remaining categories.
+
+This design makes it possible to, for example, fine-tune the permissions of `file:///` resources without impacting Internet sites, or to forbid navigation from "Internet" to "Local intranet" - and from this perspective, appears to offer a major security benefit. On the flip side:
+
+  * Quite a few important security settings are excluded from the zone model, somewhat diminishing its value; for example, cookie permissions or SSL behavior is controlled elsewhere.
+
+  * The number of settings currently offered in this model is very hard to manage, and many of them appear to be too finely grained, or have remarkably vague or confusing descriptions with security impact not clearly explained (_"Script controls marked as safe for scripting"_, _"Navigate sub-frames across different domains"_), increasing the risk of hard-to-spot configuration errors.
+
+  * The model fails to account for the impact of cross-site scripting flaws in trusted sites. Since users add pages such as Windows Update, their banks, and other legacy sites that do not work properly in the "Internet" zone to "Trusted sites", giving them a lot of unnecessary permissions as a side effect, the impact of cross-site scripting flaws on these pages may result in the attacker suddenly gaining the ability to carry out dangerous actions normally not available to Internet content.
+
+  * The complexity of the model and the permissive settings of some zones resulted in a [http://www.securityfocus.com/news/8998 large number of security problems] that could easily be avoided by employing a simpler approach instead.
+
 ==Microsoft Internet Explorer frame restrictions==
+
+Another interesting, little-known security feature unique to Microsoft Internet Explorer is the concept of [http://msdn.microsoft.com/en-us/library/ms534622(VS.85).aspx SECURITY=RESTRICTED frames]. The idea behind the mechanism is that some services may have a legitimate use for limiting the ability of data displayed within `<IFRAME>` containers to disrupt the top-level document or abuse same-origin policies - and so, with the `SECURITY=RESTRICTED` attribute, the content may be placed in the "Restricted sites" zone, and deprived of the ability to run disruptive scripts or access cookies.
+
+No support outside of Microsoft Internet Explorer makes this feature useless as a security defense for most intents and purposes; but the mechanism needs to be considered for its potential negative security impact, such as the ability to prevent frame busting code from operating properly and making [http://code.google.com/p/browsersec/wiki/Part2#Arbitrary_page_mashups_(UI_redressing) UI redress attacks] a bit easier. No support for HTTP cookies within a restricted container limits the impact by design.
+
+Due to its minimal use, the mechanism likely received very little security scrutiny, and so future problems should be anticipated.
 
 ==Microsoft Internet Explorer XSS filtering==
 
+An experimental [http://blogs.technet.com/swi/archive/2008/08/19/ie-8-xss-filter-architecture-implementation.aspx reflected HTML injection filter] is proposed for Microsoft Internet Explorer 8. It is uncertain what final shape this mechanism would take, and how useful it will be for preventing attacks; the complexity of escaping rules, jiffy handling of certain character sets, and quirky rules for parsing HTML documents, all make it likely that the mechanism would never achieve a 100% coverage. 
+
+An important downside of the design is that it aims to selectively disable script snippets that appear in URL query parameters, instead of displaying an interstitial or other security prompt, and permitting the page to display in full, or not display at all. This behavior may potentially enable attackers to carefully take out frame-busting code or other security-critical components of targeted applications, while leaving the rest of the functionality intact. 
+
 ==Script restriction frameworks==
+
+Several experimental browser-side or client-side designs aim to provide control over same-origin permissions for scripts, or over when scripts may execute on pages to begin with. Although such features would not necessarily prevent all the potential negative effects of rendering attacker-controlled HTML in trusted domains, a well-executed solution could indeed avert most of the high-impact vulnerabilities.
+
+There are two primary classes of solutions proposed:
+
+  * *Comprehensive script security frameworks:* these approaches strive to offer the ability for site owner to approve or reject arbitrary actions executed by scripts with a great deal of flexibility. Examples include Microsoft [https://research.microsoft.com/users/yxie/papers/hotOS07.pdf Mutation-Event Transforms] for browser-side checks (not clear if this being pursued in any major browsers), or Google [http://code.google.com/p/google-caja/ Caja] and Microsoft [http://websandbox.livelabs.com/Default.aspx Web Sandbox] for a solution that requires no browser-side tweaks.
+
+  * *Selective script disable / enable functions:* these comparatively simpler solutions attempt to give web developers the tools to disable scripting in certain critical areas of the document, such as around user input or a block of intentionally non-sanitized HTML. Trevor Jim's [http://www.research.att.com/~trevor/papers/beep-tr.pdf Browser-Enforced Embedded Policies].
 
 ==Origin headers==
 
+Adam Barth, Collin Jackson, and other researchers propose the introduction of reliable [http://people.mozilla.org/~bsterne/content-security-policy/origin-header-proposal.html Origin headers] as an answer to the risk of cross-site request forgery - giving sites the ability to reliably and easily decide whether a particular request [http://code.google.com/p/browsersec/wiki/Part2#Navigation_and_content_inclusion_across_domains permitted across domains] comes from a trusted party or not.
+
+In theory, an existing `Referer` HTTP header could be used for the same purpose, but many users install tweaks to suppress it for privacy reasons; the header may also be dropped on certain page transitions, and is not particularly reliable on other. `Origin` proposals attempt to limit the risk of the header being disabled by limiting the amount of data being sent across domains (host name, but no full URL; though arguably, it may still easily disclose undesirable information); and limiting the types of requests on which the header is provided (although this may undermine some of the security benefits associated with the solution).
+
 ==Mozilla content security policies==
 
+Brandon Sterne of Mozilla proposes [http://people.mozilla.org/~bsterne/content-security-policy/index.html content security policies], a mechanism that would permit site owners to define a list of valid target domains for `<IMG>`, `<EMBED>`, `<APPLET>`, `<SCRIPT>`, and `<IFRAME>` resources appearing in their content
+
+The security benefit of these features is by itself limited to very specialized uses, primarily associated with policy enforcement; the proposal originally also incorporated the ability to define a list of valid origins for incoming requests as a method to mitigate cross-site request forgery attacks - but this part of the design got dropped in favor of more flexible and simpler `Origin` headers.
+
 =Open browser engineering issues=
+
+Other than the general design of HTTP, HTML, and related mechanisms discussed previously, a handful of browser engineering decisions tends to contribute to a disproportional of day-to-day security woes. Understanding these properties is sometimes important for properly assessing the likelihood and maximum impact of security breaches, and hence determining the safety of user data. Some of the pivotal, open-ended issues include:
+
+  * *Relatively unsafe core programming languages:* C++ is used for a majority of code in Internet Explorer, Firefox, Safari, Opera, and Chrome; C is used in certain high-performance or low-level areas, such as image manipulation libraries. The choice of C and C++ means that browsers are regularly plagued by memory management and integer overflow problems, despite considerable ongoing audit efforts.
+
+  * *No security compartmentalization:* once control of the process is seized due to common implementation flaws, most browsers provide essentially unconstrained access to the user context they are running in. This means that browser bugs - historically, very common - easily lead to total system integrity loss.<p /><i>There are two notable exceptions: Chrome uses [[http://dev.chromium.org/developers/design-documents/sandbox security sandbox]] to contain the renderer (which includes WebKit and V8, hence constituting the largest and most complicated body of code in the project). Access to system functions and browser-managed data is heavily constrained, and individual tabs are generally run in separate processes, with some exceptions for new tabs spawned in response to document navigation. Android, on the other hand, simply runs browser in a dedicated user account, and then attempts to restrict the ability for this context to execute any undesirable actions.</i>.
+
+  * *Web technologies are used in browser chrome:* Javascript, HTML, and XML are all used to a varying degree to implement some browser internals and various diagnostic and error pages in most browsers. This choice contributes to an elevated risk of HTML injection flaws that permit web content to gain elevated chrome privileges, which - depending on the browser - may carry the permission to read or write files, access arbitrary sites on the Internet, or alter browser settings. The problem is particularly pronounced for Firefox, which implements much of its user interface in this manner.
+
+  * *Inconsistent and overly complex security UIs:* a vast majority of browsers employ highly inconsistent UI elements and security messaging, including several styles of modal prompts, interstitials, icons, color codes, and messages that pop up either on the bottom or on the top of the document window. Usability studies consistently show that at least some of these features are easily mis-identified, misunderstood, or trivial to spoof (this is particularly the case for interstitials and notification bars that are not anchored in browser UI). Although a gradual improvement may be observed in certain aspects, further coordinated work in this area seems to be necessary.
+
+  * *Inconsistent and haphazard data storage practices:* browsers use a mix of random storage methods to keep temporary files, downloads, configuration data, and sensitive records such as passwords, browsing history, saved cookies, or cache entries. These methods include system registry, database container files, drop-off directories, text-based configs (CSV, INI, tab-delimited, XML), and proprietary binary files. The data may be stored in user home directories, system-wide temporary directories, or global program installation folders. Controlling the permissions on all these resources and manipulating them securely is relatively difficult, contributing to many problems, particularly in multi-user systems.
 
 _([http://code.google.com/p/browsersec/wiki/Main Go back to the beginning])_
