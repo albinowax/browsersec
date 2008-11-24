@@ -1024,8 +1024,41 @@ Because of this, a rather arbitrary subset of ports belonging to common (and not
 
 There usually are various protocol-specific exceptions to these rules: for example, `ftp://` URLs are obviously permitted to access port 21, and `nntp://` may reference port 119. A detailed discussion of these exceptions in the prevailing Mozilla implementation is [http://www.mozilla.org/projects/netlib/PortBanning.html available here].
 
-
 ===URL scheme access rules===
+
+The section on URL schemes notes that for certain URL types, browsers implement additional restrictions on what pages may use them and when. Whereas the rationale for doing so for special and dangerous schemes such as `res:` or `view-cache:` is rather obvious, the reasons for restricting two other protocols - most notably `file:` and `javascript:` - are more nuanced.
+
+In the case of `file:`, web sites are generally prevented from navigating to local resources at all. The three explanations given for this decision are as follows:
+
+  * Many browsers and browser plugins keep their temporary files and cache data in predictable locations on the disk. The attacker could first plant a HTML file in one these spots during normal browsing activities, and then attempt to open it by invoking a carefully crafted `file:///` URL. As noted earlier, many implementations of same-origin policies are eager to bestow special privileges on local HTML documents ([#Same-origin_policy_for_DOM_access more]), and so this led to frequent trouble.
+
+  * Users were uncomfortable with random, untrusted sites opening local, sensitive files, directories, or applications within `<IFRAME>` containers, even if the web page embedding them technically had no way to read back the data - a property that a casual user could not verify.
+
+  * Lastly, tags such as `<SCRIPT>` or `<LINK REL="stylesheet" HREF="...">` could be used to read back certain constrained formats of local files from the disk, and access the data from within cross-domain scripts. Although no particularly useful and universal attacks of this type were demonstrated, this posed a potential risk.
+
+Browser behavior when handling `file:` URLs in Internet content is summed up in the following table:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Are `<IMG>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Are `<SCRIPT>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Are `<IFRAME>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">tbd</font> ||
+|| <font color="#3050a0">Are `<EMBED>` `file:` targets allowed to load?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are `<APPLET>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are stylesheet `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">tbd</font> ||
+
+_NOTE: For Microsoft Internet Explorer, the exact behavior for `file:` references is controlled by the "Websites in less privileged web content zone can navigate into this zone" setting for "My computer" zone._
+
+The restrictions applied to `javascript:` are less drastic, and have a different justification. In the past, many HTML sanitizers implemented by various web applications could be easily circumvented by employing seemingly harmless tags such as `<IMG>`, but pointing their `SRC=` parameters to Javascript pseudo-URLs, instead of HTTP resources - leading to HTML injection and cross-site scripting. To make the life of web developers easier, a majority of browser vendors locked down many of the scenarios where a legitimate use of `javascript:` would be, in their opinion, unlikely:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Are `<IMG>` `javascript:` targets allowed to run?</font> || <font color="#ff0000">YES</font> || NO || || NO || NO || NO || <font color="#ff0000">YES</font> || NO || NO ||
+|| <font color="#3050a0">Are `<SCRIPT>` `javascript:` targets allowed to run?</font> || <font color="#ff0000">YES</font> || NO || || NO || NO || NO || <font color="#ff0000">YES</font> || NO || NO ||
+|| <font color="#3050a0">Are `<IFRAME>` `javascript:` targets allowed to run?</font> || YES || YES || || YES || NO || YES || YES || YES || YES ||
+|| <font color="#3050a0">Are `<EMBED>` `javascript:` targets allowed to run?</font> || NO || NO || || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are `<APPLET>` `javascript:` targets allowed to run?</font> || NO || NO || || NO || <font color="#ff0000">YES</font> || NO || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are stylesheet `javascript:` targets allowed to run?</font> || <font color="#ff0000">YES</font> || NO || || NO || NO || NO || <font color="#ff0000">YES</font> || NO || NO ||
+
+<b></b>
 
 ===Redirection restrictions===
 
