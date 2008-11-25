@@ -66,7 +66,7 @@ This design makes it possible to, for example, fine-tune the permissions of `fil
 
   * The number of settings currently offered in this model is remarkably high, and many of them appear to be too finely grained, or have vague or confusing descriptions with security impact not clearly explained (_"Script controls marked as safe for scripting"_, _"Navigate sub-frames across different domains"_), increasing the risk of hard-to-spot configuration errors.
 
-  * The model fails to account for the impact of cross-site scripting flaws in trusted sites. Since users add pages such as Windows Update, their banks, and other legacy sites that do not work properly in the "Internet" zone to "Trusted sites", giving them a lot of unnecessary permissions as a side effect, the impact of cross-site scripting flaws on these pages may result in the attacker suddenly gaining the ability to carry out dangerous actions normally not available to Internet content.
+  * The model fails to account for the impact of cross-site scripting flaws in trusted sites. Since users add pages such as Windows Update, their banks, and other legacy sites that may not always work properly in the "Internet" zone to "Trusted sites", giving them a lot of unnecessary permissions as a side effect, the impact of cross-site scripting flaws on these pages may result in the attacker suddenly gaining the ability to carry out dangerous actions normally not available to Internet content.
 
   * The complexity of the model and the permissive settings of some zones resulted in a [http://www.securityfocus.com/news/8998 large number of security problems] that could easily be avoided by employing a simpler approach instead.
 
