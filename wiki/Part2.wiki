@@ -57,8 +57,8 @@ On top of this, the specification is simplistic enough to actually omit quite co
 All this ambiguity leads to a significant degree of variation between browsers, and historically, resulted in a large number of browser security flaws. A detailed analysis of DOM actions permitted across domains, as well as context inheritance rules, is given in later sections. A quick survey of several core same-origin differences between browsers is given below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">May `document.domain` be set to TLD alone?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">May `document.domain` be set to right-hand IP address fragments?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">May `document.domain` be set to TLD alone?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">May `document.domain` be set to right-hand IP address fragments?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> ||
 || <font color="#3050a0">Do port numbers wrap around in same origin checks?</font> || NO || NO || || uint32 || uint32 || uint16/32 || uint16 || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">May local HTML access unrelated local files via DOM?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">May local HTML access sites on the Internet via DOM?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">n/a</font> ||
@@ -620,7 +620,7 @@ Some of the interesting corner cases of content sniffing behavior are captured b
 || <font color="#3050a0">Is HTML sniffed on MIME types not known to browser?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is HTML sniffed on unknown MIME when `.html` seen in URL parameters?</font> || <font color="#ff0000">YES</font> || NO || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is HTML sniffed on unknown MIME when `.html` seen in URL path?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Is HTML sniffed on `text/plain` documents under any circumstances?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is HTML sniffed on `text/plain` documents under any circumstances?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || NO ||
 || <font color="#3050a0">Is HTML sniffed on GIF served as `image/jpeg`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Content sniffing buffer size for second-guessing MIME type</font> || 256 B || 256 B || || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">May image/svg+xml document contain HTML xmlns payload?</font> || <font color="#ff0000">(YES)</font> || <font color="#ff0000">(YES)</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">(YES)</font> ||
@@ -632,7 +632,7 @@ In addition, the behavior for non-HTML resources is as follows (to test for thes
 || <font color="#3050a0">File type detection for `ftp://` resources</font> || content sniffing || content sniffing || || content sniffing || content sniffing || content sniffing || <font color="#30ff30">extension matching</font> || content sniffing || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">File type detection for `file://` resources</font> || content sniffing || <font color="#30ff30">sniffing w/o HTML</font> || || content sniffing || content sniffing || content sniffing || content sniffing || <font color="#30ff30">extension matching</font> || <font color="#909090">n/a</font> ||
 
-<b></b>
+An interesting study of content sniffing signatures is given on [http://webblaze.cs.berkeley.edu/2009/content-sniffing/ this page].
 
 ===Downloads and Content-Disposition===
 
@@ -864,7 +864,7 @@ Several important HTTPS properties are outlined below:
 || <font color="#3050a0">`Referer` header sent on HTTPS → HTTPS navigation?</font> || YES || YES || || YES || YES || YES || <font color="#30ff30">NO</font> || YES || YES ||
 || <font color="#3050a0">`Referer` header sent on HTTPS → HTTP navigation?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Behavior on invalid certificates</font> || prompt || interstitial || || prompt || block || prompt || prompt || interstitial || prompt ||
-|| <font color="#3050a0">Is EV SSL supported?</font> || NO || NO || || NO || YES || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is EV SSL visually distinguished?</font> || NO || NO || || NO || YES || NO || NO || NO || NO ||
 || <font color="#3050a0">Mixed content behavior on `<IMG>`</font> || block || block || || warn || warn || permit || permit || permit || permit ||
 || <font color="#3050a0">Mixed content behavior on `<SCRIPT>`</font> || block || block || || <font color="#ff0000">warn</font> || <font color="#ff0000">warn</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> ||
 || <font color="#3050a0">Mixed content behavior on stylesheets</font> || block || block || || <font color="#ff0000">warn</font> || <font color="#ff0000">warn</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> ||
