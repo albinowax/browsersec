@@ -616,7 +616,7 @@ Some of the interesting corner cases of content sniffing behavior are captured b
 || <font color="#3050a0">Is HTML sniffed when a non-parseable `Content-Type` value received?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
 || <font color="#3050a0">Is HTML sniffed on `application/octet-stream` documents?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO ||
 || <font color="#3050a0">Is HTML sniffed on `application/binary` documents?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Is HTML sniffed on `*/unknown` documents?</font> || NO || NO || || NO || NO || NO || NO || YES || NO || 
+|| <font color="#3050a0">Is HTML sniffed on `unknown/unknown` documents?</font> || NO || NO || || NO || NO || NO || NO || YES || NO || 
 || <font color="#3050a0">Is HTML sniffed on MIME types not known to browser?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is HTML sniffed on unknown MIME when `.html` seen in URL parameters?</font> || <font color="#ff0000">YES</font> || NO || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is HTML sniffed on unknown MIME when `.html` seen in URL path?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
