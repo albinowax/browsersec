@@ -173,6 +173,8 @@ The original design for HTTP cookies has multiple problems and drawbacks that re
 || <font color="#3050a0">Are cookies for right-hand IP address fragments accepted?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || NO ||
 || <font color="#3050a0">Overly permissive ccTLD behavior test results (3 tests)</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#ff0000">1/3 FAIL</font> || || <font color="#ff0000">2/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">2/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">2/3 FAIL</font> || 
 
+<b></b>
+
 ===Same-origin policy for Flash===
 
 [http://en.wikipedia.org/wiki/Adobe_Flash Adobe Flash], a plugin believed to be installed on about [http://www.adobe.com/products/player_census/flashplayer/ 99% of all desktops], incorporates a security model generally inspired by browser same-origin checks. Flash applets have their security context derived from the URL they are loaded from (as opposed to the site that embeds them with `<OBJECT>` or `<EMBED>` tags), and within this realm, permission control follows the same basic principle as applied by browsers to DOM access: protocol, host name, and port of the requested resource is compared with that of the requestor, with universal access privileges granted to content stored on local disk. That said, there are important differences - and some interesting extensions - that make Flash capable of initiating cross-domain interactions to a degree greater than typically permitted for native browser content.
