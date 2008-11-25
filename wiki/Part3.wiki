@@ -31,7 +31,7 @@ Two key authentication schemes are supported by virtually all clients: `basic` a
 
 As hinted in the section on [http://code.google.com/p/browsersec/wiki/Part1#Uniform_Resource_Identifiers URL syntax], URLs are permitted to have an optional `user[:password]@` segment immediately before the host name, to enable pre-authenticated bookmarks or shared links. In practice, the mechanism would be seldom used for legitimate purposes, but became immensely popular with phishers - who would often construct URLs such as `http://`<font color="#ff0000">`www.example-bank.com:something_something@`</font>`www.evilsite.com/` in hopes of confusing the user. This led to this URL syntax being banned in Microsoft Internet Explorer, and often resulting in security prompts elsewhere.
 
-Because of these limitations and the relative inflexibility of this scheme to begin with, HTTP authentication was almost completely extinct on the Internet, and replaced with custom solutions built around HTTP cookies (it is still sometimes used for intranet applications or for simple access control for personal resources). 
+Because of these limitations and the relative inflexibility of this scheme to begin with, HTTP authentication has been almost completely extinct on the Internet, and replaced with custom solutions built around HTTP cookies (it is still sometimes used for intranet applications or for simple access control for personal resources). 
 
 Amusingly, its ghost still haunts modern web applications: HTTP authentication prompts often come up in browsers when viewing trusted pages where a minor authentication-requiring sub-resource, such as `<IMG>`, is included from a rogue site - but these prompts usually do a poor job of clearly explaining who is asking for the credentials. This poses a phishing risk for services, such as blogs or discussion forums, that allow users to embed external content.
 
@@ -56,7 +56,7 @@ All current versions of Internet Explorer utilize an interesting concept of [htt
 
   * *Trusted sites:* an empty container for trusted pages. This group enjoys certain elevated privileges, particularly to run ActiveX controls, install desktop elements, or programatically access the clipboard. The user is expected to populate the zone with trusted sites that require these permissions to operate.
 
-  * *Restricted sites:* an empty container for untrusted pages. This group has many of the rudimentary permissions, such as the ability to initiate file downloads or use `<META HTTP-EQUIV="Refresh" ...>`, taken away. The user is expected to populate the zone with sites he would rather approach with caution (presumably ahead of the first planned visit).
+  * *Restricted sites:* an empty container for untrusted pages. This group has many of the rudimentary permissions taken away, such as the ability to initiate file downloads or use `<META HTTP-EQUIV="Refresh" ...>`. The user is expected to populate the zone with sites he would rather approach with caution (presumably ahead of the first planned visit).
 
   * *Internet:* a default container for all sites on the Internet not included in any of the remaining categories.
 
