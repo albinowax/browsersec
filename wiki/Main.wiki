@@ -28,7 +28,7 @@ The current version of this document is based on the following versions of web b
 || Microsoft Internet Explorer 6 || 6.0.2900.5512 || Nov 18, 2008 || 23% || ||
 || Microsoft Internet Explorer 7 || 7.0.5730.11 || Nov 18, 2008 || 47% || ||
 || <font color="#909090">Microsoft Internet Explorer 8 (beta)</font> || || || <font color="#909090">n/a</font> || <font color="#909090">Not tested - pending release.</font> ||
-|| Mozilla Firefox 2 || 2.0.0.17 || Nov 6, 2008 || 5% || ||
+|| Mozilla Firefox 2 || 2.0.0.18 || Nov 28, 2008 || 5% || ||
 || Mozilla Firefox 3 || 3.0.3 || Nov 18, 2008 || 15% || ||
 || Apple Safari || 3.2 || Nov 18, 2008 || 5% || ||
 || Opera || 9.62 || Nov 18, 2008 || ~1% || ||
