@@ -39,7 +39,7 @@ The current version of this document is based on the following versions of web b
 
 =Disclaimers and typographical conventions=
 
-*Please note that although we tried to make this document as accurate as possible, some errors might have slipped through. Use this document only as an initial reference, and independently verify any characteristics you wish to depend upon. All the test cases featured in this document are [http://browsersec.googlecode.com/files/browser_tests-1.00.tar.gz freely available for download].*
+*Please note that although we tried to make this document as accurate as possible, some errors might have slipped through. Use this document only as an initial reference, and independently verify any characteristics you wish to depend upon. Test cases for properties featured in this document are [http://browsersec.googlecode.com/files/browser_tests-1.00.tar.gz freely available for download].*
 
 The document attempts to capture the risks and security considerations present for general populace of users accessing the web with default browser settings in place. Although occasionally noted, the degree of flexibility offered through non-standard settings is by itself not a subject of this comparative study.
 
