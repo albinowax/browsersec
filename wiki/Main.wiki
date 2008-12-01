@@ -20,7 +20,7 @@ Hello, and welcome to the _Browser Security Handbook_!
 
 This document is meant to provide web application developers, browser engineers, and information security researchers with a one-stop reference to key security properties of contemporary web browsers. Insufficient understanding of these often poorly-documented characteristics is a major contributing factor to the prevalence of several classes of security vulnerabilities.
 
-Although all browsers implement roughly the same set of baseline features, there is relatively little conformance to standards when it comes to many of the less apparent characteristics. Furthermore, vendors routinely introduce poorly documented, proprietary tweaks or improvements that may interfere with existing features in non-obvious ways.
+Although all browsers implement roughly the same set of baseline features, there is relatively little standardization - or conformance to standards - when it comes to many of the less apparent implementation details. Furthermore, vendors routinely introduce proprietary tweaks or improvements that may interfere with existing features in non-obvious ways, and seldom provide a detailed discussion of potential problems.
 
 The current version of this document is based on the following versions of web browsers:
 
