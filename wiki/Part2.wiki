@@ -228,7 +228,7 @@ There is some uncertainty about how likely the technology is to win widespread s
 
   * Security context for the application is derived from the URL it is included from. Access to the embedding HTML document is permitted by default for same-origin HTML, and controlled by [http://msdn.microsoft.com/en-us/library/cc838264(VS.95).aspx enableHtmlAccess] parameter elsewhere. Microsoft security documentation does not clearly state if scripts have permission to navigate browser windows in absence of `enableHtmlAccess`, however.
 
-  * Same-origin HTTP requests may be issued via `HttpWebRequest` API, and may contain arbitrary payloads - but there are certain restrictions on which HTTP headers may be modified. The exact list of restricted headers is not given by Microsoft ([http://msdn.microsoft.com/en-us/library/system.net.httpwebrequest.headers(VS.95).aspx reference]).
+  * Same-origin HTTP requests may be issued via `HttpWebRequest` API, and may contain arbitrary payloads - but there are certain restrictions on which HTTP headers may be modified. The exact list of restricted headers appears to be not given by Microsoft in MSDN documentation ([http://msdn.microsoft.com/en-us/library/system.net.httpwebrequest.headers(VS.95).aspx reference]).
 
   * Cross-domain HTTP and network access is not permitted until a policy compatible with Flash `crossdomain.xml` or Silverlight `clientaccesspolicy.xml` format, is furnished by the target host. Microsoft documentation implies that "unexpected" MIME types are rejected, but this is not elaborated upon; it is also not clear how strict the parser used for XML policies is ([http://msdn.microsoft.com/en-us/library/cc645032(VS.95).aspx reference]).
 
