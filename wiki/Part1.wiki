@@ -501,7 +501,7 @@ One example of a document that, even if served as `image/svg+xml`, would still e
 </container>
 }}}
 
-Furthermore, natively SVG permits [http://www.w3.org/TR/SVG/script.html embedded scripts] and event handlers; in all browsers that support SVG, these scripts execute when the image is loaded as a top-level document - but are ignored when rendered through `<IMG>` tags.
+Furthermore, SVG natively permits [http://www.w3.org/TR/SVG/script.html embedded scripts] and event handlers; in all browsers that support SVG, these scripts execute when the image is loaded as a top-level document - but are ignored when rendered through `<IMG>` tags.
 
 Some of the non-HTML builtin document type behaviors are documented below:
 
