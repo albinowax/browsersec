@@ -485,7 +485,7 @@ HTML aside, modern browser renderers usually natively support an additional set 
 
   * *Rich data formats.* This category is primarily populated by non-HTML XML namespace parsers ([http://www.w3.org/Graphics/SVG/ SVG], [http://www.rssboard.org/rss-specification RSS], [http://tools.ietf.org/html/rfc4287 Atom]); beyond raw data, these document formats contain various rendering instructions, hints, or conditionals. Because of how XML works, each of the XML-based formats has two important security consequences:<p />
     * Firstly, nested XML namespaces may be defined, and are usually not verified against MIME type intents, permitting HTML to be embedded for example inside `image/svg+xml`.<p />
-    * Secondly, these formats may actually come with provisions for non-standard embedded HTML payloads or scripts built in, permitting HTML injection even if the attacker has no direct control over XML document structure.
+    * Secondly, these formats may actually come with provisions for non-standard embedded HTML or Javascript payloads or scripts built in, permitting HTML injection even if the attacker has no direct control over XML document structure.
 
 One example of a document that, even if served as `image/svg+xml`, would still execute scripts in many current browsers despite MIME type clearly stating a different intent, is as follows:
 
@@ -500,6 +500,8 @@ One example of a document that, even if served as `image/svg+xml`, would still e
   </html>
 </container>
 }}}
+
+Furthermore, SVG permits [http://www.w3.org/TR/SVG/script.html embedded scripts], and needs to be carefully validated if ever hosted on user behalf.
 
 Some of the non-HTML builtin document type behaviors are documented below:
 
