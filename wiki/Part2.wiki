@@ -142,7 +142,7 @@ Key properties of the mechanism:
 
   * *Overwriting cookies:* if a new cookie with the same `NAME`, `domain`, and `path` as an existing cookie is encountered, the old cookie is discarded. Otherwise, even if a subtle difference exists (e.g., two distinct `domain=` values in the same top-level domain), the two cookies will co-exist, and may be sent by the client at the same time as two separate pairs in `Cookie` headers, with no additional information to help resolve the conflict.
 
-  * *Deleting cookies:* There is no specific mechanism for deleting cookies envisioned, although a common hack is to overwrite a cookie with a bogus value as outlined above, plus a backdated or short-lived `expires=` (`max-age=` does not seem to have the desired effect in Internet Explorer).
+  * *Deleting cookies:* There is no specific mechanism for deleting cookies envisioned, although a common hack is to overwrite a cookie with a bogus value as outlined above, plus a backdated or short-lived `expires=` (`max-age=` appears to have the desired effect only in Firefox and Opera).
 
   * *"Protected" cookies:* as a security feature, some cookies set may be marked with a special `secure` keyword, which causes them to be sent over HTTPS only. Note that non-HTTPS sites may still set `secure` cookies in some implementations, just not read them back.
 
