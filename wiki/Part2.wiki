@@ -142,7 +142,7 @@ Key properties of the mechanism:
 
   * *Overwriting cookies:* if a new cookie with the same `NAME`, `domain`, and `path` as an existing cookie is encountered, the old cookie is discarded. Otherwise, even if a subtle difference exists (e.g., two distinct `domain=` values in the same top-level domain), the two cookies will co-exist, and may be sent by the client at the same time as two separate pairs in `Cookie` headers, with no additional information to help resolve the conflict.
 
-  * *Deleting cookies:* There is no specific mechanism for deleting cookies envisioned, although a common hack is to overwrite a cookie with a bogus value as outlined above, plus a backdated or short-lived `expires=` (`max-age=` appears to have the desired effect only in Firefox and Opera).
+  * *Deleting cookies:* There is no specific mechanism for deleting cookies envisioned, although a common hack is to overwrite a cookie with a bogus value as outlined above, plus a backdated or short-lived `expires=` (using `max-age=0` is not universally supported).
 
   * *"Protected" cookies:* as a security feature, some cookies set may be marked with a special `secure` keyword, which causes them to be sent over HTTPS only. Note that non-HTTPS sites may still set `secure` cookies in some implementations, just not read them back.
 
@@ -167,6 +167,8 @@ The original design for HTTP cookies has multiple problems and drawbacks that re
 || <font color="#3050a0">Does `document.cookie` work on `file` URLs?</font> || YES || YES || || YES || YES || YES || YES || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is `Cookie2` standard supported?</font> || NO || NO || || NO || NO || NO || <font color="#30ff30">YES</font> || NO || NO ||
 || <font color="#3050a0">Are multiple comma-separated `Set-Cookie` pairs accepted?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || NO ||
+|| <font color="#3050a0">Is `max-age` parameter supported?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Does `max-age=0` work to delete cookies?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || YES || YES || <font color="#ff0000">NO</font> || YES || YES || YES ||
 || <font color="#3050a0">Is `httponly` flag supported?</font> || YES || YES || || YES || YES || <font color="#ff0000">NO</font> || YES || YES || <font color="#ff0000">NO</font> ||
 || <font color="#3050a0">Can scripts clobber `httponly` cookies?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">(YES)</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">(YES)</font> ||
 || <font color="#3050a0">Ordering of duplicate cookies with different scope</font> || <font color="#ff0000">random</font> || <font color="#ff0000">random</font> || || <font color="#ff0000">some dropped</font> || <font color="#30ff30">most specific first</font> || <font color="#ff0000">random</font> || <font color="#30ff30">most specific first</font> || <font color="#30ff30">most specific first</font> || <font color="#ff0000">by age</font> ||
