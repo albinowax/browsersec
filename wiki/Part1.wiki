@@ -168,7 +168,7 @@ POST /fuzzy_bunnies/images/bunny_dispenser.php HTTP/1.1
 Host: www.fuzzybunnies.com
 User-Agent: Bunny Browser 1.7
 Content-Type: text/plain
-Content-Length: 11
+Content-Length: 12
 Referer: http://www.fuzzybunnies.com/main.html
 
 HELLO SERVER
@@ -380,6 +380,8 @@ Inline script blocks embedded within HTML are somewhat tricky to sanitize if per
 var user_string = 'Hello world</SCRIPT><SCRIPT>alert(1)</SCRIPT>';
 </SCRIPT>
 }}}
+
+Strictly speaking, HTML4 standard specifies that any `</...` sequence may be used to break out of non-HTML blocks such as `<SCRIPT>` ([http://www.w3.org/TR/html4/appendix/notes.html#notes-specifying-data reference]); in practice, this suit is not followed by browsers, and a literal `</SCRIPT>` string is required instead. This property is not necessarily safe to rely on, however.
 
 Various differences between browser implementations are outlined below:
 
