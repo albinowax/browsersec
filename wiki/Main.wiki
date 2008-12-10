@@ -43,7 +43,7 @@ The current version of this document is based on the following versions of web b
 
 The document attempts to capture the risks and security considerations present for general populace of users accessing the web with default browser settings in place. Although occasionally noted, the degree of flexibility offered through non-standard settings is by itself not a subject of this comparative study.
 
-Through the document, <font color="#ff0000">red color</font> is used to bring attention to browser properties seeem particularly tricky or unexpected, and need to be carefully accounted for in server-side implementations. Whenever status quo appears to bear no significant security consequences and is well-understood, but a particular browser implementation takes additional steps to protect application developers, we use <font color="#30ff30">green color</font> to denote this, likewise. Rest assured, neither of these color codes implies that a particular browser is less or more secure than its counterparts.
+Through the document, <font color="#ff0000">red color</font> is used to bring attention to browser properties that seem particularly tricky or unexpected, and need to be carefully accounted for in server-side implementations. Whenever status quo appears to bear no significant security consequences and is well-understood, but a particular browser implementation takes additional steps to protect application developers, we use <font color="#30ff30">green color</font> to denote this, likewise. Rest assured, neither of these color codes implies that a particular browser is less or more secure than its counterparts.
 
 =Acknowledgments=
 
