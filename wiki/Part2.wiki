@@ -240,13 +240,13 @@ There is some uncertainty about how likely the technology is to win widespread s
 
 ===Same-origin policy for Gears===
 
-[http://gears.google.com/ Google Gears] is a browser extension that enables user-authorized sites to store data in a local database store. The store is bound to the traditional understanding of a same-origin: that is, protocol, host name, and port must match precisely for a page to be able to access a particular container - and direct fenceposts across these boundaries are generally not permitted ([http://code.google.com/intl/pl/apis/gears/security.html reference]).
+[http://gears.google.com/ Google Gears] is a browser extension that enables user-authorized sites to store persistent data in a local database. Containers in the database are partitioned in accordance with the traditional understanding of same-origin rules: that is, protocol, host name, and port must match precisely for a page to be able to access a particular container - and direct fenceposts across these boundaries are generally not permitted ([http://code.google.com/intl/pl/apis/gears/security.html reference]).
 
-An important additional feature of Gears intended to make it possible to design more responsive offline applications are [http://code.google.com/intl/pl/apis/gears/api_workerpool.html Javascript workers]: a specialized [http://code.google.com/intl/pl/apis/gears/api_workerpool.html WorkerPool API] permits authorized sites to initiate background execution of Javascript code in an inherited security context without blocking browser UI.
+An important additional feature of Gears are [http://code.google.com/intl/pl/apis/gears/api_workerpool.html Javascript workers]: a specialized [http://code.google.com/intl/pl/apis/gears/api_workerpool.html WorkerPool API] permits authorized sites to initiate background execution of Javascript code in an inherited security context without blocking browser UI. This functionality is provided in hopes of making it easier to develop rich and CPU-intensive offline applications more easily.
 
-Workers behave like separate processes: they do not share any execution state with each other or with their parent - although they may communicate with the "foreground" Javascript code and workers in other domain through a simple messaging mechanism. 
+Workers behave like separate processes: they do not share any execution state with each other or with their parent - although they may communicate with the "foreground" Javascript code and workers in other domain through a simple, specialized messaging mechanism. 
 
-A somewhat unusual, indirect approach to cross-domain data access in Gears is built around the `createWorkerFromUrl` function, permitting an authorized page in one domain to spawn a worker running in the context of another; the code of this worker must originate from the target site, and for security reasons, the data must be further served with a MIME type of `application/x-gears-worker`.
+A somewhat unusual, indirect approach to cross-domain data access in Gears is built around the `createWorkerFromUrl` function, rather than any sort of cross-domain policies. This API call permits a previously authorized page in one domain to spawn a worker running in the context of another; both the security context, and the source from which the worker code is retrieved, is derived from the supplied URL. For security reasons, the data must be further served with a MIME type of `application/x-gears-worker`, thus acknowledging mutual consent to this interaction.
 
 ===Origin inheritance rules===
 
