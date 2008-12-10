@@ -238,6 +238,16 @@ There is some uncertainty about how likely the technology is to win widespread s
 
   * Acess between HTTP and HTTPS schemes is apparently considered same-origin, and does not require a cross-domain specification ([http://msdn.microsoft.com/en-us/library/cc189008(VS.95).aspx reference]).
 
+===Same-origin policy for Gears===
+
+[http://gears.google.com/ Google Gears] is a browser extension that enables user-authorized sites to store data in a local database store. The store is bound to the traditional understanding of a same-origin: that is, protocol, host name, and port must match precisely for a page to be able to access a particular container - and direct fenceposts across these boundaries are generally not permitted ([http://code.google.com/intl/pl/apis/gears/security.html reference]).
+
+An important additional feature of Gears intended to make it possible to design more responsive offline applications are [http://code.google.com/intl/pl/apis/gears/api_workerpool.html Javascript workers]: a specialized [http://code.google.com/intl/pl/apis/gears/api_workerpool.html WorkerPool API] permits authorized sites to initiate background execution of Javascript code in an inherited security context without blocking browser UI.
+
+Workers behave like separate processes: they do not share any execution state with each other or with their parent - although they may communicate with the "foreground" Javascript code and workers in other domain through a simple messaging mechanism. 
+
+A somewhat unusual, indirect approach to cross-domain data access in Gears is built around the `createWorkerFromUrl` function, permitting an authorized page in one domain to spawn a worker running in the context of another; the code of this worker must originate from the target site, and for security reasons, the data must be further served with a MIME type of `application/x-gears-worker`.
+
 ===Origin inheritance rules===
 
 As [http://code.google.com/p/browsersec/wiki/Part1#Pseudo_URL_schemes hinted earlier], certain types of pseudo-URLs, such as `javascript:`, `data:`, or `about:blank`, do not have any inherent same-origin context associated with them the way `http://` URLs have - which poses a special problem in the context of same-origin checks. 
