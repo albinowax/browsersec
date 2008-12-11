@@ -880,7 +880,7 @@ Several important HTTPS properties are outlined below:
 || <font color="#3050a0">`Referer` header sent on HTTPS → HTTPS navigation?</font> || YES || YES || || YES || YES || YES || <font color="#30ff30">NO</font> || YES || YES ||
 || <font color="#3050a0">`Referer` header sent on HTTPS → HTTP navigation?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Behavior on invalid certificates</font> || prompt || interstitial || || prompt || block || prompt || prompt || interstitial || prompt ||
-|| <font color="#3050a0">Is EV SSL visually distinguished?</font> || NO || NO || || NO || YES || NO || YES || NO || NO ||
+|| <font color="#3050a0">Is EV SSL visually distinguished?</font> || NO || NO || || NO || YES || NO || YES || YES || NO ||
 || <font color="#3050a0">Mixed content behavior on `<IMG>`</font> || block || block || || warn || warn || permit || permit || permit || permit ||
 || <font color="#3050a0">Mixed content behavior on `<SCRIPT>`</font> || block || block || || <font color="#ff0000">warn</font> || <font color="#ff0000">warn</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> ||
 || <font color="#3050a0">Mixed content behavior on stylesheets</font> || block || block || || <font color="#ff0000">warn</font> || <font color="#ff0000">warn</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> ||
