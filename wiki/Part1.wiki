@@ -420,7 +420,7 @@ Unlike in some C implementations, stray multi-line string literals are not permi
 
 [http://msdn.microsoft.com/en-us/library/sx7b3k7y(VS.85).aspx VBScript] is a language envisioned by Microsoft as a general-purpose "hosted" scripting environment, incorporated within Windows as such, Microsoft IIS, and supported by Microsoft Internet Explorer via `vbscript:` URL scheme, and through `<SCRIPT>` tags. As far as client-side scripting is considered, the language did not seem to offer any significant advantages over the competing Javascript technology, and appeared to lag in several areas.
 
-Presumably because of this, the technology never won broad browser support outside MSIE (with all current versions being able to execute it), and is very seldom relied upon. Where permitted to go through, it should be expected to have roughly the same security consequences as Javascript. The attack surface and security controls within VBScript are poorly studied in comparison to the alternative, however.
+Presumably because of this, the technology never won broad browser support outside MSIE (with all current versions being able to execute it), and is very seldom relied upon. Where permitted to go through, it should be expected to have roughly the same security consequences as Javascript. The attack surface and security controls within VBScript are poorly studied in comparison to that alternative, however.
 
 ==Cascading stylesheets==
 
