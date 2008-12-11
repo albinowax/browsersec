@@ -28,7 +28,7 @@ With no additional qualifiers, the term "same-origin policy" most commonly refer
 
   * If protocol, host name, and - for browsers other than Microsoft Internet Explorer - port number for two interacting pages match, access is granted with no further checks.
 
-  * Any page may set `document.domain` parameter to a right-hand, fully-qualified fragment of its current host name (e.g., `foo.bar.example.com` may set it to `example.com`, but not `ample.com`). If two pages explicitly and _mutually_ set their respective `document.domain` parameters to the same value, access is granted with no further checks.
+  * Any page may set `document.domain` parameter to a right-hand, fully-qualified fragment of its current host name (e.g., `foo.bar.example.com` may set it to `example.com`, but not `ample.com`). If two pages explicitly and _mutually_ set their respective `document.domain` parameters to the same value, and the remaining same-origin checks are satisfied, access is granted.
 
   * If neither of the above conditions is satisfied, access is denied.
 
@@ -81,6 +81,8 @@ Since all requests sent via `XMLHttpRequest` include a browser-maintained set of
   * Checks for `XMLHttpRequest` targets do not take `document.domain` into account, making it impossible for third-party sites to mutually agree to permit cross-domain requests between them.
 
   * In some implementations, there are additional restrictions on protocols, header fields, and HTTP methods for which the functionality is available, or HTTP response codes which would be shown to scripts (see later).
+
+  * In Microsoft Internet Explorer, although port number is not taken into account for "proper" DOM access same-origin checks, it is taken into account for `XMLHttpRequest`.
 
 Since the removal of `document.domain` made any sort of client-side cross-domain communications through `XMLHttpRequest` impossible, as a much-demanded extension, [http://www.w3.org/TR/access-control/ W3C proposal for cross-domain XMLHttpRequest] access control would permit cross-site traffic to happen under certain additional conditions. The scheme envisioned by the proponents is as follows:
 
