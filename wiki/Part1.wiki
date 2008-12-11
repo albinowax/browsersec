@@ -475,7 +475,7 @@ Various differences in style parsing between common browsers are outlined below:
 
 In many cases, as with Javascript, there is a need for web applications to render certain user-supplied user-controlled strings within stylesheets in a safe manner. To handle various reserved characters, a method for escaping potentially troublesome values is required; confusingly, however, CSS format supports neither HTML entity encoding, nor any of the common methods of encoding characters seen in Javascript. 
 
-Instead, a rather unusual and incompatible scheme consisting of `\` followed by non-prefixed, two-digit, zero-padded, 8-bit hexadecimal is employed; for example, `"test"` may be encoded as `"t\65st"` - but not as `t\est"`, `"t\x65st"`, `"t\u0065st"`, nor `"t&#x65;st"`.
+Instead, a rather unusual and incompatible scheme consisting of `\` followed by non-prefixed, variable length one- to six-digit hexadecimal is employed; for example, `"test"` may be encoded as `"t\65st"` or `"t\000065st"` - but not as `t\est"`, `"t\x65st"`, `"t\u0065st"`, nor `"t&#x65;st"` ([http://www.w3.org/TR/CSS21/syndata.html#escaped-characters reference]).
 
 Like in Javascript, stray multi-line string literals are not supported, but a lone `\` at the end of a line may be used to seamlessly break long lines; and overly short escape sequences are parsed correctly, without consuming any of the following text (`"\1test"` → `"\01test"`).
 
