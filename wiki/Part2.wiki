@@ -84,7 +84,7 @@ Since all requests sent via `XMLHttpRequest` include a browser-maintained set of
 
   * In Microsoft Internet Explorer, although port number is not taken into account for "proper" DOM access same-origin checks, it is taken into account for `XMLHttpRequest`.
 
-Since the removal of `document.domain` made any sort of client-side cross-domain communications through `XMLHttpRequest` impossible, as a much-demanded extension, [http://www.w3.org/TR/access-control/ W3C proposal for cross-domain XMLHttpRequest] access control would permit cross-site traffic to happen under certain additional conditions. The scheme envisioned by the proponents is as follows:
+Since the removal of `document.domain` made any sort of client-side cross-domain communications through `XMLHttpRequest` impossible, as a much-demanded extension, [http://www.w3.org/TR/XMLHttpRequest2/ W3C proposal for cross-domain XMLHttpRequest] access control would permit cross-site traffic to happen under certain additional conditions. The scheme envisioned by the proponents is as follows:
 
    * `GET` requests with custom headers limited to a whitelist would be sent to the target system immediately, with no advance verification, based on the assumption that `GET` traffic is not meant to change server-side application state, and thus will have no lasting side effects. This assumption is theoretically sound, as per the "SHOULD NOT" recommendation spelled out in [http://www.faqs.org/rfcs/rfc2616.html RFC 2616], though is seldom observed in practice. Unless an appropriate HTTP header or XML directive appears in the response, the result would not be revealed to the requester, though.
 
