@@ -26,7 +26,7 @@ In practice, there is no single same-origin policy, but rather, a set of mechani
 
 With no additional qualifiers, the term "same-origin policy" most commonly refers to a mechanism that governs the ability for Javascript and other scripting languages to access DOM properties and methods across domains ([http://developer.mozilla.org/En/Same_origin_policy_for_JavaScript reference]). In essence, the model boils down to this three-step decision process:
 
-  * If protocol, host name, and port number for two interacting pages match, access is granted with no further checks.
+  * If protocol, host name, and - for browsers other than Microsoft Internet Explorer - port number for two interacting pages match, access is granted with no further checks.
 
   * Any page may set `document.domain` parameter to a right-hand, fully-qualified fragment of its current host name (e.g., `foo.bar.example.com` may set it to `example.com`, but not `ample.com`). If two pages explicitly and _mutually_ set their respective `document.domain` parameters to the same value, access is granted with no further checks.
 
