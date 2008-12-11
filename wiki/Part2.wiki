@@ -246,7 +246,9 @@ An important additional feature of Gears are [http://code.google.com/intl/pl/api
 
 A somewhat unusual, indirect approach to cross-domain data access in Gears is built around the `createWorkerFromUrl` function, rather than any sort of cross-domain policies. This API call permits a previously authorized page in one domain to spawn a worker running in the context of another; both the security context, and the source from which the worker code is retrieved, is derived from the supplied URL. For security reasons, the data must be further served with a MIME type of `application/x-gears-worker`, thus acknowledging mutual consent to this interaction.
 
-Workers behave like separate processes: they do not share any execution state with each other or with their parent - although they may communicate with the "foreground" Javascript code and workers in other domain through a simple, specialized messaging mechanism. They also do not have access to a native `XMLHttpRequest` implementation, so Gears provides a subset of this functionality through own [http://code.google.com/intl/pl/apis/gears/api_httprequest.html HttpRequest] interface.
+Workers behave like separate processes: they do not share any execution state with each other or with their parent - although they may communicate with the "foreground" Javascript code and workers in other domain through a simple, specialized messaging mechanism. 
+
+Workers also do not have access to a native `XMLHttpRequest` implementation, so Gears provides a compatible subset of this functionality through own [http://code.google.com/intl/pl/apis/gears/api_httprequest.html HttpRequest] interface. `HttpRequest` implementation blacklists a standard set of HTTP headers and methods, as listed in [http://gears.googlecode.com/svn/trunk/gears/httprequest/httprequest.cc httprequest.cc].
 
 ===Origin inheritance rules===
 
