@@ -477,7 +477,7 @@ In many cases, as with Javascript, there is a need for web applications to rende
 
 Instead, a rather unusual and incompatible scheme consisting of `\` followed by non-prefixed, variable length one- to six-digit hexadecimal is employed; for example, `"test"` may be encoded as `"t\65st"` or `"t\000065st"` - but not as `t\est"`, `"t\x65st"`, `"t\u0065st"`, nor `"t&#x65;st"` ([http://www.w3.org/TR/CSS21/syndata.html#escaped-characters reference]).
 
-Like in Javascript, stray multi-line string literals are not supported, but a lone `\` at the end of a line may be used to seamlessly break long lines; and overly short escape sequences are parsed correctly, without consuming any of the following text (`"\1test"` → `"\01test"`).
+Like in Javascript, stray multi-line string literals are not supported, but a lone `\` at the end of a line may be used to seamlessly break long lines.
 
 ==Other built-in document formats==
 
