@@ -154,7 +154,7 @@ The original design for HTTP cookies has multiple problems and drawbacks that re
 
   * *Problems with conflict resolution:* when two identically named cookies with different scopes are to be sent in a single request, there is no information available to the server to resolve the conflict and decide which cookie came from where, or how old it is. Browsers do not follow any specific conventions on the ordering of supplied cookies, too, and some behave in an outright buggy manner. Additional metadata to address this problem is proposed in "cookies 2" design ([http://tools.ietf.org/rfc/rfc2965.txt RFC 2965]), but the standard never gained widespread support.
 
-  * *Problems with certain characters:* just like HTTP, cookies have no specific provisions for character escaping, and no specified behavior for handling of high-bit and control characters. This sometimes results in completely unpredictable and [http://b/issue?id=978119 dangerous situations] if not accounted for.
+  * *Problems with certain characters:* just like HTTP, cookies have no specific provisions for character escaping, and no specified behavior for handling of high-bit and control characters. This sometimes results in completely unpredictable and dangerous situations if not accounted for.
 
   * *Problems with cookie jar size:* standards do not specify cookie count limits or pruning strategies. Various browsers may implement various total and per-domain caps, and the behavior may result in malicious content purposefully disrupting session management, or legitimate content doing so by accident.
 
