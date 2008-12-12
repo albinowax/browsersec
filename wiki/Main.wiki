@@ -56,8 +56,8 @@ _Browser Security Handbook_ would not be possible without the ideas and assistan
   * Tavis Ormandy
   * Marius Schilder
   * Parisa Tabriz
-  * Mike Wiacek
   * Berend-Jan Wever
+  * Mike Wiacek
 
 The document builds on years of previous security research by Adam Barth, Collin Jackson, Amit Klein, Jesse Ruderman, and many other security experts who painstakingly dissected browser internals for the past few years. 
 
