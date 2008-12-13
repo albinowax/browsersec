@@ -2,7 +2,7 @@
 
 <h1>Browser Security Handbook, part 2</h1>
 
-  * Written and maintained by [http://lcamtuf.coredump.cx/ Michal Zalewski] <[mailto:lcamtuf@google.com lcamtuf@google.com]>. 
+  * Written and maintained by [http://lcamtuf.coredump.cx/ Michal Zalewski] <[mailto:lcamtuf@google.com lcamtuf@google.com]>.
   * Copyright 2008 Google Inc, rights reserved.
   * Released under terms and conditions of the [http://creativecommons.org/licenses/by/3.0 CC-3.0-BY] license.
 
@@ -162,7 +162,7 @@ The original design for HTTP cookies has multiple problems and drawbacks that re
 
   * *Perceived Javascript-related problems:* the aforementioned `document.cookie` Javascript API permits for Javascript embedded on pages to access sensitive authentication cookies. If malicious scripts may be planted on a page due to insufficient escaping of user input, these cookies could be stolen and disclosed to the attacker. The concern for this possibility resulted in [http://msdn.microsoft.com/en-us/library/ms533046.aspx httponly cookie flag] being incorporated into Microsoft Internet Explorer, and later other browsers; such cookies would not be visible through `document.cookie` (but, as noted in the previous section, are not always adequately hidden in `XMLHttpRequest` calls). In reality, the degree of protection afforded this way is minimal, given the ability to interact with same-origin content through DOM.
 
-  * *Problems with "protected" cookie clobbering:* as indicated earlier, `secure` and `httponly` cookies are meant not to be visible in certain situations, but no specific thought was given to preventing Javascript from overwriting `httponly` cookies, or non-encrypted pages from overwriting `secure` cookies. This oversight could be abused to subvert at least some usage scenarios.
+  * *Problems with "protected" cookie clobbering:* as indicated earlier, `secure` and `httponly` cookies are meant not to be visible in certain situations, but no specific thought was given to preventing Javascript from overwriting `httponly` cookies, or non-encrypted pages from overwriting `secure` cookies. This oversight could be abused to subvert at least some usage scenarios.<p />_Note: there is an ongoing work to [http://docs.google.com/View?docid=dxxqgkd_0cvcqhsdw clarify and clean up] `httponly` cookie behavior to improve its usability._
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Does `document.cookie` work on `ftp` URLs?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
