@@ -13,7 +13,7 @@
 
 =Experimental and legacy security mechanisms=
 
-Through the years, browsers accrued a fair number of security mechanisms that had either fallen into disuse, or never caught on; as well as a number of ongoing proposals and enhancements that are yet to prove their worth. This section provides a brief overview of several technologies that could fall into this class.
+Through the years, browsers accrued a fair number of security mechanisms that had either fallen into disuse, or never caught on; as well as a number of ongoing proposals, enhancements, and extensions that are yet to prove their worth or become even vaguely standardized. This section provides a brief overview of several technologies that could fall into this class.
 
 _Fun fact: when it comes to newly proposed features, many of them essentially introduce new security boundaries and permission systems mostly orthogonal, yet intertwined, with same-origin controls. Although this appears to be a good idea at first sight, some researchers [http://crypto.stanford.edu/websec/origins/fgo.pdf warn about the pitfalls] of finer-grained origins as difficult to understand to users, and hard to fully examine for potential side effects and interactions with existing code._
 
@@ -46,7 +46,26 @@ Amusingly, its ghost still haunts modern web applications: HTTP authentication p
 || <font color="#3050a0">Do password prompts come up on `<SCRIPT>` and stylesheets?</font>  || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Do password prompts come up on `<IFRAME>`?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
 
-_Note: as the cookie-based alternative to HTTP authentication is in no way standardized, most browsers have face challenges trying to implement convenience features such as password managers that try to detect possible authentication forms, and store entered values for later reuse. In particular, because of no clear boundaries between security realms, it is generally easy for certain types of user content hosted under the same host name as a login interface to spoof such forms and intercept auto-filled data; letting user-controlled forms and login interfaces mix on the same site is not a good idea for time being ([http://www.info-svc.com/news/2008/12-12/ further research])._
+<b></b>
+
+==Password managers==
+
+As a part of a broader form auto-completion mechanism, most browsers offer users the ability to save their passwords on client side, and auto-complete them whenever authentication forms appear.
+
+Unfortunately, as noted in the previous section, the only standard mechanism for identifying and scoping user passwords in HTTP traffic had largely fallen into disuse; the new form- and cookie-based alternatives are custom-built for every application, are share almost nothing in common with each other. As a result, most browsers have face challenges trying heuristically detect when legitimate authentication takes place, and decide how to define the realm for stored data.
+
+In particular, it might be easier than expected for certain types of user content hosted under the same host name as a login interface to spoof such forms and intercept auto-filled data; letting user-controlled forms and login interfaces mix on the same site appears to be not necessarily a good idea for time being.
+
+Several of the relevant password manager behaviors are shown below:
+
+|| <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Password manager behavior model</font> || completes password only || completes password only || || auto-completes on load || completes all data on load || completes all data on load || <font color="#30ff30">requires UI action</font> || completes all data on load || completes all data on load ||
+|| <font color="#3050a0">Are stored passwords restricted to a specific URL path only?</font> || <font color="#30ff30">YES</font> || <font color="#30ff30">YES</font> || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Are stored `https` passwords restricted to SSL only?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> ||
+
+<b></b>
+
+Robert Chapin offers some additional research into [http://www.info-svc.com/news/2008/12-12/ password manager scoping habits], exploring some non-security considerations as well.
 
 ==Microsoft Internet Explorer zone model==
 
