@@ -46,6 +46,8 @@ Amusingly, its ghost still haunts modern web applications: HTTP authentication p
 || <font color="#3050a0">Do password prompts come up on `<SCRIPT>` and stylesheets?</font>  || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Do password prompts come up on `<IFRAME>`?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
 
+_Note: as the cookie-based alternative to HTTP authentication is in no way standardized, most browsers have face challenges trying to implement convenience features such as password managers that try to detect possible authentication forms, and store entered values for later reuse. In particular, because of no clear boundaries between security realms, it is generally easy for certain types of user content hosted under the same host name as a login interface to spoof such forms and intercept auto-filled data; letting user-controlled forms and login interfaces mix on the same site is not a good idea for time being ([http://www.info-svc.com/news/2008/12-12/ further research])._
+
 ==Microsoft Internet Explorer zone model==
 
 All current versions of Internet Explorer utilize an interesting concept of [http://support.microsoft.com/kb/174360 security zones], not shared with any other browser on the market. The idea behind the approach is to compartmentalize resources into various categories, depending on the degree of trust given - and then control almost all security settings for these groups separately. The following zones are defined:
