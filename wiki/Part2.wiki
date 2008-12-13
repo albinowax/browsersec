@@ -646,7 +646,7 @@ Some of the interesting corner cases of content sniffing behavior are captured b
 || <font color="#3050a0">May image/svg+xml document contain HTML xmlns payload?</font> || <font color="#ff0000">(YES)</font> || <font color="#ff0000">(YES)</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">(YES)</font> ||
 || <font color="#3050a0">HTTP error codes ignored on sub-resources?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
 
-In addition, the behavior for non-HTML resources is as follows (to test for these, please put sample HTML inside two files with extensions of =.TXT= and =.UNKNOWN=, then attempt to access them through the browser):
+In addition, the behavior for non-HTML resources is as follows (to test for these, please put sample HTML inside two files with extensions of `.TXT` and `.UNKNOWN`, then attempt to access them through the browser):
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">File type detection for `ftp://` resources</font> || content sniffing || content sniffing || || content sniffing || content sniffing || content sniffing || <font color="#30ff30">extension matching</font> || content sniffing || <font color="#909090">n/a</font> ||
