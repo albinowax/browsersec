@@ -59,7 +59,7 @@ In particular, it might be easier than expected for certain types of user conten
 Several of the relevant password manager behaviors are shown below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Password manager behavior model</font> || completes password only || completes password only || || auto-completes on load || completes all data on load || completes all data on load || <font color="#30ff30">requires UI action</font> || completes all data on load || completes all data on load ||
+|| <font color="#3050a0">Password manager behavior model</font> || <font color="#30ff30">completes password only</font> || <font color="#30ff30">completes password only</font> || || auto-completes on load || auto-completes on load || auto-completes on load || <font color="#30ff30">requires UI action</font> || auto-completes on load || auto-completes on load ||
 || <font color="#3050a0">Are stored passwords restricted to a specific URL path only?</font> || <font color="#30ff30">YES</font> || <font color="#30ff30">YES</font> || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Are stored `https` passwords restricted to SSL only?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> ||
 
