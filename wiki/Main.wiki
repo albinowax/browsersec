@@ -50,6 +50,7 @@ Through the document, <font color="#ff0000">red color</font> is used to bring at
 _Browser Security Handbook_ would not be possible without the ideas and assistance from the following contributors:
 
   * Filipe Almeida
+  * Brian Eaton
   * Chris Evans
   * Drew Hintz
   * Nick Kralevich
