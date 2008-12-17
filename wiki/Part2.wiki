@@ -40,7 +40,7 @@ In theory, the model seems simple and robust enough to ensure proper separation 
 
   * Whenever tight integration of services within a single host name is pursued to overcome these communication problems, because of the inflexibility of same-origin checks, there is no usable method to sandbox any untrusted or particularly vulnerable content to minimize the impact of security problems.
 
-On top of this, the specification is simplistic enough to actually omit quite corner cases; among other things:
+On top of this, the specification is simplistic enough to actually omit quite a few corner cases; among other things:
 
   * The `document.domain` behavior when hosts are addressed by IP addresses, as opposed to fully-qualified domain names, is not specified.
 
