@@ -116,7 +116,7 @@ A long-standing [http://www.securityfocus.com/archive/1/434931 security flaw] in
 Other important security properties of `XMLHttpRequest` are outlined below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Banned HTTP methods</font> || `TRACE` || `CONNECT` `TRACE`^*^ || || `TRACE` || `TRACE` || `CONNECT` `TRACE` || <font color="#ff0000">none</font> || `CONNECT` `TRACE` || `CONNECT` `TRACE` ||
+|| <font color="#3050a0">Banned HTTP methods</font> || `TRACE` || `CONNECT` `TRACE`^*^ || || `TRACE` || `TRACE` || `CONNECT` `TRACE` || `CONNECT` `TRACE`^**^ || `CONNECT` `TRACE` || `CONNECT` `TRACE` ||
 || <font color="#3050a0">`XMLHttpRequest` may see `httponly` cookies?</font> || <font color="#ff0000">YES</font> || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO ||
 || <font color="#3050a0">`XMLHttpRequest` may see invalid HTTP 30x responses</font>? || NO || NO || || YES || YES || NO || NO || YES || NO ||
 || <font color="#3050a0">`XMLHttpRequest` may see cross-domain HTTP 30x responses</font>? || NO || NO || || YES || YES || NO || NO || NO || NO ||
@@ -124,7 +124,8 @@ Other important security properties of `XMLHttpRequest` are outlined below:
 || <font color="#3050a0">May local HTML access unrelated local files via `XMLHttpRequest`?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">May local HTML access sites on the Internet via `XMLHttpRequest`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">n/a</font> ||
 
-^*^ Implements a whitelist of known schemes, rejects made up values.
+^*^ Implements a whitelist of known schemes, rejects made up values.<br />
+^**^ Implements a whitelist of known schemes, replaces non-whitelisted schemes with `GET`.
 
 *WARNING:* Microsoft Internet Explorer 7 may be forced to partly regress to the less secure behavior of the previous version by invoking a proprietary, legacy `ActiveXObject('MSXML2.XMLHTTP')` in place of the new, native `XMLHttpRequest` API.
 
