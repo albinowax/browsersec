@@ -298,7 +298,7 @@ There are numerous mechanisms that permit HTML web pages to include and display 
 
   * *Embedded objects and applets:* `<EMBED SRC="...">`, `<OBJECT CODEBASE="...">`, and `<APPLET CODEBASE="...">` tags permit arbitrary resources to be retrieved via `GET` and then supplied as input to browser plugins. The exact effect of this action depends on the plugin to which the resource is routed, a factor entirely controlled by the author of the page. The impact is that content never meant to be interpreted as a plugin-based program may end up being interpreted and executed in a security context associated with the serving host.
 
-  * *Document-embedded frames:* `<FRAME>` `<IFRAME>` elements may be used to create new document rendering containers within the current browser window, and to fetch any target documents via `GET`. These documents would be subject to same-origin checks once loaded.
+  * *Document-embedded frames:* `<FRAME>` and `<IFRAME>` elements may be used to create new document rendering containers within the current browser window, and to fetch any target documents via `GET`. These documents would be subject to same-origin checks once loaded.
 
 Note that on all of the aforementioned inclusion schemes other than `<FRAME>` and `<IFRAME>`, any `Content-Type` and `Content-Disposition` HTTP headers returned by the server for the sub-resource are completely ignored; there is no opportunity to authoritatively instruct the browser about the intended purpose of a served document to prevent having the data parsed as Javascript, CSS, etc.
 
