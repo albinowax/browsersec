@@ -501,7 +501,7 @@ Browser behavior when handling `file:` URLs in Internet content is summed up in 
 || <font color="#3050a0">Are `<SCRIPT>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Are `<IFRAME>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Are `<EMBED>` `file:` targets allowed to load?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Are `<APPLET>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are `<APPLET>` `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Are stylesheet `file:` targets allowed to load?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 
 _NOTE: For Microsoft Internet Explorer, the exact behavior for `file:` references is controlled by the "Websites in less privileged web content zone can navigate into this zone" setting for "My computer" zone._
