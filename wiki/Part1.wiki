@@ -222,7 +222,7 @@ This day, the four prevailing HTML document rendering implementations are:
 
 The ability for various applications to accurately understand HTML document structure, as it would be seen by a browser, is an important security challenge. The serial nature of the HTML blends together code (Javascript, Flash, Java applets) and the actual data to be displayed - making it easy for attackers to smuggle dangerous directives along with useful layout information in any external content. Knowing exactly what is being rendered is often crucial to site security (see [http://code.google.com/p/doctype/wiki/ArticleXSS this article] for a broader discussion of the threat).
 
-Sadly, for compatibility reasons, parsers operating in non-XML mode tend are generally lax and feature proprietary, incompatible, poorly documented recovery modes that make it very difficult for any platform to anticipate how a third-party HTML document would be interpreted. Any of the following grossly malformed examples may be interpreted as a scripting directive by some, but usually not all, renderers:
+Sadly, for compatibility reasons, parsers operating in non-XML mode tend to be generally lax and feature proprietary, incompatible, poorly documented recovery modes that make it very difficult for any platform to anticipate how a third-party HTML document would be interpreted. Any of the following grossly malformed examples may be interpreted as a scripting directive by some, but usually not all, renderers:
 
 {{{
 1: <B <SCRIPT>alert(1)</SCRIPT>>
