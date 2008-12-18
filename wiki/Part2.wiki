@@ -203,7 +203,7 @@ Some of the unique properties and gotchas of the current Flash security model in
 
 This model is further mired with other bugs and oddities, such as the reliance on [http://my.opera.com/hallvors/blog/2007/10/22/a-malicious-thought-how-to-imagine-a-security-issue location.* DOM being tamper-proof] for the purpose of executing same-origin security checks,
 
-Flash applets running from the Internet do not have any specific permissions to access local files or input devices devices, although depending on user configuration decisions, some or all sites may use a limited quota within a virtualized [http://www.macromedia.com/support/documentation/en/flashplayer/help/help02.html data storage sandbox], or access the microphone.
+Flash applets running from the Internet do not have any specific permissions to access local files or input devices, although depending on user configuration decisions, some or all sites may use a limited quota within a virtualized [http://www.macromedia.com/support/documentation/en/flashplayer/help/help02.html data storage sandbox], or access the microphone.
 
 ===Same-origin policy for Java===
 
