@@ -35,7 +35,7 @@ The current version of this document is based on the following versions of web b
 || Google Chrome || 1.0.154.36 || Dec 11, 2008 || ~1% || ||
 || Android  embedded browser || SDK 1.0 RC1 || Nov 10, 2008 || <font color="#909090">n/a</font> || ||
 
-^*^ Approximate browser usage data based on public [http://marketshare.hitslink.com/browser-market-share.aspx?qprid=0 Net Applications] estimates for October 2008.
+^*^ Approximate browser usage data based on public [http://marketshare.hitslink.com/report.aspx?qprid=3 Net Applications] estimates for October 2008.
 
 =Disclaimers and typographical conventions=
 
