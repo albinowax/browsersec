@@ -239,7 +239,7 @@ There is some uncertainty about how likely the technology is to win widespread s
 
   * Non-HTTP network connectivity uses `System.Net.Sockets`. Raw connections to same-origin systems are not permitted until an appropriate cross-domain policy is furnished ([http://msdn.microsoft.com/en-us/library/cc645032(VS.95).aspx reference]).
 
-  * Acess between HTTP and HTTPS schemes is apparently considered same-origin, and does not require a cross-domain specification ([http://msdn.microsoft.com/en-us/library/cc189008(VS.95).aspx reference]).
+  * Cross-scheme access between HTTP and HTTPS is apparently considered same-origin, and does not require a cross-domain specification ([http://msdn.microsoft.com/en-us/library/cc189008(VS.95).aspx reference]).
 
 ===Same-origin policy for Gears===
 
