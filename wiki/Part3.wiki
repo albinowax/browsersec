@@ -48,6 +48,15 @@ Amusingly, its ghost still haunts modern web applications: HTTP authentication p
 
 <b></b>
 
+==Name look-ahead and content prefetching==
+
+Several browsers are toying with the idea of prefetching certain information that, to their best knowledge, is likely to be needed in the immediate future. For example, Firefox offers an option to perform a background prefetch of certain links specified by page authors ([https://developer.mozilla.org/En/Link_prefetching_FAQ reference]); and Chrome is willing to carry out look-ahead DNS lookups on links on a page ([http://dev.chromium.org/developers/design-documents/dns-prefetching#TOC-DNS-Prefetch-Control
+ reference]).
+
+The idea here is that if the user indeed takes the action anticipated by browser developers or page owners, he or she would appreciate the reduced latency achieved through these predictive, background operations. On the flip side, prefetching has two important caveats: one is that it is generally rather wasteful - as users are very unlikely to follow _all_ prefetched links, and quite often, would not follow any of them; the other is that in certain contexts, such look-aheads may reveal privacy-sensitive information to third parties.
+
+One particularly interesting scenario is the concept of a web mail interface: unless prefetching is properly disabled or limited, the sender of a mail containing a HTTP link might have the ability to detect that the recipient had read his message, even if the link itself is not followed.
+
 ==Password managers==
 
 As a part of a broader form auto-completion mechanism, most browsers offer users the ability to save their passwords on client side, and auto-complete them whenever previously seen authentication forms appear again.
