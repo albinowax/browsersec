@@ -55,6 +55,7 @@ _Browser Security Handbook_ would not be possible without the ideas and assistan
   * Drew Hintz
   * Nick Kralevich
   * Tavis Ormandy
+  * David Ross
   * Marius Schilder
   * Parisa Tabriz
   * Berend-Jan Wever
