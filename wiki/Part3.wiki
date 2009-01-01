@@ -79,7 +79,7 @@ Robert Chapin offers some additional research into [http://www.info-svc.com/news
 
 All current versions of Internet Explorer utilize an interesting concept of [http://support.microsoft.com/kb/174360 security zones], not shared with any other browser on the market. The idea behind the approach is to compartmentalize resources into various categories, depending on the degree of trust given - and then control almost all security settings for these groups separately. The following zones are defined:
 
-  * *My computer:* a container for all `file:///` resources, with the exception of documents annotated with mark-of-the-web tags. The user has no control over what gets included into this zone.
+  * *My computer:* a container for all local `file:///` resources, with the exception of documents annotated with mark-of-the-web tags. The user has no control over what gets included into this zone, although an `urlmon.dll` API is provided to give certain protocol handlers the ability to define additional mappings ([http://msdn.microsoft.com/en-us/library/ms537133(VS.85).aspx reference]).
 
   * *Local intranet:* a container for all sites determined by simple configurable heuristics to belong to the local network (non-FQDN host names, proxy server exception list, content accessed over SMB). The user may list additional host names to include in this zone.
 
