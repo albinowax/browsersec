@@ -25,7 +25,7 @@ The abstract syntax for URIs is described in [http://www.ietf.org/rfc/rfc3986.tx
 Some additional mechanisms are laid out in [http://www.ietf.org/rfc/rfc1738.txt RFC 1738], which defines URI syntax within the scope of HTTP, FTP, NNTP, Gopher, and several other specific protocols. Together, these RFCs define the following syntax for common Internet resources (the compliance with a generic naming strategy is denoted by the `//` prefix):
 
 {{{
-scheme://[authority[:password]@](host_name|\[host_address\])[:port][/hierarchical/path/to/resource[?search_string][#fragment_id]]
+scheme://[authority[:password]@](host_name|host_address)[:port][/hierarchical/path/to/resource[?search_string][#fragment_id]]
 }}}
 
 Since the presence of a scheme is the key differentiator between relative references permitted in documents for usability reasons, and fully-qualified URLs, and since `:` itself has other uses later in the URL, the set of characters permitted for scheme name must be narrow and clearly defined (`0-9 A-Z a-z + - .`) so that all implementations may make the distinction accurately.
