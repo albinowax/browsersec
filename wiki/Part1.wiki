@@ -510,7 +510,7 @@ Furthermore, SVG natively permits [http://www.w3.org/TR/SVG/script.html embedded
 Some of the non-HTML builtin document type behaviors are documented below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Supported bitmap formats (excluding JPG, GIF, PNG)</font> || BMP ICO || BMP ICO || || BMP ICO TGA || BMP ICO TGA || BMP TIF || <font color="#909090">none</font> || BMP ICO || BMP ICO ||
+|| <font color="#3050a0">Supported bitmap formats (excluding JPG, GIF, PNG)</font> || BMP ICO || BMP ICO || || BMP ICO TGA || BMP ICO TGA || BMP TIF || some BMP || BMP ICO || BMP ICO ||
 || <font color="#3050a0">Is generic XML document support present?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Is RSS feed support present?</font> || NO || YES || || YES || YES || YES || YES || NO || NO ||
 || <font color="#3050a0">Is ATOM feed support present</font> || NO || YES || || YES || YES || YES || YES || NO || NO ||
