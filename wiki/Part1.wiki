@@ -206,7 +206,7 @@ Many specific areas, such as caching behavior, have their own sections later in 
 || <font color="#3050a0">`Referer` header sent on HTTPS → HTTPS navigation?</font> || YES || YES || || YES || YES || YES || <font color="#30ff30">NO</font> || YES || YES ||
 || <font color="#3050a0">`Referer` header sent on HTTPS → HTTP navigation?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Response body on invalid 30x redirect shown to user?</font> || NO || NO || || YES || YES || NO || YES || YES || NO ||
-|| <font color="#3050a0">Are high-bit characters supported in HTTP cookies?</font> || <font color="#ff0000">transcoded to 7 bit</font> || <font color="#ff0000">transcoded to 7 bit</font> || || <font color="#ff0000">mangled</font> || <font color="#ff0000">mangled</font> || YES || YES || YES || YES ||
+|| <font color="#3050a0">High-bit character handling in HTTP cookies</font> || <font color="#ff0000">transcoded to 7 bit</font> || <font color="#ff0000">transcoded to 7 bit</font> || || <font color="#ff0000">mangled</font> || <font color="#ff0000">mangled</font> || utf-8 || utf-8 || utf-8 || utf-8 ||
 || <font color="#3050a0">Are `quoted-string` values supported for HTTP cookies?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || YES || YES || <font color="#ff0000">NO</font> || YES || YES || YES ||
 
 ==Hypertext Markup Language==
