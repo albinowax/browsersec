@@ -167,7 +167,7 @@ One example of an HTTP request might be:
 {{{
 POST /fuzzy_bunnies/images/bunny_dispenser.php HTTP/1.1
 Host: www.fuzzybunnies.com
-User-Agent: Bunny Browser 1.7
+User-Agent: Bunny-Browser/1.7
 Content-Type: text/plain
 Content-Length: 12
 Referer: http://www.fuzzybunnies.com/main.html
@@ -179,7 +179,7 @@ The server responds in a similar manner, returning a numerical status code, spok
 
 {{{
 HTTP/1.1 200 OK
-Server: Bunny Server 0.9.2
+Server: Bunny-Server/0.9.2
 Content-Type: text/plain
 
 HELLO CLIENT
