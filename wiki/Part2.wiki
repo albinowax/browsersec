@@ -331,7 +331,7 @@ Yet another operation permitted across domains with no specific security checks 
 
 There are several basic ways to fool users into generating such misrouted clicks:
 
-  * *Decoy UI underneath, proper UI made transparent using CSS `opacity` attribute:* many browsers permit page authors to set transparency on cross-domain `<IFRAME>` tags. Low opacity may result in the attacked cross-domain UI being barely visible, or not visible at all, with the browser showing attacker-controlled content placed underneath instead. Any clicks intended to reach attacker's content would still be routed to the invisible third-party UI overlaid on top, however.
+  * *Decoy UI underneath, proper UI made transparent using CSS `opacity` or `filter` attribute:* most browsers permit page authors to set transparency on cross-domain `<IFRAME>` tags. Low opacity may result in the attacked cross-domain UI being barely visible, or not visible at all, with the browser showing attacker-controlled content placed underneath instead. Any clicks intended to reach attacker's content would still be routed to the invisible third-party UI overlaid on top, however.
 
   * *Decoy UI on top, with a small fragment not covered:* the attacker may also opt for showing the entire UI of the targeted application in a large `<IFRAME>`, but then cover portions of this container with opaque `<DIV>` or `<IFRAME>` elements placed on top (higher CSS `z-index` values). These overlays would be showing his misleading content instead, spare for the single button borrowed from the UI underneath.
 
@@ -369,7 +369,7 @@ var location = "clobber";
 Relevant tests:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is CSS `opacity` supported ("decoy underneath")?</font> || NO || NO || || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Is CSS `opacity` supported ("decoy underneath")?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Are partly obstructed `IFRAME` containers clickable ("decoy on top")?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Is cross-domain `scrollBy` scrolling permitted?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is cross-domain anchor-based frame positioning permitted?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
