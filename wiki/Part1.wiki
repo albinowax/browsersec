@@ -44,7 +44,7 @@ The standards themselves are fairly laid back - for example, unnecessarily permi
 
 _NOTE: As an anti-phishing mechanism, additional restrictions on the use of `authority` and `password` fields in URLs are imposed by many browsers; see the section on [http://code.google.com/p/browsersec/wiki/Part3#HTTP_authentication HTTP authentication] later on._
 
-Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity decoding] takes place before the link is parsed. Because of this, if a newline is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as Javascript, just as `javascript<TAB>:alert(1)` would be.
+Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity decoding] takes place before the link is parsed. Because of this, if a newline is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as Javascript, just as `javascript<TAB>:alert(1)` would be. Furthermore, certain characters, such as `\x00` in Internet Explorer, or `\x08` in Firefox, may be ignored or specially handled by HTML parsers if used in certain locations.
 
 ===Unicode in URLs===
 
@@ -259,7 +259,7 @@ Key security-relevant differences between HTML parsing modes in the aforemention
 || <font color="#3050a0">Characters accepted in lieu of quotes for HTML parameters (excluding `"`)</font> || ' <font color="#ff0000">`</font> || ' <font color="#ff0000">`</font> || || ' || ' || ' || ' || ' || ' || 
 || <font color="#3050a0">Characters accepted in tag names (excluding `A-Z / ? !`)</font> || <font color="#ff0000">\0 %*</font>|| <font color="#ff0000">\0 %</font> || || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#ff0000">\0</font> || <font color="#909090">none</font> || <font color="#909090">none</font> ||
 
-<b></b>
+_Note: to add insult to injury, special HTML handling rules seem to be sometimes applied to specific sections of a document; for example, `\x00` character is ignored by Internet Explorer, and `\x08` by Firefox, in certain HTML contexts, but not in others; most notably, they are ignored in HTML tag parameter values in respective browsers._
 
 ===HTML entity encoding===
 
