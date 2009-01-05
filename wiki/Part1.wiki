@@ -392,7 +392,7 @@ Various differences between browser implementations are outlined below:
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Is setter and getter support present?</font> || NO || NO || || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Is access to prototypes via `__proto__` possible?</font> || NO || NO || || YES || YES || YES || NO || YES || YES ||
-|| <font color="#3050a0">Is it possible to alias `eval()` function? || YES || YES || || PARTLY || PARTLY || YES || PARTLY || NO || YES ||
+|| <font color="#3050a0">Is it possible to alias `eval()` function? || YES || YES || || PARTLY || PARTLY || YES || PARTLY || YES || YES ||
 || <font color="#3050a0">Are watches on objects supported?</font> || NO || NO || || YES || YES || NO || NO || NO || NO ||
 || <font color="#3050a0">May currently executing code blocks modify self?</font> || read-only || read-only || || NO || NO || NO || YES || NO || NO ||
 || <font color="#3050a0">Is E4X extension supported?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
