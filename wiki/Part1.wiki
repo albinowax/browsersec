@@ -44,7 +44,7 @@ The standards themselves are fairly laid back - for example, unnecessarily permi
 
 _NOTE: As an anti-phishing mechanism, additional restrictions on the use of `authority` and `password` fields in URLs are imposed by many browsers; see the section on [http://code.google.com/p/browsersec/wiki/Part3#HTTP_authentication HTTP authentication] later on._
 
-Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity decoding] takes place before the link is parsed. Because of this, if a newline is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as Javascript, just as `javascript<TAB>:alert(1)` would be. Furthermore, certain characters, such as `\x00` in Internet Explorer, or `\x08` in Firefox, may be ignored or specially handled by HTML parsers if used in certain locations.
+Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity decoding] takes place before the link is parsed. Because of this, if a newline is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as Javascript, just as `javascript<TAB>:alert(1)` would be. Furthermore, certain characters, such as `\x00` in Internet Explorer, or `\x08` in Firefox, may be ignored by HTML parsers if used in certain locations, even though they are not treated differently by URL-handling code itself.
 
 ===Unicode in URLs===
 
