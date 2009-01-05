@@ -259,7 +259,7 @@ Key security-relevant differences between HTML parsing modes in the aforemention
 || <font color="#3050a0">Characters accepted in lieu of quotes for HTML parameters (excluding `"`)</font> || ' <font color="#ff0000">`</font> || ' <font color="#ff0000">`</font> || || ' || ' || ' || ' || ' || ' || 
 || <font color="#3050a0">Characters accepted in tag names (excluding `A-Z / ? !`)</font> || <font color="#ff0000">\0 %*</font>|| <font color="#ff0000">\0 %</font> || || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#ff0000">\0</font> || <font color="#909090">none</font> || <font color="#909090">none</font> ||
 
-_Note: to add insult to injury, special HTML handling rules seem to be sometimes applied to specific sections of a document; for example, `\x00` character is ignored by Internet Explorer, and `\x08` by Firefox, in certain HTML contexts, but not in others; most notably, they are ignored in HTML tag parameter values in respective browsers._
+_NOTE: to add insult to injury, special HTML handling rules seem to be sometimes applied to specific sections of a document; for example, `\x00` character is ignored by Internet Explorer, and `\x08` by Firefox, in certain HTML contexts, but not in others; most notably, they are ignored in HTML tag parameter values in respective browsers._
 
 ===HTML entity encoding===
 
