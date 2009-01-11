@@ -458,7 +458,7 @@ That said, it is not trivial to determine what constitutes a protected asset on 
 
   * Address and domain name patterns detected by other heuristics, such as IP ranges local to machine's network interfaces, DNS suffixes defined on proxy configuration exception lists, and so forth.
 
-Because none of these methods is entirely bullet-proof or problem-free, as of now, a vast majority of browsers implements no protection against Internet → intranet fenceposts - although such mechanisms are being planned, tested, or offered optionally in response to previously demonstrated attacks. For example, Microsoft Internet Explorer 7 has a _"Websites in less privileged web content zone can navigate into this zone"_ setting that, if unchecked for _"Local intranet"_, would deny external sites access to a configurable subset of pages. The restriction is disabled by default, however.
+Because none of these methods is entirely bullet-proof or problem-free, as of now, a vast majority of browsers implement no default protection against Internet → intranet fenceposts - although such mechanisms are being planned, tested, or offered optionally in response to previously demonstrated attacks. For example, Microsoft Internet Explorer 7 has a _"Websites in less privileged web content zone can navigate into this zone"_ setting that, if unchecked for _"Local intranet"_, would deny external sites access to a configurable subset of pages. The restriction is disabled by default, however.
 
 Relevant tests:
 
