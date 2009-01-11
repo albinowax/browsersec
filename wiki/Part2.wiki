@@ -407,7 +407,7 @@ A survey of these exceptions is summarized below:
 || <font color="#3050a0">Is calling `frameElements` methods possible across domains?</font> || NO || NO || || YES || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is `postMessage` API supported?</font> || NO || NO || || NO || YES || NO || YES || NO || NO ||
 
-^*^ In Chrome, this succeeds only if the both tabs share a common renderer process, which limits the scope of possible attacks.
+^*^ In Chrome, this succeeds only if both tabs share a common renderer process, which limits the scope of possible attacks.
 
 ===Privacy-related side channels===
 
