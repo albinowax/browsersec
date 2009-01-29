@@ -467,6 +467,18 @@ Another interesting property specific to `<STYLE>` handling is that when two CDA
 </STYLE>
 }}}
 
+Yet another property that sets stylesheets apart from Javascript is the fact that although CSS parser is very strict, a syntax error does not cause it to bail out completely. Instead, a recovery from the next top-level syntax element is attempted. This makes handling user-controlled strings even harder - for example, if a stray newline in user-supplied string is not properly escaped, it would actually permit the attacker to freely tinker with the stylesheet:
+
+{{{
+<STYLE>
+.example {
+  content: '*** USER STRING START ***
+  } .example { color: red; } .bar { *** USER STRING END'
+</STYLE>
+
+<SPAN CLASS="example">Hello world!</SPAN>
+}}}
+
 Various differences in style parsing between common browsers are outlined below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
