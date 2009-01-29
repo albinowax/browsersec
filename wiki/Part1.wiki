@@ -399,6 +399,7 @@ Various differences between browser implementations are outlined below:
 || <font color="#3050a0">May currently executing code blocks modify self?</font> || read-only || read-only || || NO || NO || NO || YES || NO || NO ||
 || <font color="#3050a0">Is E4X extension supported?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
 || <font color="#3050a0">Is `charset=` honored on `<SCRIPT SRC="...">`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Do Unicode newlines (U+2028, U+2029) break lines in Javascript?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
 
 <b></b>
 
