@@ -473,7 +473,8 @@ Yet another property that sets stylesheets apart from Javascript is the fact tha
 <STYLE>
 .example {
   content: '*** USER STRING START ***
-  } .example { color: red; } .bar { *** USER STRING END ***'
+  } .example { color: red; } .bar { *** USER STRING END ***';
+}
 </STYLE>
 
 <SPAN CLASS="example">Hello world (in red)!</SPAN>
