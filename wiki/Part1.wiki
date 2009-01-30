@@ -467,7 +467,7 @@ Another interesting property specific to `<STYLE>` handling is that when two CDA
 </STYLE>
 }}}
 
-Yet another property that sets stylesheets apart from Javascript is the fact that although CSS parser is very strict, a syntax error does not cause it to bail out completely. Instead, a recovery from the next top-level syntax element is attempted. This makes handling user-controlled strings even harder - for example, if a stray newline in user-supplied string is not properly escaped, it would actually permit the attacker to freely tinker with the stylesheet:
+Yet another property that sets stylesheets apart from Javascript is the fact that although CSS parser is very strict, a syntax error does not cause it to bail out completely. Instead, a recovery from the next top-level syntax element is attempted. This makes handling user-controlled strings even harder - for example, if a stray newline in user-supplied string is not properly escaped, it would actually permit the attacker to freely tinker with the stylesheet in most browsers:
 
 {{{
 <STYLE>
@@ -487,6 +487,7 @@ Various differences in style parsing between common browsers are outlined below:
 || <font color="#3050a0">Is script-executing `-moz-binding` supported?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Does `</STYLE>` take precedence over comment block parsing?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
 || <font color="#3050a0">Characters permitted as CSS field-value separators (excluding `\t \r \n \x20`)</font> || \x0B \x0C \ \xA0 || \x0B \x0C \ \xA0 || || \x0B \x0C \ || \x0C \ || \x0C \ || \x0C \ \xA0 || \x0C \ \xA0 || \x0C \ ||
+|| <font color="#3050a0">Does the CSS parser attempt to recover from syntax errors?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
 
 <b></b>
 
