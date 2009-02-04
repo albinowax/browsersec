@@ -118,7 +118,7 @@ Other important security properties of `XMLHttpRequest` are outlined below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Banned HTTP methods</font> || `TRACE` || `CONNECT` `TRACE`^*^ || || `TRACE` || `TRACE` || `CONNECT` `TRACE` || `CONNECT` `TRACE`^**^ || `CONNECT` `TRACE` || `CONNECT` `TRACE` ||
-|| <font color="#3050a0">`XMLHttpRequest` may see `httponly` cookies?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
+|| <font color="#3050a0">`XMLHttpRequest` may see `httponly` cookies?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO || NO ||
 || <font color="#3050a0">`XMLHttpRequest` may see invalid HTTP 30x responses</font>? || NO || NO || || YES || YES || NO || NO || YES || NO ||
 || <font color="#3050a0">`XMLHttpRequest` may see cross-domain HTTP 30x responses</font>? || NO || NO || || YES || YES || NO || NO || NO || NO ||
 || <font color="#3050a0">`XMLHttpRequest` may see other HTTP non-200 responses?</font> || YES || YES || || YES || YES || YES || YES || YES || NO ||
