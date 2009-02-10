@@ -370,7 +370,7 @@ var location = "clobber";
 <iframe src="http://www.example.com/frame_busting_code.html"></iframe>
 }}}
 
-_Trivia: Joseph Schorr cleverly pointed out that this behavior may be worked around by creating an `<A HREF="..." TARGET="_top">` HTML tag, and then calling the `click()` on this element._
+Joseph Schorr cleverly pointed out that this behavior may be worked around by creating an `<A HREF="..." TARGET="_top">` HTML tag, and then calling the `click()` on this element; on the other hand, flaws in [http://code.google.com/p/browsersec/wiki/Part3#Microsoft_Internet_Explorer_frame_restrictions SECURITY=RESTRICTED] frames render even this variant of limited use. 
 
 Relevant tests:
 
