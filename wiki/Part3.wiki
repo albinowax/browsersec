@@ -105,7 +105,7 @@ Another interesting, little-known security feature unique to Microsoft Internet 
 
 No support outside of Microsoft Internet Explorer makes this feature useless as a security defense for most intents and purposes; but the mechanism needs to be considered for its potential negative security impact, such as the ability to prevent frame busting code from operating properly and making [http://code.google.com/p/browsersec/wiki/Part2#Arbitrary_page_mashups_(UI_redressing) UI redress attacks] a bit easier. No support for HTTP cookies within a restricted container would normally limit the impact, but flaws in the design are known.
 
-Due to its minimal use, the mechanism likely received very little security scrutiny.
+Due to its minimal use, the mechanism likely received very little security scrutiny otherwise.
 
 ==Microsoft Internet Explorer XSS filtering==
 
