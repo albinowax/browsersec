@@ -823,13 +823,13 @@ Virtually all browsers attempt to limit the ability for sites to open new window
 || <font color="#3050a0">Is popup blocker present?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Are popups permitted on non-`onclick` events?</font> || NO || NO || || NO || NO || NO || NO || NO || YES ||
 || <font color="#3050a0">Maximum delay between click and popup</font> || 0 ms || 0 ms || || 1 sec || 1 sec || 0 ms || <font color="#ff0000">> 5 sec</font> || 0 ms || 0 ms ||
-|| <font color="#3050a0">Maximum number of per-click popups opened</font> || 1 || 1 || || <font color="#ff0000">20</font><sup>*</sup> || <font color="#ff0000">20</font><sup>*</sup> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || 1 ||
+|| <font color="#3050a0">Maximum number of per-click popups opened</font> || 1 || 1 || || <font color="#ff0000">20</font>^*^> || <font color="#ff0000">20</font>^*^ || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || 1 ||
 || <font color="#3050a0">Is `window.alert()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
 || <font color="#3050a0">Is `window.print()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is `window.confirm()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
 || <font color="#3050a0">Is `window.prompt()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || YES || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
 
-<sup>*</sup> Controlled by `dom.popup_maximum` setting in browser configuration.
+^*^ Controlled by `dom.popup_maximum` setting in browser configuration.
 
 ===Window appearance restrictions===
 
