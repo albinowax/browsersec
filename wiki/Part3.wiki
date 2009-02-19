@@ -107,6 +107,14 @@ No support outside of Microsoft Internet Explorer makes this feature useless as 
 
 Due to its minimal use, the mechanism likely received very little security scrutiny otherwise.
 
+==Mozilla HTML5 storage experiments==
+
+Firefox 2 embraced the idea of [https://developer.mozilla.org/En/DOM/Storage globalStorage], a somewhat jiffy mechanism that permitted data to be stored persistently for offline use in a local database shared across all sites (and until Firefox 2, with no strong security controls on scoping). The concept of `globalStorage` originated with early HTML5 drafts, although there, got eventually ditched in favor of a more tightly controlled `localStorage` scheme (yet to be implemented in Firefox).
+
+Further along these lines, Firefox 3 introduced, and Firefox 3.1 revised in a largely incompatible manner, the concept of [https://developer.mozilla.org/en/Offline_resources_in_Firefox cache manifests] that permit sites to opt for having certain resources persistently stored in a site-specific cache, and then retrieved from there instead of being looked up on the net. The feature is again borrowed from the ever-shifting HTML5 specification. 
+
+It is not clear how useful and widely used they would be.
+
 ==Microsoft Internet Explorer XSS filtering==
 
 An experimental [http://blogs.technet.com/swi/archive/2008/08/19/ie-8-xss-filter-architecture-implementation.aspx reflected HTML injection filter] is proposed for Microsoft Internet Explorer 8. It is uncertain what final shape this mechanism would take, and how useful it will be for preventing attacks; the complexity of escaping rules, jiffy handling of certain character sets, and quirky rules for parsing HTML documents, all make it likely that the mechanism would never achieve a 100% coverage - a property that Microsoft [http://blogs.msdn.com/dross/archive/2008/07/03/ie8-xss-filter-design-philosophy-in-depth.aspx pragmatically acknowledges] in their design proposals. As such, the mechanism would serve to complement, rather than replace, proper server-side development practices.
@@ -134,12 +142,6 @@ In theory, an existing `Referer` HTTP header could be used for the same purpose,
 Brandon Sterne of Mozilla proposes [http://people.mozilla.org/~bsterne/content-security-policy/index.html content security policies], a mechanism that would permit site owners to define a list of valid target domains for `<IMG>`, `<EMBED>`, `<APPLET>`, `<SCRIPT>`, and `<IFRAME>` resources appearing in their content
 
 The security benefit of these features is by itself limited to very specialized uses, primarily associated with policy enforcement; the proposal originally also incorporated the ability to define a list of valid origins for incoming requests as a method to mitigate cross-site request forgery attacks - but this part of the design got dropped in favor of more flexible and simpler `Origin` headers.
-
-==Firefox storage experiments==
-
-Firefox 2 embraced the idea of [https://developer.mozilla.org/En/DOM/Storage globalStorage], a somewhat buggy mechanism that permitted data to be stored persistently for offline use in a local database; the idea originated with early HTML5 drafts, although there, got eventually ditched in favor of a `localStorage` mechanism, yet to be implemented in Firefox.
-
-Further along these lines, Firefox 3 introduced, and Firefox 3.1 revised in an incompatible manner, the concept of [https://developer.mozilla.org/en/Offline_resources_in_Firefox cache manifests] that permit sites to opt for having certain resources persistently stored in a site-specific cache, and then retrieved from there instead of being looked up on the net. The feature is again borrowed from the ever-shifting HTML5 specification, and it is not clear how useful and widely used it would be.
 
 =Open browser engineering issues=
 
