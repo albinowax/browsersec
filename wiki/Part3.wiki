@@ -113,7 +113,7 @@ Firefox 2 embraced the idea of [https://developer.mozilla.org/En/DOM/Storage glo
 
 Further along these lines, Firefox 3 introduced, and Firefox 3.1 revised in a largely incompatible manner, the concept of [https://developer.mozilla.org/en/Offline_resources_in_Firefox cache manifests] that permit sites to opt for having certain resources persistently stored in a site-specific cache, and then retrieved from there instead of being looked up on the net. The feature is again borrowed from the ever-shifting HTML5 specification. 
 
-It is not clear how useful and widely used they would be.
+It is not clear how useful and widely used they would be, or even what final shape they would take, and what security restrictions would ultimately be present.
 
 ==Microsoft Internet Explorer XSS filtering==
 
