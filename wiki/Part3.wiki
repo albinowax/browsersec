@@ -135,6 +135,12 @@ Brandon Sterne of Mozilla proposes [http://people.mozilla.org/~bsterne/content-s
 
 The security benefit of these features is by itself limited to very specialized uses, primarily associated with policy enforcement; the proposal originally also incorporated the ability to define a list of valid origins for incoming requests as a method to mitigate cross-site request forgery attacks - but this part of the design got dropped in favor of more flexible and simpler `Origin` headers.
 
+==Firefox storage experiments==
+
+Firefox 2 embraced the idea of [https://developer.mozilla.org/En/DOM/Storage globalStorage], a somewhat buggy mechanism that permitted data to be stored persistently for offline use in a local database; the idea originated with early HTML5 drafts, although there, got eventually ditched in favor of a `localStorage` mechanism, yet to be implemented in Firefox.
+
+Further along these lines, Firefox 3 introduced, and Firefox 3.1 revised in an incompatible manner, the concept of [https://developer.mozilla.org/en/Offline_resources_in_Firefox cache manifests] that permit sites to opt for having certain resources persistently stored in a site-specific cache, and then retrieved from there instead of being looked up on the net. The feature is again borrowed from the ever-shifting HTML5 specification, and it is not clear how useful and widely used it would be.
+
 =Open browser engineering issues=
 
 Other than the general design of HTTP, HTML, and related mechanisms discussed previously, a handful of browser engineering decisions tends to contribute to a disproportional of day-to-day security woes. Understanding these properties is sometimes important for properly assessing the likelihood and maximum impact of security breaches, and hence determining the safety of user data. Some of the pivotal, open-ended issues include:
