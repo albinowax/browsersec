@@ -899,7 +899,7 @@ Several important HTTPS properties and default behaviors are outlined below:
 || <font color="#3050a0">Mixed content behavior on `<EMBED>`</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Mixed content behavior on `<IFRAME>`</font> || block || block || || warn || warn || permit || permit || permit || permit ||
 
-^*^ Only when [http://support.microsoft.com/kb/931125 KB931125] is installed, and phishing filter functionality enabled.
+^*^ On Windows XP, only when [http://support.microsoft.com/kb/931125 KB931125] is installed, and phishing filter functionality enabled.
 
 _Trivia: [http://lists.whatwg.org/pipermail/whatwg-whatwg.org/attachments/20080714/07ea5534/attachment.txt KEYGEN tags] are an obscure and largely undocumented feature supported by all browsers with the exception of Microsoft Internet Explorer. These tags permit the server to challenge the client to generate a cryptographic key, send it to server for signing, and store a signed response in user's key chain. This mechanism provides a quasi-convenient method to establish future client credentials in the context of HTTPS traffic._
 
