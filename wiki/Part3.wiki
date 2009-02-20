@@ -107,7 +107,7 @@ No support outside of Microsoft Internet Explorer makes this feature useless as 
 
 Due to its minimal use, the mechanism likely received very little security scrutiny otherwise.
 
-==Mozilla and WebKit HTML5 storage experiments==
+==Mozilla and Safari HTML5 storage experiments==
 
 Firefox 2 embraced the idea of [https://developer.mozilla.org/En/DOM/Storage globalStorage], a somewhat jiffy mechanism that permitted data to be stored persistently for offline use in a local database shared across all sites (and until Firefox 2, with no strong security controls on scoping). The concept of `globalStorage` originated with early HTML5 drafts, although there, got eventually ditched in favor of a more tightly controlled [http://www.whatwg.org/specs/web-apps/current-work/multipage/structured-client-side-storage.html#dom-localstorage localStorage] and [http://www.whatwg.org/specs/web-apps/current-work/multipage/structured-client-side-storage.html#sql SQL database] schemes (yet to be implemented in Firefox, though the the latter option is already supported in a handful of WebKit browsers).
 
