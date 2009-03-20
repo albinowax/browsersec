@@ -360,7 +360,7 @@ Browser-side Javascript is invoked from within HTML documents in four primary wa
   # Standalone `<SCRIPT>` tags that enclose code blocks,<p />
   # Event handlers tied to HTML tags (e.g. `onmouseover="..."`),<p />
   # Stylesheet `expression(...)` blocks that permit Javascript syntax in some browsers,<p />
-  # Special URL schemes specified as targets for certain resources or actions (`javascript:...`),
+  # Special URL schemes specified as targets for certain resources or actions (`javascript:...`) - in HTML and in stylesheets,
 
 Note that the first option does not always work when such a string is dynamically added by running Javascript to an existing document. That said, any of the remaining options might be used as a comparable substitute.
 
