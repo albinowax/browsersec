@@ -271,8 +271,9 @@ A quick survey of implementations is shown below:
 || <font color="#3050a0">Inherited context for `about:blank` windows</font> || parent || parent || || no access || no access || parent || parent || parent || parent ||
 || <font color="#3050a0">Inherited context for `javascript:` windows</font> || parent || parent || || parent || parent || <font color="#909090">n/a</font> || parent || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || 
 || <font color="#3050a0">Inherited context for `data:` windows</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || || parent || parent || no access || blank || no access || no access ||
-|| <font color="#3050a0">Is parent's `Referer` sent from `javascript:` frames or windows?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Is parent's `Referer` sent from `data:` frames or windows?</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is parent's `Referer` sent from blank frames?</font> || NO || NO || || NO || NO || NO || YES || NO || NO ||
+|| <font color="#3050a0">Is parent's `Referer` sent from `javascript:` windows?</font> || NO || NO || || NO || NO || <font color="#909090">n/a</font> || NO || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is parent's `Referer` sent from `data:` windows?</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || || NO || NO || NO || NO || NO || NO ||
 
 <b></b>
 
