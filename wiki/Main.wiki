@@ -60,6 +60,7 @@ _Browser Security Handbook_ would not be possible without the ideas and assistan
   * David Ross
   * Marius Schilder
   * Parisa Tabriz
+  * Julien Tinnes
   * Berend-Jan Wever
   * Mike Wiacek
 
