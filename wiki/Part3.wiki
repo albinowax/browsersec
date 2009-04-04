@@ -127,7 +127,7 @@ Several experimental browser-side or client-side designs aim to provide control 
 
 There are two primary classes of solutions proposed:
 
-  * *Comprehensive script security frameworks:* these approaches strive to offer the ability for site owner to approve or reject arbitrary actions executed by scripts with a great deal of flexibility. Examples include Microsoft [https://research.microsoft.com/users/yxie/papers/hotOS07.pdf Mutation-Event Transforms] for browser-side checks (not clear if this being pursued in any major browsers), or Google [http://code.google.com/p/google-caja/ Caja] and Microsoft [http://websandbox.livelabs.com/Default.aspx Web Sandbox] for a solution that requires no browser-side tweaks.
+  * *Comprehensive script security frameworks:* these approaches strive to offer the ability for site owner to approve or reject arbitrary actions executed by scripts with a great deal of flexibility. Examples include Microsoft [https://research.microsoft.com/users/yxie/papers/hotOS07.pdf Mutation-Event Transforms] for browser-side checks (not clear if this is being pursued in any browser), or Google [http://code.google.com/p/google-caja/ Caja] and Microsoft [http://websandbox.livelabs.com/Default.aspx Web Sandbox] for a solution that requires no browser-side tweaks.
 
   * *Selective script disable / enable functions:* these comparatively simpler solutions attempt to give web developers the tools to disable scripting in certain critical areas of the document, such as around user input or a block of intentionally non-sanitized HTML. One example such a proposal are Trevor Jim's [http://www.research.att.com/~trevor/papers/beep-tr.pdf Browser-Enforced Embedded Policies].
 
