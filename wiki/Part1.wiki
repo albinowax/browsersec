@@ -47,7 +47,7 @@ The standards themselves are fairly laid back - for example, unnecessarily permi
 
 _NOTE: As an anti-phishing mechanism, additional restrictions on the use of `authority` and `password` fields in URLs are imposed by many browsers; see the section on [http://code.google.com/p/browsersec/wiki/Part3#HTTP_authentication HTTP authentication] later on._
 
-Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity decoding] takes place before the link is parsed. Because of this, if a newline is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as JavaScript, just as `javascript<TAB>:alert(1)` would be. Furthermore, certain characters, such as `\x00` in Internet Explorer, or `\x08` in Firefox, may be ignored by HTML parsers if used in certain locations, even though they are not treated differently by URL-handling code itself.
+Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity decoding] takes place before the link is parsed. Because of this, if a newline is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as Java<b></b>Script, just as `javascript<TAB>:alert(1)` would be. Furthermore, certain characters, such as `\x00` in Internet Explorer, or `\x08` in Firefox, may be ignored by HTML parsers if used in certain locations, even though they are not treated differently by URL-handling code itself.
 
 ===Unicode in URLs===
 
@@ -158,7 +158,7 @@ Finally, several pseudo-schemes exist specifically to enable scripting or URL-co
 || <font color="#3050a0">vbscript ([http://msdn.microsoft.com/en-us/library/sx7b3k7y(VS.85).aspx Microsoft proprietary scripting])</font> || YES || YES || || NO || NO || NO || NO || NO || NO ||
 
 
-_NOTE: Historically, numerous aliases for these schemes were also present; `livescript` and `mocha` schemes were supported by Netscape Navigator and other early browsers as aliases for JavaScript; `local` worked in some browsers as a nickname for `file`; etc. This is not witnessed anymore._
+_NOTE: Historically, numerous aliases for these schemes were also present; `livescript` and `mocha` schemes were supported by Netscape Navigator and other early browsers as aliases for Java<b></b>Script; `local` worked in some browsers as a nickname for `file`; etc. This is not witnessed anymore._
 
 ==Hypertext Transfer Protocol==
 
@@ -227,7 +227,7 @@ This day, the four prevailing HTML document rendering implementations are:
   * [http://webkit.org/ WebKit] - used by Safari, Chrome, Android,
   * Presto - used in Opera.
 
-The ability for various applications to accurately understand HTML document structure, as it would be seen by a browser, is an important security challenge. The serial nature of the HTML blends together code (JavaScript, Flash, Java applets) and the actual data to be displayed - making it easy for attackers to smuggle dangerous directives along with useful layout information in any external content. Knowing exactly what is being rendered is often crucial to site security (see [http://code.google.com/p/doctype/wiki/ArticleXSS this article] for a broader discussion of the threat).
+The ability for various applications to accurately understand HTML document structure, as it would be seen by a browser, is an important security challenge. The serial nature of the HTML blends together code (Java<b></b>Script, Flash, Java applets) and the actual data to be displayed - making it easy for attackers to smuggle dangerous directives along with useful layout information in any external content. Knowing exactly what is being rendered is often crucial to site security (see [http://code.google.com/p/doctype/wiki/ArticleXSS this article] for a broader discussion of the threat).
 
 Sadly, for compatibility reasons, parsers operating in non-XML mode tend to be generally lax and feature proprietary, incompatible, poorly documented recovery modes that make it very difficult for any platform to anticipate how a third-party HTML document - or portion thereof - would be interpreted. Any of the following grossly malformed examples may be interpreted as a scripting directive by some, but usually not all, renderers:
 
@@ -295,7 +295,7 @@ An interesting piece of trivia is that, as per HTML entity encoding requirements
 http://example.com/?p1=v1&p2=v2
 }}}
 
-Should be technically always encoded in HTML parameters (but not in JavaScript code) as:
+Should be technically always encoded in HTML parameters (but not in Java<b></b>Script code) as:
 
 {{{
 <a href="http://example.com/?p1=v1&amp;p2=v2">Click here</a>
@@ -307,7 +307,7 @@ In practice, however, the convention is almost never followed by web developers,
 
 As the web matured and the concept of client-side programming gained traction, the need arose for HTML document to be programatically accessible and modifiable on the fly in response to user actions. One technology, [http://www.w3.org/DOM/DOMTR Document Object Model] (also referred to as "dynamic HTML"), emerged as the prevailing method for accomplishing this task.
 
-In the context of web browsers, Document Object Model is simply an object-based representation of HTML document layout, and by a natural extension much of the browser internals, in a hierarchical structure with various read and write properties, and callable methods. To illustrate, to access the value of the first `<INPUT>` tag in a document through DOM, the following JavaScript code could be used:
+In the context of web browsers, Document Object Model is simply an object-based representation of HTML document layout, and by a natural extension much of the browser internals, in a hierarchical structure with various read and write properties, and callable methods. To illustrate, to access the value of the first `<INPUT>` tag in a document through DOM, the following Java<b></b>Script code could be used:
 
 {{{
 document.getElementsByTagName('INPUT')[0].value
@@ -321,7 +321,7 @@ document.getElementsByTagName('IFRAME')[1].contentDocument.getElementsByTagName(
 
 DOM object hierarchy - as seen by programmers - begins with an implicit "root" object, sometimes named `defaultView` or `global`; all the scripts running on a page have `defaultView` as their default scope. This root object has the following members:
 
-  * Various properties and methods relating to current document-specific window or frame ([http://www.w3schools.com/HTMLDOM/dom_obj_window.asp reference]). Properties include window dimensions, status bar text, references to parent, top-level, and owner (opener) `defaultView` objects. Methods permit scripts to resize, move, change focus, or decor of current windows, display certain UI widgets, or - oddly enough - set up JavaScript timers to execute code after a certain "idle" interval.
+  * Various properties and methods relating to current document-specific window or frame ([http://www.w3schools.com/HTMLDOM/dom_obj_window.asp reference]). Properties include window dimensions, status bar text, references to parent, top-level, and owner (opener) `defaultView` objects. Methods permit scripts to resize, move, change focus, or decor of current windows, display certain UI widgets, or - oddly enough - set up Java<b></b>Script timers to execute code after a certain "idle" interval.
 
   * All the current script's global variables and functions.
 
@@ -337,7 +337,7 @@ DOM object hierarchy - as seen by programmers - begins with an implicit "root" o
 
   * `defaultView.window` - a self-referential entry that points back to the root object; this is the name by which the `defaultView` object is most commonly known. In general, `screen`, `navigator`, and `window` DOM hierarchies combined usually contain enough information to very accurately fingerprint any given machine.
 
-With the exception of cross-domain, cross-document access permissions outlined in later chapters, the operation of DOM bears relatively little significance to site security. It is, however, worth noting that DOM methods are wrappers providing access to highly implementation-specific internal data structures that may or may not obey the usual rules of JavaScript language, may haphazardly switch between bounded and ASCIZ string representations, and so forth. Because of this, multiple seemingly inexplicable oddities and quirks plague DOM data structures in every browsers - and some of these may interfere with client-side security mechanisms. Several such quirks are documented below:
+With the exception of cross-domain, cross-document access permissions outlined in later chapters, the operation of DOM bears relatively little significance to site security. It is, however, worth noting that DOM methods are wrappers providing access to highly implementation-specific internal data structures that may or may not obey the usual rules of Java<b></b>Script language, may haphazardly switch between bounded and ASCIZ string representations, and so forth. Because of this, multiple seemingly inexplicable oddities and quirks plague DOM data structures in every browsers - and some of these may interfere with client-side security mechanisms. Several such quirks are documented below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Is `window` the same object as `window.window`?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || YES || YES || YES || YES || YES || YES ||
@@ -353,38 +353,38 @@ _Trivia: traversing `document.*` is a possible approach to look up specific inpu
 
 [http://en.wikipedia.org/wiki/Javascript JavaScript] is a relatively simple but rich, object-based imperative scripting language tightly integrated with HTML, and supported by all contemporary web browsers. Authors claim that the language has roots with [http://en.wikipedia.org/wiki/Scheme_(programming_language) Scheme] and [http://en.wikipedia.org/wiki/Self_(programming_language) Self] programming languages, although it is often characterized in a more down-to-earth way as resembling a crossover of [http://en.wikipedia.org/wiki/Objective-C Objective C] and [http://en.wikipedia.org/wiki/Visual_Basic Visual Basic]. Confusingly, except for the common C syntax, it shares relatively few unique features with [http://en.wikipedia.org/wiki/Java_(programming_language) Java]; the naming is simply a marketing gimmick devised by Netscape and Sun in the 90s.
 
-The language is a creation of Netscape engineers, originally marketed under the name of Mocha, then Livescript, and finally rebranded to JavaScript; Microsoft embraced the concept shortly thereafter, under the name of JScript. The language, as usual with web technologies, got standardized only post factum, under a yet another name - ECMAScript. Additional, sometimes overlapping efforts to bring new features and extensions of the language - for example, [http://wiki.ecmascript.org/doku.php ECMAScript 4], [http://developer.mozilla.org/Special:Tags?tag=JavaScript_version_overviews&language=en JavaScript versions 1.6-1.8], [http://developer.mozilla.org/En/E4X native XML objects], etc - are taking place, although none of these concepts managed to win broad acceptance and following.
+The language is a creation of Netscape engineers, originally marketed under the name of Mocha, then Livescript, and finally rebranded to Java<b></b>Script; Microsoft embraced the concept shortly thereafter, under the name of JScript. The language, as usual with web technologies, got standardized only post factum, under a yet another name - ECMAScript. Additional, sometimes overlapping efforts to bring new features and extensions of the language - for example, [http://wiki.ecmascript.org/doku.php ECMAScript 4], [http://developer.mozilla.org/Special:Tags?tag=JavaScript_version_overviews&language=en JavaScript versions 1.6-1.8], [http://developer.mozilla.org/En/E4X native XML objects], etc - are taking place, although none of these concepts managed to win broad acceptance and following.
 
-Browser-side JavaScript is invoked from within HTML documents in four primary ways: 
+Browser-side Java<b></b>Script is invoked from within HTML documents in four primary ways: 
 
   # Standalone `<SCRIPT>` tags that enclose code blocks,<p />
   # Event handlers tied to HTML tags (e.g. `onmouseover="..."`),<p />
-  # Stylesheet `expression(...)` blocks that permit JavaScript syntax in some browsers,<p />
+  # Stylesheet `expression(...)` blocks that permit Java<b></b>Script syntax in some browsers,<p />
   # Special URL schemes specified as targets for certain resources or actions (`javascript:...`) - in HTML and in stylesheets.
 
-Note that the first option does not always work when such a string is dynamically added by running JavaScript to an existing document. That said, any of the remaining options might be used as a comparable substitute.
+Note that the first option does not always work when such a string is dynamically added by running Java<b></b>Script to an existing document. That said, any of the remaining options might be used as a comparable substitute.
 
-Regardless of their source (`<SCRIPT SRC="...">`), remote scripts always execute in the security context of the document they are attached to. Once called, JavaScript has full access to the current DOM, and limited access to DOMs of other windows; it may also further invoke new JavaScript by calling `eval()`, configuring timers (`setTimeout(...)` and `setInterval(...)`), or producing JavaScript-invoking HTML. JavaScript may also configure self to launch when its objects are interacted with by third-party JavaScript code, by configuring watches, setters, or getters, or cross contexts by calling same-origin functions belonging to other documents.
+Regardless of their source (`<SCRIPT SRC="...">`), remote scripts always execute in the security context of the document they are attached to. Once called, Java<b></b>Script has full access to the current DOM, and limited access to DOMs of other windows; it may also further invoke new Java<b></b>Script by calling `eval()`, configuring timers (`setTimeout(...)` and `setInterval(...)`), or producing Java<b></b>Script-invoking HTML. Java<b></b>Script may also configure self to launch when its objects are interacted with by third-party Java<b></b>Script code, by configuring watches, setters, or getters, or cross contexts by calling same-origin functions belonging to other documents.
 
-JavaScript enjoys very limited input and output capabilities. Interacting with same-origin document data and drawing [http://developer.mozilla.org/en/Canvas_tutorial CANVASes], displaying `window.*` pop-up dialogs, and writing script console errors aside, there are relatively few I/O facilities available. File operations or access to other persistent storage is generally not possible, although some [https://developer.mozilla.org/en/DOM/Storage experimental features] are being introduced and quickly scrapped. Scripts may send and receive data from the originating server using the [http://www.w3.org/TR/XMLHttpRequest/ XMLHttpRequest] extension, which permits scripts to send and read arbitrary payloads; and may also automatically send requests and read back properly formatted responses by issuing `<SCRIPT SRC="...">`, or `<LINK REL="Stylesheet" HREF="...">`, even across domains. Lastly, JavaScript may send information to third-party servers by spawning objects such as `<IMG>`, `<IFRAME>`, `<OBJECT>`, `<APPLET>`, or by triggering page transitions, and encoding information in the URL that would be automatically requested by the browser immediately thereafter - but it may not read back the returned data. Some side channels related to browser caching mechanisms and lax DOM security checks also exist, providing additional side channels between cooperating parties.
+Java<b></b>Script enjoys very limited input and output capabilities. Interacting with same-origin document data and drawing [http://developer.mozilla.org/en/Canvas_tutorial CANVASes], displaying `window.*` pop-up dialogs, and writing script console errors aside, there are relatively few I/O facilities available. File operations or access to other persistent storage is generally not possible, although some [https://developer.mozilla.org/en/DOM/Storage experimental features] are being introduced and quickly scrapped. Scripts may send and receive data from the originating server using the [http://www.w3.org/TR/XMLHttpRequest/ XMLHttpRequest] extension, which permits scripts to send and read arbitrary payloads; and may also automatically send requests and read back properly formatted responses by issuing `<SCRIPT SRC="...">`, or `<LINK REL="Stylesheet" HREF="...">`, even across domains. Lastly, Java<b></b>Script may send information to third-party servers by spawning objects such as `<IMG>`, `<IFRAME>`, `<OBJECT>`, `<APPLET>`, or by triggering page transitions, and encoding information in the URL that would be automatically requested by the browser immediately thereafter - but it may not read back the returned data. Some side channels related to browser caching mechanisms and lax DOM security checks also exist, providing additional side channels between cooperating parties.
 
-Some of the other security-relevant characteristics of JavaScript environments in modern browsers include:
+Some of the other security-relevant characteristics of Java<b></b>Script environments in modern browsers include:
 
-  * *Dynamic, runtime code interpretation with no strict code caching rules*. Any code snippets located in-line with HTML tags would be interpreted and executed, and JavaScript itself has a possibility to either directly evaluate strings as JavaScript code (`eval(...)`), or to produce new HTML that in turn may contain more JavaScript (`.innerHTML` and `.outerHTML` properties, `document.write()`, event handlers). The behavior of code that attempts to modify own container while executing (through DOM) is not well-defined, and varies between browsers.
+  * *Dynamic, runtime code interpretation with no strict code caching rules*. Any code snippets located in-line with HTML tags would be interpreted and executed, and Java<b></b>Script itself has a possibility to either directly evaluate strings as Java<b></b>Script code (`eval(...)`), or to produce new HTML that in turn may contain more Java<b></b>Script (`.innerHTML` and `.outerHTML` properties, `document.write()`, event handlers). The behavior of code that attempts to modify own container while executing (through DOM) is not well-defined, and varies between browsers.
 
   * *Somewhat inconsistent exception support*. Although within the language itself, exception-throwing conditions are well defined, it is not so when interacting with DOM structures. Depending on the circumstances, some DOM operations may fail silently (with writes or reads ignored), return various magic responses (`undefined`, `null`, `object inaccessible`), throw a non-standardized exception, or even abort execution unconditionally.
 
-  * *Somewhat inconsistent, but modifiable builtins and prototypes*. The behavior of many language constructs might be redefined by programs within the current context by modifying object setters, getters, or overwriting prototypes. Because of this, reliance on any specific code - for example a security check - executing in a predictable manner in the vicinity of a potentially malicious payload is risky. Notably, however, not all builtin objects may be trivially tampered with - for example, `Array` prototype setters may be modifiable, but `XML` not so. There is no fully-fledged operator overloading in JavaScript 1.x.
+  * *Somewhat inconsistent, but modifiable builtins and prototypes*. The behavior of many language constructs might be redefined by programs within the current context by modifying object setters, getters, or overwriting prototypes. Because of this, reliance on any specific code - for example a security check - executing in a predictable manner in the vicinity of a potentially malicious payload is risky. Notably, however, not all builtin objects may be trivially tampered with - for example, `Array` prototype setters may be modifiable, but `XML` not so. There is no fully-fledged operator overloading in Java<b></b>Script 1.x.
 
-  * *Typically synchronous execution*. Within a single document, browser-side JavaScript usually executes synchronously and in a single thread, and asynchronous timer events are not permitted to fire until the scripting engine enters idle state. No strict guarantees of synchronous execution exist, however, and multi-process rendering of Chrome or MSIE8 may permit cross-domain access to occur more asynchronously.
+  * *Typically synchronous execution*. Within a single document, browser-side Java<b></b>Script usually executes synchronously and in a single thread, and asynchronous timer events are not permitted to fire until the scripting engine enters idle state. No strict guarantees of synchronous execution exist, however, and multi-process rendering of Chrome or MSIE8 may permit cross-domain access to occur more asynchronously.
 
   * *Global function lookups not dependent on ordering or execution flow*. Functions may be invoked in a block of code before they are defined, and are indexed in a pass prior to execution. Because of this, reliance on top-level no-return statements such as `while (1);` to prevent subsequent code from being interpreted might be risky.
 
   * *Endless loops that terminate*. As a security feature, when the script executes for too long, the user is prompted to abort execution. This merely causes current execution to be stopped, but does not prevent scripts from being re-entered.
 
-  * *Broad, quickly evolving syntax*. For example, E4X extensions in Firefox [http://code.google.com/p/doctype/wiki/ArticleE4XSecurity well-structured XHTML or XML to be interpreted] as a JavaScript object, also executing any nested JavaScript initializers within such a block. This makes it very difficult to assume that a particular format of data would not constitute valid JavaScript syntax in a future-proof manner.
+  * *Broad, quickly evolving syntax*. For example, E4X extensions in Firefox [http://code.google.com/p/doctype/wiki/ArticleE4XSecurity well-structured XHTML or XML to be interpreted] as a Java<b></b>Script object, also executing any nested Java<b></b>Script initializers within such a block. This makes it very difficult to assume that a particular format of data would not constitute valid Java<b></b>Script syntax in a future-proof manner.
 
-Inline script blocks embedded within HTML are somewhat tricky to sanitize if permitted to contain user-controlled strings, because, much like `<TEXTAREA>`, `<STYLE>`, and several other HTML tags, they follow a counterintuitive CDATA-style parsing: a literal sequence of `</SCRIPT>` ends the script block regardless of its location within the JavaScript syntax as such. For example, the following code block would be ended prematurely, and lead to unauthorized, additional JavaScript block being executed:
+Inline script blocks embedded within HTML are somewhat tricky to sanitize if permitted to contain user-controlled strings, because, much like `<TEXTAREA>`, `<STYLE>`, and several other HTML tags, they follow a counterintuitive CDATA-style parsing: a literal sequence of `</SCRIPT>` ends the script block regardless of its location within the Java<b></b>Script syntax as such. For example, the following code block would be ended prematurely, and lead to unauthorized, additional Java<b></b>Script block being executed:
 
 {{{
 <SCRIPT>
@@ -404,13 +404,13 @@ Various differences between browser implementations are outlined below:
 || <font color="#3050a0">May currently executing code blocks modify self?</font> || read-only || read-only || || NO || NO || NO || YES || NO || NO ||
 || <font color="#3050a0">Is E4X extension supported?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
 || <font color="#3050a0">Is `charset=` honored on `<SCRIPT SRC="...">`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Do Unicode newlines (U+2028, U+2029) break lines in JavaScript?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Do Unicode newlines (U+2028, U+2029) break lines in Java<b></b>Script?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
 
 <b></b>
 
 ===JavaScript character encoding===
 
-To permit handling of strings that otherwise contain restricted literal text (such as `</SCRIPT>`, `"`, `'`, `CL` or `LF`, other non-printable characters), JavaScript offers five character encoding strategies:
+To permit handling of strings that otherwise contain restricted literal text (such as `</SCRIPT>`, `"`, `'`, `CL` or `LF`, other non-printable characters), Java<b></b>Script offers five character encoding strategies:
 
   # Three-digit, zero-padded, 8-bit octal numerical representations, C-style (`"test"` →  `"t\145st"`),<p />
   # Two-digit, zero-padded, 8-bit hexadecimal numerical representations, with C-style `\x` prefix (`"test"` → `"t\x65st"`),<p />
@@ -424,15 +424,15 @@ The parsing of these schemes is uniform across all browsers if fewer than the ex
 
 HTML entity encoding has no special meaning within HTML-embedded `<SCRIPT>` blocks. 
 
-Amusingly, although all the four aforementioned schemes are supported in JavaScript proper, a proposed informational standard for JavaScript Object Notation (JSON), a transport-oriented serialization scheme for JavaScript objects and arrays ([http://www.ietf.org/rfc/rfc4627.txt RFC 4627]), technically permits only the `\u` notation and a seemingly arbitrary subset of `\` control character shorthand codes (options 3 and 5 on the list above). In practice, since JSON objects are almost always simply passed to `eval(...)` in client-side JavaScript code to convert them back to native data structures, the limitation is not enforced in a vast majority of uses. Because of the advice provided in the RFC, some non-native `parseJSON` implementations (such as the [http://json.org/json2.js current example reference implementation] from [http://json.org json.org]) may not handle traditional `\x` escape codes properly, however. It is also not certain what approach would be followed by browsers in the currently discussed [http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2008-June/015078.html native, non-executing parsers] proposed for performance and security reasons.
+Amusingly, although all the four aforementioned schemes are supported in Java<b></b>Script proper, a proposed informational standard for Java<b></b>Script Object Notation (JSON), a transport-oriented serialization scheme for Java<b></b>Script objects and arrays ([http://www.ietf.org/rfc/rfc4627.txt RFC 4627]), technically permits only the `\u` notation and a seemingly arbitrary subset of `\` control character shorthand codes (options 3 and 5 on the list above). In practice, since JSON objects are almost always simply passed to `eval(...)` in client-side Java<b></b>Script code to convert them back to native data structures, the limitation is not enforced in a vast majority of uses. Because of the advice provided in the RFC, some non-native `parseJSON` implementations (such as the [http://json.org/json2.js current example reference implementation] from [http://json.org json.org]) may not handle traditional `\x` escape codes properly, however. It is also not certain what approach would be followed by browsers in the currently discussed [http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2008-June/015078.html native, non-executing parsers] proposed for performance and security reasons.
 
-Unlike in some C implementations, stray multi-line string literals are not permitted by JavaScript, but lone `\` at the end of a line may be used to break long lines in a seamless manner.
+Unlike in some C implementations, stray multi-line string literals are not permitted by Java<b></b>Script, but lone `\` at the end of a line may be used to break long lines in a seamless manner.
 
 ==Other document scripting languages==
 
-[http://msdn.microsoft.com/en-us/library/sx7b3k7y(VS.85).aspx VBScript] is a language envisioned by Microsoft as a general-purpose "hosted" scripting environment, incorporated within Windows as such, Microsoft IIS, and supported by Microsoft Internet Explorer via `vbscript:` URL scheme, and through `<SCRIPT>` tags. As far as client-side scripting is considered, the language did not seem to offer any significant advantages over the competing JavaScript technology, and appeared to lag in several areas.
+[http://msdn.microsoft.com/en-us/library/sx7b3k7y(VS.85).aspx VBScript] is a language envisioned by Microsoft as a general-purpose "hosted" scripting environment, incorporated within Windows as such, Microsoft IIS, and supported by Microsoft Internet Explorer via `vbscript:` URL scheme, and through `<SCRIPT>` tags. As far as client-side scripting is considered, the language did not seem to offer any significant advantages over the competing Java<b></b>Script technology, and appeared to lag in several areas.
 
-Presumably because of this, the technology never won broad browser support outside MSIE (with all current versions being able to execute it), and is very seldom relied upon. Where permitted to go through, it should be expected to have roughly the same security consequences as JavaScript. The attack surface and security controls within VBScript are poorly studied in comparison to that alternative, however.
+Presumably because of this, the technology never won broad browser support outside MSIE (with all current versions being able to execute it), and is very seldom relied upon. Where permitted to go through, it should be expected to have roughly the same security consequences as Java<b></b>Script. The attack surface and security controls within VBScript are poorly studied in comparison to that alternative, however.
 
 ==Cascading stylesheets==
 
@@ -448,13 +448,13 @@ There are three distinct ways to place CSS directives in HTML documents:
 
 Because CSS provides a powerful and standardized method to control the visual appearance of a block of HTML, many applications strive to let third parties control a subset of CSS syntax emitted in documents. Unfortunately, the task is fairly tricky; the most important security consequences of attacker-controlled stylesheets are:
 
-  * *The risk of JavaScript execution*. As a little-known feature, some CSS implementations permit JavaScript code to be embedded in stylesheets. There are at least three ways to achieve this goal: by using the `expression(...)` directive, which gives the ability to evaluate arbitrary JavaScript statements and use their value as a CSS parameter; by using the `url('javascript:...')` directive on properties that support it; or by invoking browser-specific features such as the [http://www.securiteam.com/securitynews/5LP051FHPE.html -moz-binding] mechanism of Firefox.
+  * *The risk of Java<b></b>Script execution*. As a little-known feature, some CSS implementations permit Java<b></b>Script code to be embedded in stylesheets. There are at least three ways to achieve this goal: by using the `expression(...)` directive, which gives the ability to evaluate arbitrary Java<b></b>Script statements and use their value as a CSS parameter; by using the `url('javascript:...')` directive on properties that support it; or by invoking browser-specific features such as the [http://www.securiteam.com/securitynews/5LP051FHPE.html -moz-binding] mechanism of Firefox.
 
   * *The ability to freely position text*. If user-controlled stylesheets are permitted on a page, various powerful CSS positioning directives may be invoked to move text outside the bounds of its current container, and mimick trusted UI elements or approximate them very accurately. Some examples of absolute positioning directives include `z-index`, `margin`, `padding`, `bottom`, `left`, `position`, `right`, `top`, or `text-indent` (many of them with sub-variants, such as `margin-left`).
 
   * *The ability to reuse trusted classes*. If user-controlled `CLASS="..."` attributes are permitted in HTML syntax, the attacker may have luck "borrowing" a class used to render elements of the trusted UI and impersonate them.
 
-Much like JavaScript, stylesheets are also tricky to sanitize, because they follow CDATA-style parsing: a literal sequence of `</STYLE>` ends the stylesheet regardless of its location within the CSS syntax as such. For example, the following stylesheet would be ended prematurely, and lead to JavaScript code being executed:
+Much like Java<b></b>Script, stylesheets are also tricky to sanitize, because they follow CDATA-style parsing: a literal sequence of `</STYLE>` ends the stylesheet regardless of its location within the CSS syntax as such. For example, the following stylesheet would be ended prematurely, and lead to Java<b></b>Script code being executed:
 
 {{{
 <STYLE>
@@ -472,7 +472,7 @@ Another interesting property specific to `<STYLE>` handling is that when two CDA
 </STYLE>
 }}}
 
-Yet another property that sets stylesheets apart from JavaScript is the fact that although CSS parser is very strict, a syntax error does not cause it to bail out completely. Instead, a recovery from the next top-level syntax element is attempted. This makes handling user-controlled strings even harder - for example, if a stray newline in user-supplied string is not properly escaped, it would actually permit the attacker to freely tinker with the stylesheet in most browsers:
+Yet another property that sets stylesheets apart from Java<b></b>Script is the fact that although CSS parser is very strict, a syntax error does not cause it to bail out completely. Instead, a recovery from the next top-level syntax element is attempted. This makes handling user-controlled strings even harder - for example, if a stray newline in user-supplied string is not properly escaped, it would actually permit the attacker to freely tinker with the stylesheet in most browsers:
 
 {{{
 <STYLE>
@@ -488,7 +488,7 @@ Yet another property that sets stylesheets apart from JavaScript is the fact tha
 Various differences in style parsing between common browsers are outlined below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is JavaScript `expression(...)` supported?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is Java<b></b>Script `expression(...)` supported?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is script-targeted `url(...)` supported?</font> || <font color="#ff0000">YES</font> || NO || || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is script-executing `-moz-binding` supported?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Does `</STYLE>` take precedence over comment block parsing?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
@@ -498,13 +498,13 @@ Various differences in style parsing between common browsers are outlined below:
 
 ===CSS character encoding===
 
-In many cases, as with JavaScript, there is a need for web applications to render certain user-supplied user-controlled strings within stylesheets in a safe manner. To handle various reserved characters, a method for escaping potentially troublesome values is required; confusingly, however, CSS format supports neither HTML entity encoding, nor any of the common methods of encoding characters seen in JavaScript. 
+In many cases, as with Java<b></b>Script, there is a need for web applications to render certain user-supplied user-controlled strings within stylesheets in a safe manner. To handle various reserved characters, a method for escaping potentially troublesome values is required; confusingly, however, CSS format supports neither HTML entity encoding, nor any of the common methods of encoding characters seen in Java<b></b>Script. 
 
 Instead, a rather unusual and incompatible scheme consisting of `\` followed by non-prefixed, variable length one- to six-digit hexadecimal is employed; for example, `"test"` may be encoded as `"t\65st"` or `"t\000065st"` - but not as `t\est"`, `"t\x65st"`, `"t\u0065st"`, nor `"t&#x65;st"` ([http://www.w3.org/TR/CSS21/syndata.html#escaped-characters reference]).
 
 A very important and little-known oddity unique to CSS parsing is that escape sequences are also accepted outside strings, and confusingly, may substitute syntax control characters in the stylesheet; so for example, `color: red` and `color: \072\065\064` have the same meaning - and so does `color: expression(alert(1))` and `color: expression\028\061lert\028\031\029\029`. To add insult to injury, syntax such as `color: \027red'` or `color: 'red\027` would not work, but 'color: \027red\027' is OK.
 
-Like in JavaScript, stray multi-line string literals are not supported, but a lone `\` at the end of a line may be used to seamlessly break long lines.
+Like in Java<b></b>Script, stray multi-line string literals are not supported, but a lone `\` at the end of a line may be used to seamlessly break long lines.
 
 ==Other built-in document formats==
 
@@ -514,7 +514,7 @@ HTML aside, modern browser renderers usually natively support an additional set 
 
   * *Rich data formats.* This category is primarily populated by non-HTML XML namespace parsers ([http://www.w3.org/Graphics/SVG/ SVG], [http://www.rssboard.org/rss-specification RSS], [http://tools.ietf.org/html/rfc4287 Atom]); beyond raw data, these document formats contain various rendering instructions, hints, or conditionals. Because of how XML works, each of the XML-based formats has two important security consequences:<p />
     * Firstly, nested XML namespaces may be defined, and are usually not verified against MIME type intents, permitting HTML to be embedded for example inside `image/svg+xml`.<p />
-    * Secondly, these formats may actually come with provisions for non-standard embedded HTML or JavaScript payloads or scripts built in, permitting HTML injection even if the attacker has no direct control over XML document structure.
+    * Secondly, these formats may actually come with provisions for non-standard embedded HTML or Java<b></b>Script payloads or scripts built in, permitting HTML injection even if the attacker has no direct control over XML document structure.
 
 One example of a document that, even if served as `image/svg+xml`, would still execute scripts in many current browsers despite MIME type clearly stating a different intent, is as follows:
 
@@ -539,7 +539,7 @@ Some of the non-HTML builtin document type behaviors are documented below:
 || <font color="#3050a0">Is generic XML document support present?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Is RSS feed support present?</font> || NO || YES || || YES || YES || YES || YES || NO || NO ||
 || <font color="#3050a0">Is ATOM feed support present</font> || NO || YES || || YES || YES || YES || YES || NO || NO ||
-|| <font color="#3050a0">Does JavaScript execute within feeds?</font> || <font color="#ff0000">(YES)</font> || NO || || NO || NO || NO || NO || <font color="#ff0000">(YES)</font> || <font color="#ff0000">(YES)</font> ||
+|| <font color="#3050a0">Does Java<b></b>Script execute within feeds?</font> || <font color="#ff0000">(YES)</font> || NO || || NO || NO || NO || NO || <font color="#ff0000">(YES)</font> || <font color="#ff0000">(YES)</font> ||
 || <font color="#3050a0">Are `javascript:` or `data:` URLs permitted in feeds?</font> || <font color="#909090">n/a</font> || NO || || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Are CSS specifications permitted in feeds?</font> || <font color="#909090">n/a</font> || NO || || YES || YES || NO || YES || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is SVG image support present?</font> || NO || NO || || YES || YES || YES || YES || YES || NO ||
