@@ -52,7 +52,7 @@ On top of this, the specification is simplistic enough to actually omit quite a 
 
   * The behavior when a single name resolves to vastly different IP addresses (for example, one on an internal network, and another on the Internet) is not specified, permitting [http://crypto.stanford.edu/dns/ DNS rebinding] attacks and related tricks that put certain mechanisms (captchas, ad click tracking, etc) at extra risk.
 
-  * Many one-off exceptions to the model were historically made, be it intentionally to permit certain types of desirable interaction, such as the ability to point own frames or script-spawned windows to new locations - and these are not well-documented.
+  * Many one-off exceptions to the model were historically made to permit certain types of desirable interaction, such as the ability to point own frames or script-spawned windows to new locations - and these are not well-documented.
 
 All this ambiguity leads to a significant degree of variation between browsers, and historically, resulted in a large number of browser security flaws. A detailed analysis of DOM actions permitted across domains, as well as context inheritance rules, is given in later sections. A quick survey of several core same-origin differences between browsers is given below:
 
