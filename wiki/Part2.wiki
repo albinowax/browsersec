@@ -204,7 +204,7 @@ Some of the unique properties and gotchas of the current Flash security model in
     * The ability to interact with on-page Java<b></b>Script context ([http://livedocs.adobe.com/flex/3/html/05B_Security_14.html#131683 allowScriptAccess] attribute; previously unrestricted by default, now limited to `sameDomain`, which requires the accessed page to be same origin with the applet).<p />
     * The ability to run in full-screen mode ([http://livedocs.adobe.com/flex/3/html/05B_Security_06.html#152029 allowFullScreen] attribute).
 
-This model is further mired with other bugs and oddities, such as the reliance on [http://my.opera.com/hallvors/blog/2007/10/22/a-malicious-thought-how-to-imagine-a-security-issue location.* DOM being tamper-proof] for the purpose of executing same-origin security checks,
+This model is further mired with other bugs and oddities, such as the reliance on [http://my.opera.com/hallvors/blog/2007/10/22/a-malicious-thought-how-to-imagine-a-security-issue location.* DOM being tamper-proof] for the purpose of executing same-origin security checks.
 
 Flash applets running from the Internet do not have any specific permissions to access local files or input devices, although depending on user configuration decisions, some or all sites may use a limited quota within a virtualized [http://www.macromedia.com/support/documentation/en/flashplayer/help/help02.html data storage sandbox], or access the microphone.
 
