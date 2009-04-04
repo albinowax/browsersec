@@ -349,7 +349,7 @@ With the exception of cross-domain, cross-document access permissions outlined i
 
 _Trivia: traversing `document.*` is a possible approach to look up specific input or output fields when modifying complex pages from within scripts, but it is not a very practical one; because of this, most scripts resort to `document.getElementById()` method to uniquely identify elements regardless of their current location on the page. Although `ID=` parameters for tags within HTML documents are expected to be unique, there is no such guarantee. Currently, all major browsers seem to give the first occurrence a priority._
 
-==Browser-side Java<b></b>Script==
+==Browser-side Javascript==
 
 [http://en.wikipedia.org/wiki/Javascript JavaScript] is a relatively simple but rich, object-based imperative scripting language tightly integrated with HTML, and supported by all contemporary web browsers. Authors claim that the language has roots with [http://en.wikipedia.org/wiki/Scheme_(programming_language) Scheme] and [http://en.wikipedia.org/wiki/Self_(programming_language) Self] programming languages, although it is often characterized in a more down-to-earth way as resembling a crossover of [http://en.wikipedia.org/wiki/Objective-C Objective C] and [http://en.wikipedia.org/wiki/Visual_Basic Visual Basic]. Confusingly, except for the common C syntax, it shares relatively few unique features with [http://en.wikipedia.org/wiki/Java_(programming_language) Java]; the naming is simply a marketing gimmick devised by Netscape and Sun in the 90s.
 
@@ -408,7 +408,7 @@ Various differences between browser implementations are outlined below:
 
 <b></b>
 
-===Java<b></b>Script character encoding===
+===Javascript character encoding===
 
 To permit handling of strings that otherwise contain restricted literal text (such as `</SCRIPT>`, `"`, `'`, `CL` or `LF`, other non-printable characters), Java<b></b>Script offers five character encoding strategies:
 
