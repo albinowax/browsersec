@@ -745,11 +745,13 @@ The other option is an equivalent `<META HTTP-EQUIV="...">` directive (supported
 
 _NOTE: Somewhat confusingly, XML `<?xml version="1.0" encoding="UTF-8">` directive does not authoritatively specify the character set for the purpose of rendering XHTML documents - in absence of one of the aforementioned declarations, character set detection may still take place regardless of this tag._
 
-That said, if an appropriate character set declaration is provided, browsers thankfully tend to obey a specified character set value, with two caveats:
+That said, if an appropriate character set declaration is provided, browsers thankfully tend to obey a specified character set value, with several caveats:
 
   * Invalid character set names cause character set detection to kick in. Sadly, there is little or no consistency in how flexibly character set name might be specified, leading to unnecessary mistakes - for example, `iso-8859-2` and `iso8859-2` are both a valid character set to most browsers, and so many developers learned to pay no attention to how they enter the name; but `utf8` is *not* a valid alias for `utf-8`. 
 
   * As noted in the section on [http://code.google.com/p/browsersec/wiki/Part1#Hypertext_Markup_Language HTML language], the precedence of `META HTTP-EQUIV` and `Content-Type` character specifications is not well-defined in any specific place - so if the two directives disagree, it is difficult to authoritatively predict the outcome of this conflict in all current and future browsers.
+
+  * There are some reports of some exotic non-security glitches present in Microsoft Internet Explorer when only `Content-Type` headers, but not `META HTTP-EQUIV`, are used for HTML documents in certain scripts.
 
 Relevant tests:
 
