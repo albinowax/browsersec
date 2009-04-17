@@ -472,7 +472,7 @@ Another interesting property specific to `<STYLE>` handling is that when two CDA
 </STYLE>
 }}}
 
-Yet another property that sets stylesheets apart from Java<b></b>Script is the fact that although CSS parser is very strict, a syntax error does not cause it to bail out completely. Instead, a recovery from the next top-level syntax element is attempted. This makes handling user-controlled strings even harder - for example, if a stray newline in user-supplied string is not properly escaped, it would actually permit the attacker to freely tinker with the stylesheet in most browsers:
+Yet another characteristic that sets stylesheets apart from Java<b></b>Script is the fact that although CSS parser is very strict, a syntax error does not cause it to bail out completely. Instead, a recovery from the next top-level syntax element is attempted. This makes handling user-controlled strings even harder - for example, if a stray newline in user-supplied string is not properly escaped, it would actually permit the attacker to freely tinker with the stylesheet in most browsers:
 
 {{{
 <STYLE>
@@ -485,7 +485,7 @@ Yet another property that sets stylesheets apart from Java<b></b>Script is the f
 <SPAN CLASS="example">Hello world (in red)!</SPAN>
 }}}
 
-Various differences in style parsing between common browsers are outlined below:
+Additional examples along these lines are explored in more detail on [http://centricle.com/ref/css/filters/ this page]. Several fundamental differences in style parsing between common browsers are outlined below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Is Java<b></b>Script `expression(...)` supported?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
@@ -502,7 +502,7 @@ In many cases, as with Java<b></b>Script, there is a need for web applications t
 
 Instead, a rather unusual and incompatible scheme consisting of `\` followed by non-prefixed, variable length one- to six-digit hexadecimal is employed; for example, `"test"` may be encoded as `"t\65st"` or `"t\000065st"` - but not as `t\est"`, `"t\x65st"`, `"t\u0065st"`, nor `"t&#x65;st"` ([http://www.w3.org/TR/CSS21/syndata.html#escaped-characters reference]).
 
-A very important and little-known oddity unique to CSS parsing is that escape sequences are also accepted outside strings, and confusingly, may substitute syntax control characters in the stylesheet; so for example, `color: red` and `color: \072\065\064` have the same meaning - and so does `color: expression(alert(1))` and `color: expression\028\061lert\028\031\029\029`. To add insult to injury, syntax such as `color: \027red'` or `color: 'red\027` would not work, but 'color: \027red\027' is OK.
+A very important and little-known oddity unique to CSS parsing is that escape sequences are also accepted outside strings, and confusingly, may substitute some syntax control characters in the stylesheet; so for example, `color: red` and `color: \072\065\064` have the same meaning - and so does `color: expression(alert(1))` and `color: expression\028\061lert\028\031\029\029`. To add insult to injury, syntax such as `color: \027red'` or `color: 'red\027` would not work, but 'color: \027red\027' is OK.
 
 Like in Java<b></b>Script, stray multi-line string literals are not supported, but a lone `\` at the end of a line may be used to seamlessly break long lines.
 
