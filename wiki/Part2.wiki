@@ -905,6 +905,7 @@ Several important HTTPS properties and default behaviors are outlined below:
 || <font color="#3050a0">Mixed content behavior on `<APPLET>`</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Mixed content behavior on `<EMBED>`</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Mixed content behavior on `<IFRAME>`</font> || block || block || || warn || warn || permit || permit || permit || permit ||
+|| <font color="#3050a0">Do wildcard certificates match multiple host name segments?</font> || NO || NO || || YES || YES || NO || NO || NO || NO || 
 
 ^*^ On Windows XP, this is enabled only when [http://support.microsoft.com/kb/931125 KB931125] is installed, and browser's phishing filter functionality is enabled.
 
