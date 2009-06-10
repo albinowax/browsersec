@@ -439,6 +439,8 @@ Aside from coding vulnerabilities such as [http://code.google.com/p/doctype/wiki
 
   * *Cache timing:* many resources cached locally by the browser may, when requested, load in a couple milliseconds - whereas fetching them from the server may take a longer while. By timing `onload` events on elements such as `<IMG>` or `<IFRAME>` with carefully chosen target URLs, a rogue page may tell if the requested resource, belonging to a probed site, is already cached - which would indicate prior visits - or not.<p />The probe works only once, as the resources probed this way would be cached for a while as a direct result of testing; but premature retesting could be avoided in a number of ways.
 
+  * *Pseudo-random number generator probing:* a [http://www.trusteer.com/files/Temporary_User_Tracking_in_Major_Browsers.pdf research paper] by Amit Klein explores the idea of reconstructing the state of non-crypto-safe pseudo-random number generators used globally in browsers for purposes such as implementing Javascript `Math.random()`, or generating `multipart/form-data` MIME boundaries, to uniquely identify users and possibly check for certain events across domains.
+
 Assorted tests related to the aforementioned side channels:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
