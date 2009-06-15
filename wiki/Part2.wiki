@@ -167,21 +167,21 @@ The original design for HTTP cookies has multiple problems and drawbacks that re
   * *Problems with "protected" cookie clobbering:* as indicated earlier, `secure` and `httponly` cookies are meant not to be visible in certain situations, but no specific thought was given to preventing Java<b></b>Script from overwriting `httponly` cookies, or non-encrypted pages from overwriting `secure` cookies; likewise, `httponly` or `secure` cookies may get dropped and replaced with evil versions by simply overflowing the per-domain cookie jar. This oversight could be abused to subvert at least some usage scenarios.<p />_Note: there is an ongoing work to [http://docs.google.com/View?docid=dxxqgkd_0cvcqhsdw clarify and clean up] `httponly` cookie behavior to improve its usability._
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Does `document.cookie` work on `ftp` URLs?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Does `document.cookie` work on `file` URLs?</font> || YES || YES || || YES || YES || YES || YES || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Is `Cookie2` standard supported?</font> || NO || NO || || NO || NO || NO || <font color="#30ff30">YES</font> || NO || NO ||
-|| <font color="#3050a0">Are multiple comma-separated `Set-Cookie` pairs accepted?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || NO ||
-|| <font color="#3050a0">Are `quoted-string` values supported for HTTP cookies?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || YES || YES || <font color="#ff0000">NO</font> || YES || YES || YES ||
-|| <font color="#3050a0">Is `max-age` parameter supported?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Does `max-age=0` work to delete cookies?</font> || <font color="#ff0000">(NO)</font> || <font color="#ff0000">(NO)</font> || || YES || YES || <font color="#ff0000">NO</font> || YES || YES || YES ||
-|| <font color="#3050a0">Is `httponly` flag supported?</font> || YES || YES || || YES || YES || <font color="#ff0000">NO</font> || YES || YES || <font color="#ff0000">NO</font> ||
-|| <font color="#3050a0">Can scripts clobber `httponly` cookies?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">(YES)</font> || NO || NO || <font color="#ff0000">(YES)</font> ||
-|| <font color="#3050a0">Ordering of duplicate cookies with different scope</font> || <font color="#ff0000">random</font> || <font color="#ff0000">random</font> || || <font color="#ff0000">some dropped</font> || <font color="#30ff30">most specific first</font> || <font color="#ff0000">random</font> || <font color="#30ff30">most specific first</font> || <font color="#30ff30">most specific first</font> || <font color="#ff0000">by age</font> ||
-|| <font color="#3050a0">Maximum length of a single cookie</font> || 4 kB || 4 kB || || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">broken</font> ||
-|| <font color="#3050a0">Maximum number of cookies per site</font> || 50 || 50 || || <font color="#ff0000">∞</font> || 100 || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || ~70 || 50 ||
-|| <font color="#3050a0">Are cookies for right-hand IP address fragments accepted?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || NO || NO ||
-|| <font color="#3050a0">Are host-scope cookies possible (no `domain=` value)?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Overly permissive ccTLD behavior test results (3 tests)</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#ff0000">1/3 FAIL</font> || || <font color="#ff0000">2/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">2/3 FAIL</font> || 
+|| <font color="#3050a0">Does `document.cookie` work on `ftp` URLs?</font> || NO || NO || NO || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does `document.cookie` work on `file` URLs?</font> || YES || YES || YES || YES || YES || YES || YES || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is `Cookie2` standard supported?</font> || NO || NO || NO || NO || NO || NO || <font color="#30ff30">YES</font> || NO || NO ||
+|| <font color="#3050a0">Are multiple comma-separated `Set-Cookie` pairs accepted?</font> || NO || NO || NO || NO || NO || <font color="#ff0000">YES</font> || NO || NO || NO ||
+|| <font color="#3050a0">Are `quoted-string` values supported for HTTP cookies?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || <font color="#ff0000">NO</font> || YES || YES || YES ||
+|| <font color="#3050a0">Is `max-age` parameter supported?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Does `max-age=0` work to delete cookies?</font> || <font color="#ff0000">(NO)</font> || <font color="#ff0000">(NO)</font> || <font color="#ff0000">(NO)</font> || YES || YES || <font color="#ff0000">NO</font> || YES || YES || YES ||
+|| <font color="#3050a0">Is `httponly` flag supported?</font> || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> || YES || YES || <font color="#ff0000">NO</font> ||
+|| <font color="#3050a0">Can scripts clobber `httponly` cookies?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">(YES)</font> || NO || NO || <font color="#ff0000">(YES)</font> ||
+|| <font color="#3050a0">Ordering of duplicate cookies with different scope</font> || <font color="#ff0000">random</font> || <font color="#ff0000">random</font> || <font color="#ff0000">some dropped</font> || <font color="#ff0000">some dropped</font> || <font color="#30ff30">most specific first</font> || <font color="#ff0000">random</font> || <font color="#30ff30">most specific first</font> || <font color="#30ff30">most specific first</font> || <font color="#ff0000">by age</font> ||
+|| <font color="#3050a0">Maximum length of a single cookie</font> || 4 kB || 4 kB || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">broken</font> ||
+|| <font color="#3050a0">Maximum number of cookies per site</font> || 50 || 50 || 50 || <font color="#ff0000">∞</font> || 100 || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || ~70 || 50 ||
+|| <font color="#3050a0">Are cookies for right-hand IP address fragments accepted?</font> || NO || NO || NO || NO || NO || <font color="#ff0000">YES</font> || NO || NO || NO ||
+|| <font color="#3050a0">Are host-scope cookies possible (no `domain=` value)?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Overly permissive ccTLD behavior test results (3 tests)</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">2/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">2/3 FAIL</font> || 
 
 <b></b>
 
@@ -223,8 +223,8 @@ Much like Adobe Flash, [http://java.sun.com/applets/ Java applets], reportedly s
 Depending on the configuration, the user may be prompted to give signed applets greater privileges, including the ability to read and write local files, or access specific devices. Unlike Flash, Java has no cross-domain policy negotiation features.
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is `DOMService` supported?</font> || YES || YES || || NO || NO || YES || NO || YES || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Does `DOMService` permit cross-domain access to embedding page?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is `DOMService` supported?</font> || YES || YES || YES || NO || NO || YES || NO || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does `DOMService` permit cross-domain access to embedding page?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
 
 <b></b>
 
@@ -268,12 +268,12 @@ A quick survey of implementations is shown below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Inherited context for empty IFRAMEs</font> || parent || parent || || parent || parent || parent || parent || parent || parent ||
-|| <font color="#3050a0">Inherited context for `about:blank` windows</font> || parent || parent || || no access || no access || parent || parent || parent || parent ||
-|| <font color="#3050a0">Inherited context for `javascript:` windows</font> || parent || parent || || parent || parent || <font color="#909090">n/a</font> || parent || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || 
-|| <font color="#3050a0">Inherited context for `data:` windows</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || || parent || parent || no access || blank || no access || no access ||
-|| <font color="#3050a0">Is parent's `Referer` sent from empty IFRAMEs?</font> || NO || NO || || NO || NO || NO || YES || NO || NO ||
-|| <font color="#3050a0">Is parent's `Referer` sent from `javascript:` windows?</font> || NO || NO || || NO || NO || <font color="#909090">n/a</font> || NO || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Is parent's `Referer` sent from `data:` windows?</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Inherited context for `about:blank` windows</font> || parent || parent || parent || no access || no access || parent || parent || parent || parent ||
+|| <font color="#3050a0">Inherited context for `javascript:` windows</font> || parent || parent || parent || parent || parent || <font color="#909090">n/a</font> || parent || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || 
+|| <font color="#3050a0">Inherited context for `data:` windows</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || parent || parent || no access || blank || no access || no access ||
+|| <font color="#3050a0">Is parent's `Referer` sent from empty IFRAMEs?</font> || NO || NO || NO || NO || NO || NO || YES || NO || NO ||
+|| <font color="#3050a0">Is parent's `Referer` sent from `javascript:` windows?</font> || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> || NO || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is parent's `Referer` sent from `data:` windows?</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || NO || NO || NO || NO || NO || NO ||
 
 <b></b>
 
@@ -322,12 +322,12 @@ In addition to these content inclusion methods, multiple ways exist for pages to
 Related tests:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Are verbose `onerror` messages produced for `<SCRIPT>`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Are verbose `onerror` messages produced for `<STYLE>`?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Can links be auto-clicked via `click()`?</font> || YES || YES || || NO || NO || NO || YES || NO || NO ||
-|| <font color="#3050a0">Is `getComputedStyle` supported for CSS? (W3C)</font> || NO || NO || || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Is `currentStyle` supported for CSS? (Microsoft)</font> ||  YES || YES || || NO || NO || NO || YES || NO || NO ||
-|| <font color="#3050a0">Is `ENCTYPE=text/plain` supported on forms</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO ||
+|| <font color="#3050a0">Are verbose `onerror` messages produced for `<SCRIPT>`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Are verbose `onerror` messages produced for `<STYLE>`?</font> || NO || NO || NO || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Can links be auto-clicked via `click()`?</font> || YES || YES || YES || NO || NO || NO || YES || NO || NO ||
+|| <font color="#3050a0">Is `getComputedStyle` supported for CSS? (W3C)</font> || NO || NO || NO || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Is `currentStyle` supported for CSS? (Microsoft)</font> ||  YES || YES || YES || NO || NO || NO || YES || NO || NO ||
+|| <font color="#3050a0">Is `ENCTYPE=text/plain` supported on forms</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO ||
 
 Note that neither of the aforementioned methods permits any control over HTTP headers. As [http://code.google.com/p/browsersec/wiki/Part1#Plugin-supported_content noted earlier], more permissive mechanisms may be available to plugin-interpreted programs and other non-HTML data, however.
 
@@ -377,11 +377,11 @@ Joseph Schorr cleverly pointed out that this behavior may be worked around by cr
 Relevant tests:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is CSS `opacity` supported ("decoy underneath")?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Is CSS `opacity` supported ("decoy underneath")?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Are partly obstructed `IFRAME` containers clickable ("decoy on top")?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Is cross-domain `scrollBy` scrolling permitted?</font> || NO || NO || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Is cross-domain anchor-based frame positioning permitted?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Is `X-Frame-Options` available?</font> || NO || NO || YES || NO || NO || YES || NO || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is cross-domain `scrollBy` scrolling permitted?</font> || NO || NO || NO || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is cross-domain anchor-based frame positioning permitted?</font> || YES || YES || YES || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is `X-Frame-Options` defense available?</font> || NO || NO || YES || NO || NO || YES || NO || YES || <font color="#909090">n/a</font> ||
 
 <b></b>
 
@@ -400,22 +400,22 @@ For compatibility or usability reasons, and sometimes out of simple oversight, c
 A survey of these exceptions is summarized below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Can `window.open()` look up unrelated windows?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Can `frames[]` look up unrelated windows?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Can `<win>.frames[]` access third-party IFRAMEs?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Is `<win>.frames[]` iterator permitted?</font> ||  <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || (NO) || NO || NO ||
-|| <font color="#3050a0">Can `window.open()` reposition unrelated windows?</font> ||  <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Can `<win>.history.*` methods be called on unrelated targets?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Can `<win>.location.*` properties be set on unrelated targets?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Can `<win>.location.*` methods be called on unrelated targets?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Can `<win>.document.write()` be called on unrelated targets?</font> || NO || NO || || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Can `TARGET=` links reposition unrelated targets?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Is setting `window.on*` properties possible across domains?</font> || YES (?) || YES (?) || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Is setting `window.opener` possible across domains?</font> || YES || YES || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Is setting `window.name` possible across domains?</font> || YES || YES || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Is calling `frameElements` methods possible across domains?</font> || NO || NO || || YES || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Can top-level documents navigate subframes of third-party frames?</font> ||  <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Is `postMessage` API supported?</font> || NO || NO || || NO || YES || NO || YES || NO || NO ||
+|| <font color="#3050a0">Can `window.open()` look up unrelated windows?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Can `frames[]` look up unrelated windows?</font> || NO || NO || NO || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Can `<win>.frames[]` access third-party IFRAMEs?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Is `<win>.frames[]` iterator permitted?</font> ||  <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || (NO) || NO || NO ||
+|| <font color="#3050a0">Can `window.open()` reposition unrelated windows?</font> ||  <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Can `<win>.history.*` methods be called on unrelated targets?</font> || NO || NO || (NO) || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Can `<win>.location.*` properties be set on unrelated targets?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || (NO) || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Can `<win>.location.*` methods be called on unrelated targets?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || (NO) || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Can `<win>.document.write()` be called on unrelated targets?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Can `TARGET=` links reposition unrelated targets?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font>^*^ || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Is setting `window.on*` properties possible across domains?</font> || YES (?) || YES (?) || YES (?) || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is setting `window.opener` possible across domains?</font> || YES || YES || NO || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is setting `window.name` possible across domains?</font> || YES || YES || NO || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is calling `frameElements` methods possible across domains?</font> || NO || NO || NO || YES || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Can top-level documents navigate subframes of third-party frames?</font> ||  <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Is `postMessage` API supported?</font> || NO || NO || YES || NO || YES || NO || YES || NO || NO ||
 
 ^*^ In Chrome, this succeeds only if both tabs share a common renderer process, which limits the scope of possible attacks.
 
@@ -444,12 +444,12 @@ Aside from coding vulnerabilities such as [http://code.google.com/p/doctype/wiki
 Assorted tests related to the aforementioned side channels:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is detection of `:visited` styles possible?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Can image sizes be read back via CSS?</font> || NO || NO || || YES || YES || YES || NO || YES || YES ||
-|| <font color="#3050a0">Can image sizes be read back via `Image` object?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Does CSS parser accept HTML documents as stylesheets?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Does `onerror` fire on all common HTTP errors?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Is `delete <win>.var` probe possible?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is detection of `:visited` styles possible?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Can image sizes be read back via CSS?</font> || NO || NO || NO || YES || YES || YES || NO || YES || YES ||
+|| <font color="#3050a0">Can image sizes be read back via `Image` object?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Does CSS parser accept HTML documents as stylesheets?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Does `onerror` fire on all common HTTP errors?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Is `delete <win>.var` probe possible?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
 
 _Note: Chris Evans and Billy Rios explore many of these vectors in greater detail in their 2008 presentation, [https://docs.google.com/Present?docid=dfgb2455_72fkwc2phc "Cross-Domain Leakiness"]._
 
@@ -476,9 +476,9 @@ Because none of these methods is entirely bullet-proof or problem-free, as of no
 Relevant tests:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is direct navigation to RFC 1918 IPs possible?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Is navigation to non-qualified host names possible?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Is navigation to names that resolve to RFC 1918 ranges possible?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Is direct navigation to RFC 1918 IPs possible?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Is navigation to non-qualified host names possible?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Is navigation to names that resolve to RFC 1918 ranges possible?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
 
 <b></b>
 
@@ -489,8 +489,8 @@ As noted in [http://code.google.com/p/browsersec/wiki/Part1#Uniform_Resource_Loc
 Because of this, a rather arbitrary subset of ports belonging to common (and not so common) network services is in modern days blocked for HTTP and some other protocols in most browsers on the market:
 
 || <font color="#3050a0">*Browser*</font> || <font color="#3050a0">*Blocked ports*</font> ||
-|| *MSIE6,* <br> *MSIE7* || 19 <font color="#909090">(chargen)</font>, 21 <font color="#909090">(ftp)</font>, 25 <font color="#909090">(smtp)</font>, 110 <font color="#909090">(pop3)</font>, 119 <font color="#909090">(nntp)</font>, 143 <font color="#909090">(imap2)</font> ||
-|| *MSIE8* || ||
+|| *MSIE6,* <br> *MSIE7* || 19 <font color="#909090">(chargen)</font>, 21 <font color="#909090">(ftp)</font>, 25 <font color="#909090">(smtp)</font>, 110 <font color="#909090">(pop3)</font>, 119 <font color="#909090">(nntp)</font>, 143 <font color="#909090">(imap2)</font>, 993 <font color="#909090">(ssl imap3)</font> ||
+|| *MSIE8* || 19 <font color="#909090">(chargen)</font>, 21 <font color="#909090">(ftp)</font>, 25 <font color="#909090">(smtp)</font>, 110 <font color="#909090">(pop3)</font>, 119 <font color="#909090">(nntp)</font>, 143 <font color="#909090">(imap2)</font>, 220 <font color="#909090">(imap3)</font> ||
 || *Firefox,* <br> *Safari,* <br> *Opera,* <br> *Chrome,* <br> *Android* || 1 <font color="#909090">(tcpmux)</font>, 7 <font color="#909090">(echo)</font>, 9 <font color="#909090">(discard)</font>, 11 <font color="#909090">(systat)</font>, 13 <font color="#909090">(daytime)</font>, 15 <font color="#909090">(netstat)</font>, 17 <font color="#909090">(qotd)</font>, 19 <font color="#909090">(chargen)</font>, 20 <font color="#909090">(ftp-data)</font>,21 <font color="#909090">(ftp)</font>, 22 <font color="#909090">(ssh)</font>, 23 <font color="#909090">(telnet)</font>, 25 <font color="#909090">(smtp)</font>, 37 <font color="#909090">(time)</font>, 42 <font color="#909090">(name)</font>, 43 <font color="#909090">(nicname)</font>, 53 <font color="#909090">(domain)</font>, 77 <font color="#909090">(priv-rjs)</font>, 79 <font color="#909090">(finger)</font>, 87 <font color="#909090">(ttylink)</font>, 95 <font color="#909090">(supdup)</font>, 101 <font color="#909090">(hostriame)</font>, 102 <font color="#909090">(iso-tsap)</font>, 103 <font color="#909090">(gppitnp)</font>, 104 <font color="#909090">(acr-nema)</font>, 109 <font color="#909090">(pop2)</font>, 110 <font color="#909090">(pop3)</font>, 111 <font color="#909090">(sunrpc)</font>, 113 <font color="#909090">(auth)</font>, 115 <font color="#909090">(sftp)</font>, 117 <font color="#909090">(uccp-path)</font>, 119 <font color="#909090">(nntp)</font>, 123 <font color="#909090">(ntp)</font>, 135 <font color="#909090">(loc-srv)</font>, 139 <font color="#909090">(netbios)</font>, 143 <font color="#909090">(imap2)</font>, 179 <font color="#909090">(bgp)</font>, 389 <font color="#909090">(ldap)</font>, 465 <font color="#909090">(ssl smtp)</font>, 512 <font color="#909090">(exec)</font>, 513 <font color="#909090">(login)</font>, 514 <font color="#909090">(shell)</font>, 515 <font color="#909090">(printer)</font>, 526 <font color="#909090">(tempo)</font>, 530 <font color="#909090">(courier)</font>, 531 <font color="#909090">(chat)</font>, 532 <font color="#909090">(netnews)</font>, 540 <font color="#909090">(uucp)</font>, 556 <font color="#909090">(remotefs)</font>, 563 <font color="#909090">(ssl nntp)</font>, 587 <font color="#909090">(smtp submission)</font>, 601 <font color="#909090">(syslog)</font>, 636 <font color="#909090">(ssl ldap)</font>, 993 <font color="#909090">(ssl imap)</font>, 995 <font color="#909090">(ssl pop3)</font>, 2049 <font color="#909090">(nfs)</font>, 4045 <font color="#909090">(lockd)</font>, 6000 <font color="#909090">(X11)</font> ||
 
 There usually are various protocol-specific exceptions to these rules: for example, `ftp://` URLs are obviously permitted to access port 21, and `nntp://` may reference port 119. A detailed discussion of these exceptions in the prevailing Mozilla implementation is [http://www.mozilla.org/projects/netlib/PortBanning.html available here].
