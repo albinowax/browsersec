@@ -698,14 +698,14 @@ Closer to its intended use - triggering browser download prompts in response to 
 Several tests that outline key `Content-Disposition` handling differences are shown below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is `Content-Disposition` supported correctly?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || YES ||
-|| <font color="#3050a0">Is Mark-of-the-Web / Zone.Identifier supported?</font> || <font color="#30ff30">YES</font> || <font color="#30ff30">YES</font> || || NO || NO || NO || NO || <font color="#30ff30">write-only</font> || NO ||
-|| <font color="#3050a0">Types of file name encodings supported</font> || `%nn` || `%nn` || || `?b? ?q? *=` || `?b? ?q? *=` || `*=` || `*=` || `?b? ?q? %nn` || <font color="#ff0000">none</font> ||
-|| <font color="#3050a0">Does `filename=test.html` override `Content-Type`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Does `filename=test.exe` override `Content-Type`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || YES ||
+|| <font color="#3050a0">Is `Content-Disposition` supported correctly?</font> || YES || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> || YES || YES ||
+|| <font color="#3050a0">Is Mark-of-the-Web / Zone.Identifier supported?</font> || <font color="#30ff30">YES</font> || <font color="#30ff30">YES</font> || <font color="#30ff30">YES</font> || NO || NO || NO || NO || <font color="#30ff30">write-only</font> || NO ||
+|| <font color="#3050a0">Types of file name encodings supported</font> || `%nn` || `%nn` || `%nn` || `?b? ?q? *=` || `?b? ?q? *=` || `*=` || `*=` || `?b? ?q? %nn` || <font color="#ff0000">none</font> ||
+|| <font color="#3050a0">Does `filename=test.html` override `Content-Type`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Does `filename=test.exe` override `Content-Type`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || YES ||
 || <font color="#3050a0">Does URL-derived `test.html` filename override `Content-Type`?</font> || <font color="#ff0000">YES</font> || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Does URL-derived `test.exe` filename override `Content-Type`?</font> || <font color="#ff0000">YES</font> || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || YES ||
-|| <font color="#3050a0">Is `;` handled correctly in file names?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Does URL-derived `test.exe` filename override `Content-Type`?</font> || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || YES ||
+|| <font color="#3050a0">Is `;` handled correctly in file names?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || YES || YES || YES || YES ||
 
 <b></b>
 
@@ -764,18 +764,18 @@ That said, if an appropriate character set declaration is provided, browsers tha
 Relevant tests:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is `utf-7` character set supported?</font> || YES || YES || || YES || YES || YES || <font color="#30ff30">NO</font> || YES || <font color="#30ff30">NO</font> ||
-|| <font color="#3050a0">May `utf-7` be auto-detected in documents?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || <font color="#909090">n/a</font> || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">`utf-7` sniffing buffer size</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">May `utf-7` be inherited by an `<IFRAME>` across domains?</font> || NO || <font color="#ff0000">YES</font> || || NO || NO || NO || <font color="#909090">n/a</font> || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Does `us-ascii` parsing strip high bits?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Behavior of high-bit data in `utf-7` documents</font> || keep || keep || || <font color="#ff0000">mangle</font> || <font color="#ff0000">mangle</font> || <font color="#30ff30">reject</font> || <font color="#909090">n/a</font> || <font color="#30ff30">reject</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">May 7-bit ASCII may be encoded as `utf-8` on HTML pages?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Is 7-bit ASCII consumption possible in `utf-8`?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Is 7-bit ASCII consumption possible in `EUC-JP`? || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Is 7-bit ASCII consumption possible in `Big5`?</font> || NO || NO || || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">`Content-Type` header / `HTTP-EQUIV` tag precedence</font> || header || header || || header || header || header || header || header || header ||
-|| <font color="#3050a0">Does the browser fall back to `HTTP-EQUIV` if header charset invalid?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || YES ||
+|| <font color="#3050a0">Is `utf-7` character set supported?</font> || YES || YES || YES || YES || YES || YES || <font color="#30ff30">NO</font> || YES || <font color="#30ff30">NO</font> ||
+|| <font color="#3050a0">May `utf-7` be auto-detected in documents?</font> || <font color="#ff0000">YES</font> || NO || || NO || NO || NO || <font color="#909090">n/a</font> || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">`utf-7` sniffing buffer size</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">May `utf-7` be inherited by an `<IFRAME>` across domains?</font> || NO || <font color="#ff0000">YES</font> || NO || NO || NO || NO || <font color="#909090">n/a</font> || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does `us-ascii` parsing strip high bits?</font> || NO || NO || NO || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Behavior of high-bit data in `utf-7` documents</font> || keep || keep || <font color="#909090">n/a</font> || <font color="#ff0000">mangle</font> || <font color="#ff0000">mangle</font> || <font color="#30ff30">reject</font> || <font color="#909090">n/a</font> || <font color="#30ff30">reject</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">May 7-bit ASCII may be encoded as `utf-8` on HTML pages?</font> || NO || NO || NO || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is 7-bit ASCII consumption possible in `utf-8`?</font> || NO || NO || NO || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Is 7-bit ASCII consumption possible in `EUC-JP`? || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Is 7-bit ASCII consumption possible in `Big5`?</font> || NO || NO || NO || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">`Content-Type` header / `HTTP-EQUIV` tag precedence</font> || header || header || header || header || header || header || header || header || header ||
+|| <font color="#3050a0">Does the browser fall back to `HTTP-EQUIV` if header charset invalid?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || YES || <font color="#ff0000">NO</font> || YES || YES ||
 
 <b></b>
 
@@ -812,13 +812,13 @@ All these properties make it an extremely good idea to always use explicit, care
 Relevant tests:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is `Expires` relative to `Date`?</font> || NO || NO || || YES || NO || NO || YES || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Does invalid `Expires` value stop caching?</font> || <font color="#ff0000">NO</font> || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Is `Date` needed for `Expires` to work?</font> || NO || NO || || NO || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Does invalid `max-age` stop caching?</font> || NO || NO || || NO || YES || NO || <font color="#30ff30">YES</font> || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Does `Cache-Control` override `Expires` in HTTP/1.0?</font> || YES || NO || || NO || NO || NO || YES || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Does `no-cache` win on `Cache-Control` conflicts?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Does `Pragma: no-cache` work?</font> || YES || YES || || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is `Expires` relative to `Date`?</font> || NO || NO || NO || YES || NO || NO || YES || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does invalid `Expires` value stop caching?</font> || <font color="#ff0000">NO</font> || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is `Date` needed for `Expires` to work?</font> || NO || NO || NO || NO || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does invalid `max-age` stop caching?</font> || NO || NO || NO || NO || YES || NO || <font color="#30ff30">YES</font> || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does `Cache-Control` override `Expires` in HTTP/1.0?</font> || YES || NO || NO || NO || NO || NO || YES || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does `no-cache` prevail on `Cache-Control` conflicts?</font> || YES || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Does `Pragma: no-cache` work?</font> || YES || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">n/a</font> ||
 
 _NOTE: In addition to caching network resources as-is, many modern web browsers also cache rendered page state, so that "back" and "forward" navigation buttons work without having to reload and reinitialize the entire document; and some of them further provide form field caching and autocompletion that persists across sessions. These mechanisms are not subject to traditional HTTP cache controls, but may be at least partly limited by employing the [http://www.htmlcodetutorial.com/forms/_INPUT_AUTOCOMPLETE.html AUTOCOMPLETE=OFF] HTML attribute._
 
@@ -833,14 +833,14 @@ This section provides a quick overview of default restrictions currently impleme
 Virtually all browsers attempt to limit the ability for sites to open new windows (popups), permitting this to take place only in response to `onclick` events within a short timeframe; some also attempt to place restrictions on other similarly disruptive `window.*` methods - although most browsers do fail in one way or another. A survey of current features and implemented limits is shown below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is popup blocker present?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Are popups permitted on non-`onclick` events?</font> || NO || NO || || NO || NO || NO || NO || NO || YES ||
-|| <font color="#3050a0">Maximum delay between click and popup</font> || 0 ms || 0 ms || || 1 sec || 1 sec || 0 ms || <font color="#ff0000">> 5 sec</font> || 0 ms || 0 ms ||
-|| <font color="#3050a0">Maximum number of per-click popups opened</font> || 1 || 1 || || <font color="#ff0000">20</font>^*^> || <font color="#ff0000">20</font>^*^ || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || 1 ||
-|| <font color="#3050a0">Is `window.alert()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
-|| <font color="#3050a0">Is `window.print()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Is `window.confirm()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
-|| <font color="#3050a0">Is `window.prompt()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || YES || || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
+|| <font color="#3050a0">Is popup blocker present?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Are popups permitted on non-`onclick` events?</font> || NO || NO || NO || NO || NO || NO || NO || NO || YES ||
+|| <font color="#3050a0">Maximum delay between click and popup</font> || 0 ms || 0 ms || 0 ms || 1 sec || 1 sec || 0 ms || <font color="#ff0000">> 5 sec</font> || 0 ms || 0 ms ||
+|| <font color="#3050a0">Maximum number of per-click popups opened</font> || 1 || 1 || 1 || <font color="#ff0000">20</font>^*^> || <font color="#ff0000">20</font>^*^ || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || 1 ||
+|| <font color="#3050a0">Is `window.alert()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
+|| <font color="#3050a0">Is `window.print()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is `window.confirm()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
+|| <font color="#3050a0">Is `window.prompt()` limited or can be suppressed?</font> || <font color="#ff0000">NO</font> || YES || YES || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || NO ||
 
 ^*^ Controlled by `dom.popup_maximum` setting in browser configuration.
 
@@ -849,15 +849,15 @@ Virtually all browsers attempt to limit the ability for sites to open new window
 A number of restrictions is also placed on `window.open()` features originally meant to make the appearance of browser windows more flexible ([http://www.w3schools.com/HTMLDOM/met_win_open.asp reference]), but in practice had the unfortunate effect of making it easy to spoof system prompts, mimick [http://www.squarefree.com/2004/08/01/preventing-browser-ui-spoofing/ trusted browser chrome], and cause other trouble. The following is a survey of these and related `window.*` limitations:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Are Windows permitted to grab full screen?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Are windows permitted to specify own dimensions?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Are windows permitted to specify screen positioning?</font> || YES || YES || || YES || YES || YES || NO || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Are windows permitted to fully hide URL bar?</font> || <font color="#ff0000">YES</font> || NO || || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Are windows permitted to hide other chrome?</font> || YES || YES || || YES || YES || YES || NO || YES || YES ||
-|| <font color="#3050a0">Are windows permitted to take focus?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Are windows permitted to surrender focus?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO ||
-|| <font color="#3050a0">Are windows permitted to reposition self?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Are windows permitted to close non-script windows?</font> || prompt || prompt || || NO || NO || NO || YES || NO || YES ||
+|| <font color="#3050a0">Are Windows permitted to grab full screen?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are windows permitted to specify own dimensions?</font> || YES || YES || YES || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are windows permitted to specify screen positioning?</font> || YES || YES || YES || YES || YES || YES || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are windows permitted to fully hide URL bar?</font> || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Are windows permitted to hide other chrome?</font> || YES || YES || YES || YES || YES || YES || NO || YES || YES ||
+|| <font color="#3050a0">Are windows permitted to take focus?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO || <font color="#ff0000">YES</font> ||
+|| <font color="#3050a0">Are windows permitted to surrender focus?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO ||
+|| <font color="#3050a0">Are windows permitted to reposition self?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Are windows permitted to close non-script windows?</font> || prompt || prompt || prompt || NO || NO || NO || YES || NO || YES ||
 
 <b></b>
 
@@ -866,9 +866,9 @@ A number of restrictions is also placed on `window.open()` features originally m
 Further restrictions are placed on script execution times and memory usage:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Maximum busy loop time</font> || 1 sec || <font color="#ff0000">∞</font> || || 10 sec || 10 sec || 10 sec || <font color="#30ff30">responsive</font> || <font color="#30ff30">responsive</font> || 10 sec ||
-|| <font color="#3050a0">Call stack size limit</font> || ~2500 || ~2000 || || ~1000 || ~3000 || ~500 || ~1000 || ~18000 || ~500 ||
-|| <font color="#3050a0">Heap size limit</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || || 16M || || 16M || 16M || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> ||
+|| <font color="#3050a0">Maximum busy loop time</font> || 1 sec || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || 10 sec || 10 sec || 10 sec || <font color="#30ff30">responsive</font> || <font color="#30ff30">responsive</font> || 10 sec ||
+|| <font color="#3050a0">Call stack size limit</font> || ~2500 || ~2000 || ~3000 || ~1000 || ~3000 || ~500 || ~1000 || ~18000 || ~500 ||
+|| <font color="#3050a0">Heap size limit</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> || 16M || || 16M || 16M || <font color="#ff0000">∞</font> || <font color="#ff0000">∞</font> ||
 
 <b></b>
 
@@ -877,8 +877,8 @@ Further restrictions are placed on script execution times and memory usage:
 Lastly, restrictions on `onunload` and `onbeforeunload` may limit the ability for pages to suppress navigation. Historically, this would be permitted by either returning an appropriate code from these handlers, or changing `location.*` properties to counter user's navigation attempt:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Can scripts inhibit page transitions?</font> || prompt || prompt || || prompt || prompt || prompt || NO || prompt || prompt ||
-|| <font color="#3050a0">Pages may hijack transitions?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Can scripts inhibit page transitions?</font> || prompt || prompt || prompt || prompt || prompt || prompt || NO || prompt || prompt ||
+|| <font color="#3050a0">Pages may hijack transitions?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO || NO ||
 
 _Trivia: Firefox 3 also appears to be exploring the possibility of making the status bar a security feature, by making it impossible for scripts to replace link target URLs on the fly. It is not clear if other browser vendors would share this sentiment._
 
@@ -901,18 +901,18 @@ There is also an interesting technical consideration that is not entirely solved
 Several important HTTPS properties and default behaviors are outlined below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">`Referer` header sent on HTTPS → HTTPS navigation?</font> || YES || YES || || YES || YES || YES || <font color="#30ff30">NO</font> || YES || YES ||
-|| <font color="#3050a0">`Referer` header sent on HTTPS → HTTP navigation?</font> || NO || NO || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Behavior on invalid certificates</font> || prompt || interstitial || || prompt || block || prompt || prompt || interstitial || prompt ||
-|| <font color="#3050a0">Is EV SSL visually distinguished?</font> || NO || YES^*^ || || NO || YES || NO || YES || YES || NO ||
-|| <font color="#3050a0">Does mixing EV SSL and SSL turn off the EV SSL indicator?</font> || <font color="#909090">n/a</font> || <font color="#ff0000">NO</font> || || <font color="#909090">n/a</font> || <font color="#ff0000">NO</font> || <font color="#909090">n/a</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Mixed content behavior on `<IMG>`</font> || block || block || || warn || warn || permit || permit || permit || permit ||
-|| <font color="#3050a0">Mixed content behavior on `<SCRIPT>`</font> || block || block || || <font color="#ff0000">warn</font> || <font color="#ff0000">warn</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> ||
-|| <font color="#3050a0">Mixed content behavior on stylesheets</font> || block || block || || <font color="#ff0000">warn</font> || <font color="#ff0000">warn</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> ||
-|| <font color="#3050a0">Mixed content behavior on `<APPLET>`</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Mixed content behavior on `<EMBED>`</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Mixed content behavior on `<IFRAME>`</font> || block || block || || warn || warn || permit || permit || permit || permit ||
-|| <font color="#3050a0">Do wildcard certificates match multiple host name segments?</font> || NO || NO || || YES || YES || NO || NO || NO || NO || 
+|| <font color="#3050a0">`Referer` header sent on HTTPS → HTTPS navigation?</font> || YES || YES || YES || YES || YES || YES || <font color="#30ff30">NO</font> || YES || YES ||
+|| <font color="#3050a0">`Referer` header sent on HTTPS → HTTP navigation?</font> || NO || NO || NO || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Behavior on invalid certificates</font> || prompt || interstitial || interstitial || prompt || block || prompt || prompt || interstitial || prompt ||
+|| <font color="#3050a0">Is EV SSL visually distinguished?</font> || NO || YES^*^ || YES || NO || YES || NO || YES || YES || NO ||
+|| <font color="#3050a0">Does mixing EV SSL and SSL turn off the EV SSL indicator?</font> || <font color="#909090">n/a</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#909090">n/a</font> || <font color="#ff0000">NO</font> || <font color="#909090">n/a</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Mixed content behavior on `<IMG>`</font> || block || block || block || warn || warn || permit || permit || permit || permit ||
+|| <font color="#3050a0">Mixed content behavior on `<SCRIPT>`</font> || block || block || block || <font color="#ff0000">warn</font> || <font color="#ff0000">warn</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> ||
+|| <font color="#3050a0">Mixed content behavior on stylesheets</font> || block || block || block || <font color="#ff0000">warn</font> || <font color="#ff0000">warn</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> ||
+|| <font color="#3050a0">Mixed content behavior on `<APPLET>`</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Mixed content behavior on `<EMBED>`</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#ff0000">permit</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Mixed content behavior on `<IFRAME>`</font> || block || block || block || warn || warn || permit || permit || permit || permit ||
+|| <font color="#3050a0">Do wildcard certificates match multiple host name segments?</font> || NO || NO || NO || YES || YES || NO || NO || NO || NO || 
 
 ^*^ On Windows XP, this is enabled only when [http://support.microsoft.com/kb/931125 KB931125] is installed, and browser's phishing filter functionality is enabled.
 
