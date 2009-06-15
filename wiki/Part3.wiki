@@ -36,15 +36,15 @@ Because of these limitations and the relative inflexibility of this scheme to be
 Amusingly, its ghost still haunts modern web applications: HTTP authentication prompts often come up in browsers when viewing trusted pages where a minor authentication-requiring sub-resource, such as `<IMG>`, is included from a rogue site - but these prompts usually do a poor job of clearly explaining who is asking for the credentials. This poses a phishing risk for services, such as blogs or discussion forums, that allow users to embed external content.
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is HTTP authentication supported?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> ||
-|| <font color="#3050a0">Does link-embedded authentication work?</font> || NO || NO || || prompt || prompt || YES || prompt || YES || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Is authentication data bound to realms?</font> || NO || NO || || NO || NO || <font color="#30ff30">YES</font> || NO || <font color="#30ff30">YES</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Is authentication bound to host name?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Is authentication bound to protocol or port?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Do password prompts come up on `<IMG>`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Do password prompts come up on `<EMBED>` / `<APPLET>`?</font> || NO || NO || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Do password prompts come up on `<SCRIPT>` and stylesheets?</font>  || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Do password prompts come up on `<IFRAME>`?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is HTTP authentication supported?</font> || YES || YES || YES || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> ||
+|| <font color="#3050a0">Does link-embedded authentication work?</font> || NO || NO || NO || prompt || prompt || YES || prompt || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is authentication data bound to realms?</font> || NO || NO || NO || NO || NO || <font color="#30ff30">YES</font> || NO || <font color="#30ff30">YES</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is authentication bound to host name?</font> || YES || YES || YES || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is authentication bound to protocol or port?</font> || YES || YES || YES || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Do password prompts come up on `<IMG>`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Do password prompts come up on `<EMBED>` / `<APPLET>`?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Do password prompts come up on `<SCRIPT>` and stylesheets?</font>  || YES || YES || YES || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Do password prompts come up on `<IFRAME>`?</font> || YES || YES || YES || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
 
 <b></b>
 
@@ -67,9 +67,9 @@ In particular, it might be easier than intuitively expected for certain types of
 Several of the relevant password manager behaviors are shown below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Password manager operation model</font> || <font color="#30ff30">needs user name</font> || <font color="#30ff30">needs user name</font> || || auto-fills on load || auto-fills on load || auto-fills on load || <font color="#30ff30">needs UI action</font> || auto-fills on load || auto-fills on load ||
-|| <font color="#3050a0">Are stored passwords restricted to a full URL path?</font> || <font color="#30ff30">YES</font> || <font color="#30ff30">YES</font> || || NO || NO || NO || NO || NO || NO ||
-|| <font color="#3050a0">Are stored `https` passwords restricted to SSL only?</font> || YES || YES || || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> ||
+|| <font color="#3050a0">Password manager operation model</font> || <font color="#30ff30">needs user name</font> || <font color="#30ff30">needs user name</font> || <font color="#30ff30">needs user name</font> || auto-fills on load || auto-fills on load || auto-fills on load || <font color="#30ff30">needs UI action</font> || auto-fills on load || auto-fills on load ||
+|| <font color="#3050a0">Are stored passwords restricted to a full URL path?</font> || <font color="#30ff30">YES</font> || <font color="#30ff30">YES</font> || <font color="#30ff30">YES</font> || NO || NO || NO || NO || NO || NO ||
+|| <font color="#3050a0">Are stored `https` passwords restricted to SSL only?</font> || YES || YES || YES || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> ||
 
 <b></b>
 
