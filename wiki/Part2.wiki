@@ -64,7 +64,7 @@ All this ambiguity leads to a significant degree of variation between browsers, 
 || <font color="#3050a0">May local HTML access unrelated local files via DOM?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">May local HTML access sites on the Internet via DOM?</font> || NO || NO || NO || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">n/a</font> ||
 
-<b></b>
+_Note: Firefox 3 is currently the only browser that uses a [https://developer.mozilla.org/En/Same-origin_policy_for_file:_URIs directory-based scoping scheme] for same-origin access within `file://`. This bears some risk of breaking quirky local applications, and may not offer protection for shared download directories, but is a sensible approach otherwise._
 
 ===Same-origin policy for XMLHttpRequest===
 
