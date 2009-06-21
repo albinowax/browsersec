@@ -448,6 +448,8 @@ There are three distinct ways to place CSS directives in HTML documents:
   # Introduction of a block of CSS code with `<STYLE>...</STYLE>` in any portion of the document. This block may change the default appearance of any tag, or define named rulesets that may be explicitly applied to specific tags with a `CLASS="..."` parameter,<p />
   # Inclusion of a remote stylesheet with a <`LINK REL="stylesheet" HREF="...">`, with the same global effect as a `<STYLE>` block.
 
+In the first two modes, the stylesheet generally inherits the character set of its host document, and is interpreted accordingly; in the last mode, character set might be derived from `Content-Type` headers, `@charset` directives, or auto-detected if all other options fail ([http://www.w3.org/TR/CSS2/syndata.html#charset reference]).
+
 Because CSS provides a powerful and standardized method to control the visual appearance of a block of HTML, many applications strive to let third parties control a subset of CSS syntax emitted in documents. Unfortunately, the task is fairly tricky; the most important security consequences of attacker-controlled stylesheets are:
 
   * *The risk of Java<b></b>Script execution*. As a little-known feature, some CSS implementations permit Java<b></b>Script code to be embedded in stylesheets. There are at least three ways to achieve this goal: by using the `expression(...)` directive, which gives the ability to evaluate arbitrary Java<b></b>Script statements and use their value as a CSS parameter; by using the `url('javascript:...')` directive on properties that support it; or by invoking browser-specific features such as the [http://www.securiteam.com/securitynews/5LP051FHPE.html -moz-binding] mechanism of Firefox.
