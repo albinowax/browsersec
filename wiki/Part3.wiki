@@ -141,9 +141,9 @@ In theory, an existing `Referer` HTTP header could be used for the same purpose,
 
 ==Mozilla content security policies==
 
-Brandon Sterne of Mozilla proposes [http://people.mozilla.org/~bsterne/content-security-policy/index.html content security policies] ([https://wiki.mozilla.org/Security/CSP/Spec specification]), a mechanism that would permit site owners to define a list of valid target domains for `<IMG>`, `<EMBED>`, `<APPLET>`, `<SCRIPT>`, and `<IFRAME>` resources appearing in their content; and then disallow inline code from being used directly on a page.
+Brandon Sterne of Mozilla proposes [http://people.mozilla.org/~bsterne/content-security-policy/index.html content security policies] ([https://wiki.mozilla.org/Security/CSP/Spec specification]), a mechanism that would permit site owners to define a list of valid target domains for `<IMG>`, `<EMBED>`, `<APPLET>`, `<SCRIPT>`, `<IFRAME>`, and similar resources appearing in their content; and to disallow inline code from being used directly on a page.
 
-The security benefit of these features is limited primarily to cross-site scripting prevention, with most of the remaining features focusing primarily on webmaster content policy enforcement; the proposal originally also incorporated the ability to define a list of valid origins for incoming requests as a method to mitigate cross-site request forgery attacks - but this part of the design got dropped in favor of more flexible and simpler `Origin` headers.
+The security benefit of these features is limited primarily to cross-site scripting prevention and webmaster policy enforcement; the proposal originally also incorporated the ability to define a list of valid origins for incoming requests as a method to mitigate cross-site request forgery attacks - but this part of the design got dropped in favor of more flexible and simpler `Origin` headers.
 
 =Open browser engineering issues=
 
