@@ -820,7 +820,9 @@ Relevant tests:
 || <font color="#3050a0">Does `no-cache` prevail on `Cache-Control` conflicts?</font> || YES || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Does `Pragma: no-cache` work?</font> || YES || YES || YES || YES || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#909090">n/a</font> ||
 
-_NOTE: In addition to caching network resources as-is, many modern web browsers also cache rendered page state, so that "back" and "forward" navigation buttons work without having to reload and reinitialize the entire document; and some of them further provide form field caching and autocompletion that persists across sessions. These mechanisms are not subject to traditional HTTP cache controls, but may be at least partly limited by employing the [http://www.htmlcodetutorial.com/forms/_INPUT_AUTOCOMPLETE.html AUTOCOMPLETE=OFF] HTML attribute._
+_NOTE 1: In addition to caching network resources as-is, many modern web browsers also cache rendered page state, so that "back" and "forward" navigation buttons work without having to reload and reinitialize the entire document; and some of them further provide form field caching and autocompletion that persists across sessions. These mechanisms are not subject to traditional HTTP cache controls, but may be at least partly limited by employing the [http://www.htmlcodetutorial.com/forms/_INPUT_AUTOCOMPLETE.html AUTOCOMPLETE=OFF] HTML attribute._
+
+_NOTE 2: One of the interesting consequences of browser-side caching is that rogue networks have the ability to "poison" the browser with malicious versions of HTTP resources, and have these copies persist across sessions and networking environments._
 
 ==Defenses against disruptive scripts==
 
