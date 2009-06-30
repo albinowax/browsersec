@@ -408,7 +408,7 @@ Various differences between browser implementations are outlined below:
 || <font color="#3050a0">Is `charset=` honored on `<SCRIPT SRC="...">`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
 || <font color="#3050a0">Do Unicode newlines (U+2028, U+2029) break lines in Java<b></b>Script?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
 
-<b></b>
+_Trivia: Java<b></b>Script programs can programatically initiate or intercept a variety of events, such as mouse and keyboard input within a window. This can interfere with other security mechanisms, such as "protected" `<INPUT TYPE=FILE ...>` fields, or non-same-origin HTML frames, and little or no consideration was given to these interactions at design time, resulting in a number of implementation problems in modern browsers._
 
 ===Javascript character encoding===
 
