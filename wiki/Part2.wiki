@@ -544,7 +544,7 @@ A survey of current implementations is documented below:
 || <font color="#3050a0">Is `Location` redirection to `javascript:` permitted?</font> || NO || NO || NO || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is `Location` redirection to `data:` permitted?</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || NO || YES || YES || YES || NO || NO ||
 || <font color="#3050a0">Is `Refresh` redirection to `file:` permitted?</font> || NO || NO || NO || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Is `Refresh` redirection to `javascript:` permitted?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO ||
+|| <font color="#3050a0">Is `Refresh` redirection to `javascript:` permitted?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">partly</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO ||
 || <font color="#3050a0">Is `Refresh` redirection to `data:` permitted?</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || <font color="#909090">n/a</font> || YES || YES || YES || YES || YES || NO ||
 || <font color="#3050a0">Same-origin XMLHttpRequest redirection permitted?</font> || YES || YES || YES || YES || YES || YES || YES || YES || NO ||
 
