@@ -7,7 +7,7 @@
   * Released under terms and conditions of the [http://creativecommons.org/licenses/by/3.0 CC-3.0-BY] license. 
 
 <h1>Table of Contents</h1>
-av
+
   * _[http://code.google.com/p/browsersec/wiki/Main ← Back to introduction]_
 <wiki:toc max_depth="10" />
   * _[http://code.google.com/p/browsersec/wiki/Part2 → Forward to browser security features]_
