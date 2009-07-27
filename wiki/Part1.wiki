@@ -582,6 +582,6 @@ The precedence of inputs for deciding how to interpret the content in various br
 
 The approach to determining how to handle the data with no attention to the intent indicated by the hosting server is a problematic design concept, as it makes it impossible for servers to opt out from having any particular resource being treated as a plugin-interpreted document in response to actions of a malicious third-party site. In conjunction with lax syntax parsers within browser plugins, this resulted in a number of long-standing vulnerabilities, such as valid Java archive files (JARs) [http://www.infoworld.com/article/08/08/01/A_photo_that_can_steal_your_online_credentials_1.html doubling as valid images].
 
-_Trivia: many plugins have their own HTTP stacks and caching systems, which makes them a good way to circumvent browser's privacy settings ([http://decloak.net example site])._
+Another interesting property worth noting here is that many plugins have their own HTTP stacks and caching systems, which makes them a good way to circumvent browser's privacy settings; Metasploits maintains an [http://decloak.net example site] illustrating the problem.
 
 _([http://code.google.com/p/browsersec/wiki/Part2 Continue to browser security features...])_
