@@ -7,7 +7,7 @@
   * Released under terms and conditions of the [http://creativecommons.org/licenses/by/3.0 CC-3.0-BY] license. 
 
 <h1>Table of Contents</h1>
-
+av
   * _[http://code.google.com/p/browsersec/wiki/Main ← Back to introduction]_
 <wiki:toc max_depth="10" />
   * _[http://code.google.com/p/browsersec/wiki/Part2 → Forward to browser security features]_
@@ -339,9 +339,7 @@ DOM object hierarchy - as seen by programmers - begins with an implicit "root" o
 
   * `defaultView.window` - a self-referential entry that points back to the root object; this is the name by which the `defaultView` object is most commonly known. In general, `screen`, `navigator`, and `window` DOM hierarchies combined usually contain enough information to very accurately fingerprint any given machine.
 
-With the exception of cross-domain, cross-document access permissions outlined in later chapters, the operation of DOM bears relatively little significance to site security, spare for the ability to fairly accurately fingerprint individual browser installations by traversing the `navigator` and `screen` hierarchies.
-
-It is, however, worth noting that DOM methods are wrappers providing access to highly implementation-specific internal data structures that may or may not obey the usual rules of Java<b></b>Script language, may haphazardly switch between bounded and ASCIZ string representations, and so forth. Because of this, multiple seemingly inexplicable oddities and quirks plague DOM data structures in every browsers - and some of these may interfere with client-side security mechanisms. Several such quirks are documented below:
+With the exception of cross-domain, cross-document access permissions outlined in later chapters, the operation of DOM bears relatively little significance to site security. It is, however, worth noting that DOM methods are wrappers providing access to highly implementation-specific internal data structures that may or may not obey the usual rules of Java<b></b>Script language, may haphazardly switch between bounded and ASCIZ string representations, and so forth. Because of this, multiple seemingly inexplicable oddities and quirks plague DOM data structures in every browsers - and some of these may interfere with client-side security mechanisms. Several such quirks are documented below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Is `window` the same object as `window.window`?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || YES || YES || YES || YES ||
