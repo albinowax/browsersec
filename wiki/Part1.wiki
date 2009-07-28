@@ -3,7 +3,7 @@
 <h1>Browser Security Handbook, part 1</h1>
 
   * Written and maintained by [http://lcamtuf.coredump.cx/ Michal Zalewski] <[mailto:lcamtuf@google.com lcamtuf@google.com]>. 
-  * Copyright 2008 Google Inc, rights reserved.
+  * Copyright 2008, 2009 Google Inc, rights reserved.
   * Released under terms and conditions of the [http://creativecommons.org/licenses/by/3.0 CC-3.0-BY] license. 
 
 <h1>Table of Contents</h1>
