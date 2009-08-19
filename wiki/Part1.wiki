@@ -329,7 +329,7 @@ DOM object hierarchy - as seen by programmers - begins with an implicit "root" o
 
   * All the current script's global variables and functions.
 
-  * `defaultView.document` ([http://www.w3schools.com/HTMLDOM/dom_obj_document.asp reference]) - a top-level object for the actual, proper _document_ object model. This hierarchy represents all of the document elements, along with their specific methods and properties, and document-wide object lookup functions (e.g., `getElementById`, `getElementsByTagName`, etc).
+  * `defaultView.document` ([http://www.w3schools.com/HTMLDOM/dom_obj_document.asp reference]) - a top-level object for the actual, proper _document_ object model. This hierarchy represents all of the document elements, along with their specific methods and properties, and document-wide object lookup functions (e.g., `getElementById`, `getElementsByTagName`, etc). An assortment of browser-specific, proprietary APIs is usually present on top of the common functionality (e.g., [http://msdn.microsoft.com/en-us/library/ms533049%28VS.85%29.aspx document.execCommand] in Internet Explorer).
 
   * `defaultView.location` ([http://www.w3schools.com/HTMLDOM/dom_obj_location.asp reference]) - a simple object describing document's current location, both as an unparsed string, and split into parsed segments; provides methods and property setters that allow scripts to navigate away to other sites.
 
