@@ -206,6 +206,7 @@ This, in conjunction with the fact that HTTP supports proxying and content cachi
 Many specific areas, such as caching behavior, have their own sections later in this document. Below is a survey of general security-relevant differences in HTTP protocol implementations:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Header-less (HTTP/0.9) responses supported?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">`Content-Length` header value overrides actual content length?</font> || NO || YES || YES || NO || NO || YES || YES || NO || YES ||
 || <font color="#3050a0">First HTTP header of the same name takes precedence?</font> || YES || YES || YES || NO || NO || YES || NO || NO || NO ||
 || <font color="#3050a0">First field value in a HTTP header takes precedence?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
