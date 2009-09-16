@@ -51,6 +51,7 @@ Below is a more detailed review of the key differences that often need to be acc
 || <font color="#3050a0">Are non-reserved `%nn` sequences in URL path decoded in `location.href`?</font> || NO || <font color="#30ff30">YES</font> || <font color="#30ff30">YES</font> || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#30ff30">YES</font> || <font color="#ff0000">YES</font> ||
 || <font color="#3050a0">Are non-reserved `%nn` sequences in URL path decoded in actual HTTP requests sent?</font> || NO || <font color="#30ff30">YES</font> || <font color="#30ff30">YES</font> || NO || NO || NO || NO || <font color="#30ff30">YES</font> || NO ||
 || <font color="#3050a0">Characters rejected in URL login or password (excluding `/ # ; ? : %`)</font> || \x00 \ || \x00 \ || \x00 \ || <font color="#909090">none</font> || <font color="#909090">none</font> || \x00-\x20 " < > @ `[ \ ]` ^ ` { | } \x7f-\xff || \x00 || \x00 \x01 \ || \x00-\x20 " < > @ `[ \ ]` ^ ` { | } \x7f-\xff ||
+|| <font color="#3050a0">Authentication data tokenizer behavior on multiple `@` characters</font> || leftmost || leftmost || leftmost || <font color="#ff0000">rightmost</font> || <font color="#ff0000">rightmost</font> || leftmost | <font color="#ff0000">rightmost</font> || <font color="#ff0000">rightmost</font> || leftmost ||
 
 _^*^ Interestingly, Firefox 3.5 takes a safer but non-RFC approach of encoding stray ' characters as %27 in URLs, in addition to the usual escaping rules._
 
