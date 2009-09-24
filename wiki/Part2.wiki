@@ -713,7 +713,7 @@ Several tests that outline key `Content-Disposition` handling differences are sh
 
 ===Character set handling and detection===
 
-When displaying any renderable, text-based content - such as `text/html`, `text/plain`, and many others - browsers are capable of recognizing and interpreting a large number of both common and relatively obscure character sets. Some of the most important cases include:
+When displaying any renderable, text-based content - such as `text/html`, `text/plain`, and many others - browsers are capable of recognizing and interpreting a large number of both common and relatively obscure character sets ([http://wiki.whatwg.org/wiki/Web_Encodings detailed reference]). Some of the most important cases include:
 
   * A basic fixed-width 7-bit `us-ascii` charset ([http://www.columbia.edu/kermit/ascii.html reference]). The charset is defined only for character values of `\x00` to `\x7F`, although it is technically transmitted as 8-bit data. High bit values are not permitted; in practice, if they appear in text, their most significant bit may be zeroed upon parsing, or they may be treated as `iso-8859-1` or any other 8-bit encoding.
 
