@@ -417,7 +417,7 @@ A survey of these exceptions is summarized below:
 || <font color="#3050a0">Is setting `window.name` possible across domains?</font> || YES || YES || NO || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Is calling `frameElements` methods possible across domains?</font> || NO || NO || NO || YES || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Can top-level documents navigate subframes of third-party frames?</font> ||  <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> ||
-|| <font color="#3050a0">Is `postMessage` API supported?</font> || NO || NO || YES || NO || YES || NO || YES || NO || NO ||
+|| <font color="#3050a0">Is `postMessage` API supported?</font> || NO || NO || YES || NO || YES || NO || YES || YES || NO ||
 
 ^*^ In Chrome, this succeeds only if both tabs share a common renderer process, which limits the scope of possible attacks.
 
