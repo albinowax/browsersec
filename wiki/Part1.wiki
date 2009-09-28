@@ -179,7 +179,7 @@ Every HTTP request opens with a single-line description of a content access meth
 One example of an HTTP request might be:
 
 {{{
-POST /fuzzy_bunnies/images/bunny_dispenser.php HTTP/1.1
+POST /fuzzy_bunnies/bunny_dispenser.php HTTP/1.1
 Host: www.fuzzybunnies.com
 User-Agent: Bunny-Browser/1.7
 Content-Type: text/plain
