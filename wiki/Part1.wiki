@@ -253,6 +253,7 @@ Sadly, for compatibility reasons, parsers operating in non-XML mode tend to be g
 6: <IMG onmouseover =alert(1)>
 7: <A/HREF="javascript:alert(1)">
 8: <!-- Hello -- world > <SCRIPT>alert(1)</SCRIPT> -->
+9: <IMG ALT="><SCRIPT>alert(1)</SCRIPT>
 }}}
 
 [http://code.google.com/p/doctype/wiki/ArticlesXSS Cross-site scripting] aside, another interesting property of HTML is that it permits certain HTTP directives to be encoded within HTML itself, using the following format:
