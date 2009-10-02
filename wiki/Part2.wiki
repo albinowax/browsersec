@@ -110,7 +110,7 @@ As noted earlier, although there is a great deal of flexibility in what data may
 || <font color="#3050a0">`User-Agent`</font> || OK || OK || OK || OK || OK || <font color="#30ff30">BANNED</font> || OK || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> ||
 || <font color="#3050a0">`Via`</font> || OK || OK || OK || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> || <font color="#30ff30">BANNED</font> ||
 
-Specific implementations may be examined for a complete list: the current WebKit trunk implementation can be found [http://trac.webkit.org/browser/trunk/WebCore/xml/XMLHttpRequest.cpp here], whereas for Firefox, the code is [http://www.koders.com/cpp/fid85A0C4985B0456DE89AD58A65A368254EE1CE10B.aspx here].
+Specific implementations may be examined for a complete list: the current WebKit trunk implementation can be found [http://trac.webkit.org/browser/trunk/WebCore/xml/XMLHttpRequest.cpp here], whereas for Firefox, the code is [http://google.com/codesearch/p?hl=en&sa=N&cd=1&ct=rc#e_ObwTAVPyo/content/base/src/nsXMLHttpRequest.cpp&l=1996 here].
 
 A long-standing [http://www.securityfocus.com/archive/1/434931 security flaw] in Microsoft Internet Explorer 6 permits stray newline characters to appear in some `XMLHttpRequest` fields, permitting arbitrary headers (such as `Host`) to be injected into outgoing requests. This behavior needs to be accounted for in any scenarios where a considerable population of legacy MSIE6 users is expected.
 
