@@ -27,7 +27,7 @@ HTTP authentication is an ancient mechanism most recently laid out in [http://ww
 
   *  User's credentials are then encoded and sent back in a new request with an additional `Authorization` header, which the server is expected to examine, and grant access or return an error message as appropriate.
 
-Credentials are also cached for authentication with other subresources on the same site, and in some browsers, are sent out on all future requests to that host and port indiscriminately.
+Credentials are also cached for authentication with other subresources on the same site, and are sent out on future requests in an unsolicited manner (globally, or only for a particular path prefix).
 
 Two key authentication schemes are supported by virtually all clients: `basic` and `digest`. The former simply sends user names and passwords in plain (`base64`) text - and hence the data is vulnerable to snooping, unless the process takes place over HTTPS. The latter uses a simple nonce-based challenge-response mechanism that prevents immediate password disclosure. Microsoft further extended the mechanism to include two proprietary `NTLM` and `Negotiate` schemes ([http://www.innovation.ch/personal/ronald/ntlm.html reference]) that integrate seamlessly with Microsoft Windows domain authentication.
 
