@@ -27,13 +27,13 @@ The current version of this document is based on the following versions of web b
 || <font color="#3050a0">*Browser*</font> || <font color="#3050a0">*Version*</font> || <font color="#3050a0">*Test date*</font> || <font color="#3050a0">*Usage*</font>^*^ || <font color="#3050a0">*Notes*</font> ||
 || Microsoft Internet Explorer 6 || 6.0.2900.5512 || Feb 2, 2009 || 24% || ||
 || Microsoft Internet Explorer 7 || 7.0.5730.11 || Dec 11, 2008 || 19% || ||
-|| Microsoft Internet Explorer 8 || 8.0.6001.18702 || Jun 11, 2009 || 17% ||  ||
+|| Microsoft Internet Explorer 8 || 8.0.6001.18702 || Oct 3, 2009 || 17% ||  ||
 || Mozilla Firefox 2 || 2.0.0.18 || Nov 28, 2008 || 1% || ||
-|| Mozilla Firefox 3 || 3.0.10 || Jun 10, 2009 || 22% || ||
+|| Mozilla Firefox 3 || 3.0.14 || Oct 3, 2009 || 22% || ||
 || Apple Safari || 4.0 || Jun 10, 2009 || 4% || ||
 || Opera || 9.62 || Nov 18, 2008 || 2% || ||
-|| Google Chrome || 2.0.181.1 || Jun 10, 2009 || 3% || ||
-|| Android  embedded browser || SDK 1.0 RC1 || Nov 10, 2008 || <font color="#909090">n/a</font> || ||
+|| Google Chrome || 4.0.213.1 || Oct 3, 2009 || 3% || ||
+|| Android  embedded browser || SDK 1.5 R3 || Oct 3, 2009 || <font color="#909090">n/a</font> || ||
 
 ^*^ Approximate browser usage data based on public [http://marketshare.hitslink.com/browser-market-share.aspx?qprid=0 Net Applications] estimates for September 2009.
 
