@@ -124,6 +124,7 @@ Other important security properties of `XMLHttpRequest` are outlined below:
 || <font color="#3050a0">`XMLHttpRequest` may see other HTTP non-200 responses?</font> || YES || YES || YES || YES || YES || YES || YES || YES || NO ||
 || <font color="#3050a0">May local HTML access unrelated local files via `XMLHttpRequest`?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">May local HTML access sites on the Internet via `XMLHttpRequest`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is partial `XMLHttpRequest` data visible while loading</font>? || NO || NO || NO || YES || YES || YES || NO || YES || NO ||
 
 ^*^ Implements a whitelist of known schemes, rejects made up values.<br />
 ^**^ Implements a whitelist of known schemes, replaces non-whitelisted schemes with `GET`.
