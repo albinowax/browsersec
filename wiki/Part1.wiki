@@ -90,7 +90,7 @@ Key security-relevant differences in high-bit URL handling are outlined below:
 || <font color="#3050a0">URL bar Unicode display method outside host names</font> || Unicode || Unicode || Unicode || `%nn` || Unicode || Unicode || as `?` || Unicode || <font color="#909090">n/a</font> ||
 
 _NOTE 1: Firefox generally uses UTF-8 to encode most URLs, but will send characters supported by ISO-8859-1 using that codepage._
- 
+
 _NOTE 2: As an anti-phishing mechanism, additional restrictions on the use of some or all Unicode characters in certain top-level domains are imposed by many browsers; see [http://code.google.com/p/browsersec/wiki/Part2#International_Domain_Name_checks domain name restrictions] chapter later on._
 
 ==True URL schemes==
