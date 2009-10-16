@@ -195,6 +195,7 @@ The server responds in a similar manner, returning a numerical status code, spok
 HTTP/1.1 200 OK
 Server: Bunny-Server/0.9.2
 Content-Type: text/plain
+Connection: close
 
 HELLO CLIENT
 }}}
