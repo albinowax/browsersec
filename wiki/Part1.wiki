@@ -229,7 +229,19 @@ Many specific areas, such as caching behavior, have their own sections later in 
 || <font color="#3050a0">High-bit character handling in HTTP cookies</font> || <font color="#ff0000">transcoded to 7 bit</font> || <font color="#ff0000">transcoded to 7 bit</font> || <font color="#ff0000">transcoded to 7 bit</font> || <font color="#ff0000">mangled</font> || <font color="#ff0000">mangled</font> || UTF-8 || UTF-8 || UTF-8 || UTF-8 ||
 || <font color="#3050a0">Are `quoted-string` values supported for HTTP cookies?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || <font color="#ff0000">NO</font> || YES || <font color="#ff0000">NO</font> || YES ||
 
-_NOTE: `Referer` will always indicate the site from which the navigation originated, regardless of any 30x redirects in between. If it is desirable to hide the original URL from the destination site, Java<b></b>Script pseudo-protocol hops, or `Refresh` redirection, needs to be used._
+_NOTE 1: `Referer` will always indicate the site from which the navigation originated, regardless of any 30x redirects in between. If it is desirable to hide the original URL from the destination site, Java<b></b>Script pseudo-protocol hops, or `Refresh` redirection, needs to be used._
+
+_NOTE 2: `Refresh` header tokenization in MSIE is a bit unexpected, making it impossible to navigate to URLs that contain any literal `;` characters in them, unless the whole `URL=` value is additionally quoted. The tokenization also historically permitted cross-site scripting through URLs such as:_
+
+{{{
+http://example.com;URL=javascript:alert(1)
+}}}
+
+_...which was incorrectly interpreted by the browser in this setting:_
+
+{{{
+<meta http-equiv="Refresh" content="0;URL=http://example.com;URL=javascript:alert(1)">
+}}}
 
 ==Hypertext Markup Language==
 
