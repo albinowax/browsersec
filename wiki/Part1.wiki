@@ -231,16 +231,16 @@ Many specific areas, such as caching behavior, have their own sections later in 
 
 _NOTE 1: `Referer` will always indicate the site from which the navigation originated, regardless of any 30x redirects in between. If it is desirable to hide the original URL from the destination site, Java<b></b>Script pseudo-protocol hops, or `Refresh` redirection, needs to be used._
 
-_NOTE 2: `Refresh` header tokenization in MSIE is a bit unexpected, making it impossible to navigate to URLs that contain any literal `;` characters in them, unless the whole `URL=` value is additionally quoted. The tokenization also historically permitted cross-site scripting through URLs such as:_
+_NOTE 2: `Refresh` header tokenization in MSIE occurs in a very unexpected manner, making it impossible to navigate to URLs that contain any literal `;` characters in them, unless the parameter is enclosed in additional quotes. The tokenization also historically permitted cross-site scripting through URLs such as:_
 
 {{{
 http://example.com;URL=javascript:alert(1)
 }}}
 
-_...which was incorrectly interpreted by the browser in this setting:_
+_Unlike in all other browsers, older versions of Internet Explorer would interpret this as two `URL=` directives, with the latter taking precedence:_
 
 {{{
-<meta http-equiv="Refresh" content="0;URL=http://example.com;URL=javascript:alert(1)">
+Refresh: 0; URL=http://example.com;URL=javascript:alert(1)
 }}}
 
 ==Hypertext Markup Language==
