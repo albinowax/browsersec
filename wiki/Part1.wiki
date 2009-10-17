@@ -55,7 +55,7 @@ Below is a more detailed review of the key differences that often need to be acc
 || <font color="#3050a0">Characters rejected in URL login or password (excluding `/ # ; ? : % @`)</font> || \x00 <font color="#30ff30">\</font> || \x00 <font color="#30ff30">\</font> || \x00 <font color="#30ff30">\</font> || <font color="#909090">none</font> || <font color="#909090">none</font> || \x00-\x20 " < > `[` <font color="#30ff30">\</font> `]` ^ ` { | } \x7f-\xff || \x00 || \x00 \x01 <font color="#30ff30">\</font> || \x00-\x20 " < > `[` <font color="#30ff30">\</font> `]` ^ ` { | } \x7f-\xff ||
 || <font color="#3050a0">URL authentication data splitting behavior with multiple `@` characters</font> || leftmost || leftmost || leftmost || <font color="#ff0000">rightmost</font> || <font color="#ff0000">rightmost</font> || leftmost || <font color="#ff0000">rightmost</font> || <font color="#ff0000">rightmost</font> || leftmost ||
 
-_^*^ Interestingly, Firefox 3.5 takes a safer but non-RFC approach of encoding stray ' characters as %27 in URLs, in addition to the usual escaping rules._
+_^*^ Interestingly, Firefox 3.5 takes a safer but non-RFC-compliant approach of encoding stray ' characters as %27 in URLs, in addition to the usual escaping rules._
 
 _NOTE: As an anti-phishing mechanism, additional restrictions on the use of `authority` and `password` fields in URLs are imposed by many browsers; see the section on [http://code.google.com/p/browsersec/wiki/Part3#HTTP_authentication HTTP authentication] later on._
 
