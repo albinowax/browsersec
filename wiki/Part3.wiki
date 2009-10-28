@@ -142,9 +142,7 @@ A traditional method for modern web applications to parse same-origin, serialize
 
 Several implementations of secure JSON parsers were proposed earlier, such as the (unsafe!) implementation suggested [http://www.ietf.org/rfc/rfc4627.txt RFC4627], but they generally combine varying levels of insecurity with very significant performance penalties.
 
-In response to this, several browsers rolled out [http://blog.mozilla.com/webdev/2009/02/12/native-json-in-firefox-31/ JSON.parse()], a native non-executing JSON parser that could be used as a drop-in replacement for `eval()`.
-
-The interface does not address the much greater risk of loading cross-domain JavaScript information via `<SCRIPT SRC=...>` or similar approaches, and the cross-browser support is at this point very limited, shipping in Chrome and Firefox 3.5.
+In response to this, several browsers rolled out [http://blog.mozilla.com/webdev/2009/02/12/native-json-in-firefox-31/ JSON.parse()], a native non-executing JSON parser that could be used as a drop-in replacement for `eval()`. The interface does not address the much greater risk of loading cross-domain JavaScript information via `<SCRIPT SRC=...>` or similar approaches, and the cross-browser support is at this point very limited, shipping in Chrome and Firefox 3.5.
 
 ==Origin headers==
 
