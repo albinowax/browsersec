@@ -134,7 +134,17 @@ There are two primary classes of solutions proposed:
 
   * *Comprehensive script security frameworks:* these approaches strive to offer the ability for site owner to approve or reject arbitrary actions executed by scripts with a great deal of flexibility. Examples include Microsoft [https://research.microsoft.com/users/yxie/papers/hotOS07.pdf Mutation-Event Transforms] for browser-side checks (not clear if this is being pursued in any browser), or Google [http://code.google.com/p/google-caja/ Caja] and Microsoft [http://websandbox.livelabs.com/Default.aspx Web Sandbox] for a solution that requires no browser-side tweaks.
 
-  * *Selective script disable / enable functions:* these comparatively simpler solutions attempt to give web developers the tools to disable scripting in certain critical areas of the document, such as around user input or a block of intentionally non-sanitized HTML. One example such a proposal are Trevor Jim's [http://www.research.att.com/~trevor/papers/beep-tr.pdf Browser-Enforced Embedded Policies].
+  * *Selective script disable / enable functions:* these comparatively simpler solutions attempt to give web developers the tools to disable scripting in certain critical areas of the document, such as around user input or a block of intentionally non-sanitized HTML. One example such a proposal are Trevor Jim's [http://www.research.att.com/~trevor/papers/beep-tr.pdf Browser-Enforced Embedded Policies], or the [http://msdn.microsoft.com/en-us/library/cc848922(VS.85).aspx toStaticHTML() API] in Microsoft Internet Explorer 8.
+
+==Secure JSON parsing==
+
+A traditional method for modern web applications to parse same-origin, serialized text Java<b></b>Script responses returned by servers in response to `XMLHttpRequest` calls is to pass them to `eval()` - which turns the string into a native object. Unfortunately, calls to `eval()` have a number of side effects - most notably, any code smuggled inside the string would execute in the recipient script security context, putting an additional burden on the server or the client to sanitize the code - and leading to many security bugs.
+
+Several implementations of secure JSON parsers were proposed earlier, such as the (unsafe!) implementation suggested [http://www.ietf.org/rfc/rfc4627.txt RFC4627], but they generally combine varying levels of insecurity with very significant performance penalties.
+
+In response to this, several browsers rolled out [http://blog.mozilla.com/webdev/2009/02/12/native-json-in-firefox-31/ JSON.parse()], a native non-executing JSON parser that could be used as a drop-in replacement for `eval()`.
+
+The interface does not address the much greater risk of loading cross-domain JavaScript information via `<SCRIPT SRC=...>` or similar approaches, and the cross-browser support is at this point very limited, shipping in Chrome and Firefox 3.5.
 
 ==Origin headers==
 
