@@ -13,7 +13,7 @@
 
 =Experimental and legacy security mechanisms=
 
-Through the years, browsers accrued a fair number of security mechanisms that had either fallen into disuse, or never caught on; as well as a number of ongoing proposals, enhancements, and extensions that are yet to prove their worth or become even vaguely standardized. This section provides a brief overview of several technologies that could fall into this class.
+Through the years, browsers accrued a fair number of security mechanisms that had either fallen into disuse, or never caught on across more than a single vendor; as well as a number of ongoing proposals, enhancements, and extensions that are yet to prove their worth or become even vaguely standardized. This section provides a brief overview of several technologies that could fall into this class.
 
 _Fun fact: when it comes to newly proposed features, many of them essentially introduce new security boundaries and permission systems mostly orthogonal, yet intertwined, with same-origin controls. Although this appears to be a good idea at first sight, some researchers [http://crypto.stanford.edu/websec/origins/fgo.pdf warn about the pitfalls] of finer-grained origins as difficult to understand to users, and hard to fully examine for potential side effects and interactions with existing code._
 
