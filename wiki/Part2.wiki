@@ -909,9 +909,14 @@ As can be expected, HTTPS is not without a fair share of problems:
 
 There is also an interesting technical consideration that is not entirely solved in contemporary browsers: HTTP and HTTPS resources may be freely mixed when rendering a document, but doing so in certain configurations may expose the security context associated with HTTPS-served HTML to man-in-the-middle attackers. This is particularly problematic for `<SCRIPT>`, `<LINK REL="stylesheet" ...>`, `<EMBED>`, and `<APPLET>` resources, as they may jump security contexts quite easily. Because of the possibility, many browsers take measures to detect and block at least some mixed content, sometimes breaking legitimate applications in the process.
 
+An interesting recent development is [http://lists.w3.org/Archives/Public/www-archive/2009Sep/att-0051/draft-hodges-strict-transport-sec-05.plain.html Strict Transport Security], a mechanism that allows websites to opt in for HTTPS-only rendering and strict HTTPS certificate validation through a special HTTP header. Once the associated header - `Strict-Transport-Security` - is seen in a response, the browser will automatically bump all HTTP connection attempts to that site to HTTPS, and will reject invalid HTTPS certificates, with no user recourse. The mechanism offers an important defense against phishing and man-in-the-middle attacks for sensitive sites, but comes with its own set of gotchas - including the fact it requires many existing sites to be redesigned (and SSL content isolated in a separate domain), or that it bears some peripheral denial-of-service risks.
+
+Strict Transport Security is currently supported only by Chrome 4, and optionally through Firefox extensions such as [http://noscript.net/ NoScript].
+
 Several important HTTPS properties and default behaviors are outlined below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
+|| <font color="#3050a0">Strict Transport Security supported?</font> || NO || NO || NO || NO || NO || NO || NO ||  <font color="#30ff30">YES</font> || NO || 
 || <font color="#3050a0">`Referer` header sent on HTTPS → HTTPS navigation?</font> || YES || YES || YES || YES || YES || YES || <font color="#30ff30">NO</font> || YES || YES ||
 || <font color="#3050a0">`Referer` header sent on HTTPS → HTTP navigation?</font> || NO || NO || NO || NO || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Behavior on invalid certificates</font> || prompt || interstitial || interstitial || prompt || block || prompt || prompt || interstitial || prompt ||
