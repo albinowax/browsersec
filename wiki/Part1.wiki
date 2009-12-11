@@ -167,7 +167,7 @@ In addition to encapsulating schemes enumerated above, there are various schemes
 Finally, several pseudo-schemes exist specifically to enable scripting or URL-contained data rendering in the security context inherited from the caller, without actually referencing any additional external or internal content. It is particularly unsafe to output attacker-controlled URLs of this type on pages that may contain any sensitive content. Known schemes of this type include:
 
 || <font color="#3050a0">*Scheme name*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">data (in-place documents, [http://www.ietf.org/rfc/rfc2397.txt RFC 2397])</font> || NO || NO || NO || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">data (in-place documents, [http://www.ietf.org/rfc/rfc2397.txt RFC 2397])</font> || NO || NO || [http://msdn.microsoft.com/en-us/library/cc848897%28VS.85%29.aspx PARTIAL] || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">javascript ([http://developer.mozilla.org/en/docs/JavaScript web scripting])</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">vbscript ([http://msdn.microsoft.com/en-us/library/sx7b3k7y(VS.85).aspx Microsoft proprietary scripting])</font> || YES || YES || YES || NO || NO || NO || NO || NO || NO ||
 
