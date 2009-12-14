@@ -102,13 +102,15 @@ This design makes it possible to, for example, fine-tune the permissions of `fil
 
   * The complexity of the model and the permissive settings of some zones resulted in a [http://www.securityfocus.com/news/8998 large number of security problems] that could easily be avoided by employing a simpler approach instead.
 
-==Microsoft Internet Explorer frame restrictions==
+==Microsoft Internet Explorer frame restrictions (and descendants)==
 
 Another interesting, little-known security feature unique to Microsoft Internet Explorer is the concept of [http://msdn.microsoft.com/en-us/library/ms534622(VS.85).aspx SECURITY=RESTRICTED frames]. The idea behind the mechanism is that some services may have a legitimate use for limiting the ability of data displayed within `<IFRAME>` containers to disrupt the top-level document or abuse same-origin policies - and so, with the `SECURITY=RESTRICTED` attribute, the content may be placed in the "Restricted sites" zone, and - in theory - deprived of the ability to run disruptive scripts or access cookies.
 
 No support outside of Microsoft Internet Explorer makes this feature useless as a security defense for most intents and purposes; but the mechanism needs to be considered for its potential negative security impact, such as the ability to prevent frame busting code from operating properly and making [http://code.google.com/p/browsersec/wiki/Part2#Arbitrary_page_mashups_(UI_redressing) UI redress attacks] a bit easier. No support for HTTP cookies within a restricted container would normally limit the impact, but flaws in the design are known.
 
 Due to its minimal use, the mechanism likely received very little security scrutiny otherwise.
+
+_Note: a descendant of the concept seem to be a current HTML5 proposal for [http://www.w3.org/TR/html5/text-level-semantics.html#attr-iframe-sandbox sandboxed frames]. The design appears to be considerably more robust and offers a better granularity for restricting the behavior of framed sites._
 
 ==HTML5 storage and worker experiments==
 
