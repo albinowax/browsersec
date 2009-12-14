@@ -67,3 +67,5 @@ _Browser Security Handbook_ would not be possible without the ideas and assistan
 The document builds on top of previous security research by Adam Barth, Collin Jackson, Amit Klein, Jesse Ruderman, and many other security experts who painstakingly dissected browser internals for the past few years. 
 
 _([http://code.google.com/p/browsersec/wiki/Part1 Continue to basic concepts behind web browsers...])_
+
+<a name="test">
