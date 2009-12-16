@@ -18,7 +18,7 @@ This section provides a detailed discussion of explicit security mechanisms and 
 
 ==Same-origin policy=
 
-Perhaps the most important security concept within modern browsers is the idea of [http://www.w3.org/Security/wiki/Same_Origin_Policy same-origin security policies]. The principal intent for these mechanisms is to make it possible for largely unrestrained scripting and other interactions between pages served as a part of the same site (understood as having a particular DNS host name, or part thereof), whilst almost completely preventing any interference between unrelated sites.
+Perhaps the most important security concept within modern browsers is the idea of the [http://www.w3.org/Security/wiki/Same_Origin_Policy same-origin policy]. The principal intent for this mechanism is to make it possible for largely unrestrained scripting and other interactions between pages served as a part of the same site (understood as having a particular DNS host name, or part thereof), whilst almost completely preventing any interference between unrelated sites.
 
 In practice, there is no single same-origin policy, but rather, a set of mechanisms with some superficial resemblance, but quite a few important differences. These flavors are discussed below.
 
