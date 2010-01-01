@@ -25,7 +25,7 @@ The abstract syntax for URIs is described in [http://www.ietf.org/rfc/rfc3986.tx
 Some additional mechanisms are laid out in [http://www.ietf.org/rfc/rfc1738.txt RFC 1738], which defines URI syntax within the scope of HTTP, FTP, NNTP, Gopher, and several other specific protocols. Together, these RFCs define the following syntax for common Internet resources (the compliance with a generic naming strategy is denoted by the `//` prefix):
 
 {{{
-scheme://[authority[:password]@](host_name|host_address)[:port][/hierarchical/path/to/resource[?search_string][#fragment_id]]
+scheme://[login[:password]@](host_name|host_address)[:port][/hierarchical/path/to/resource[?search_string][#fragment_id]]
 }}}
 
 Since the presence of a scheme is the key differentiator between relative references permitted in documents for usability reasons, and fully-qualified URLs, and since `:` itself has other uses later in the URL, the set of characters permitted for scheme name must be narrow and clearly defined (`0-9 A-Z a-z + - .`) so that all implementations may make the distinction accurately.
@@ -59,7 +59,7 @@ Below is a more detailed review of the key differences that often need to be acc
 
 _^*^ Interestingly, Firefox 3.5 takes a safer but non-RFC-compliant approach of encoding stray ' characters as %27 in URLs, in addition to the usual escaping rules._
 
-_NOTE: As an anti-phishing mechanism, additional restrictions on the use of `authority` and `password` fields in URLs are imposed by many browsers; see the section on [http://code.google.com/p/browsersec/wiki/Part3#HTTP_authentication HTTP authentication] later on._
+_NOTE: As an anti-phishing mechanism, additional restrictions on the use of `login` and `password` fields in URLs are imposed by many browsers; see the section on [http://code.google.com/p/browsersec/wiki/Part3#HTTP_authentication HTTP authentication] later on._
 
 Please note that when links are embedded within HTML documents, [http://www.w3.org/TR/REC-html40/charset.html#h-5.3.2 HTML entity decoding] takes place before the link is parsed. Because of this, if a tab is ignored in URL schemes, a link such as `javascript&#09;:alert(1)` may be accepted and executed as Java<b></b>Script, just as `javascript<TAB>:alert(1)` would be. Furthermore, certain characters, such as `\x00` in Internet Explorer, or `\x08` in Firefox, may be ignored by HTML parsers if used in certain locations, even though they are not treated differently by URL-handling code itself.
 
