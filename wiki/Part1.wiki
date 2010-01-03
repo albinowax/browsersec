@@ -36,10 +36,11 @@ Although a broad range of reserved characters is defined as delimiters in generi
 
 The standards that specify the overall URL syntax are fairly laid back - for example, they permit IP addresses such as `74.125.19.99` to be written in completely unnecessary and ambiguous ways such as `74.0x7d.023.99` (mixing decimal, octal, and hexadecimal notation) or `74.8196963` (24 bits coalesced). To add insult to injury, on top of this, browsers deviate from these standards in random ways, for example accepting URLs with technically illegal characters, and then trying to escape them automatically, or passing them as-is to underlying implementations - such as the DNS resolver, which itself then rejects or passes through such queries in a completely OS-specific manner.
 
-A particularly interesting example of URL parsing inconsistencies is the following URL, which points to one host in Firefox, and to a different host in MSIE (and most other browsers):
+A particularly interesting example of URL parsing inconsistencies is the two following URLs. The first one resolves to a different host in Firefox, and to a different one in most other browsers; the second one behaves uniquely in Internet Explorer instead:
 
 {{{
-http://hello:world@example.com\@evil.com/
+http://example.com\@coredump.cx/
+http://example.com;.coredump.cx/
 }}}
 
 Below is a more detailed review of the key differences that often need to be accounted for:
