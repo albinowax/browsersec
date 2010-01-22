@@ -189,7 +189,7 @@ An [http://www.ietf.org/dyn/wg/charter/httpstate-charter.html IETF effort] is cu
 || <font color="#3050a0">Are host-scope cookies possible (no `domain=` value)?</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || <font color="#ff0000">NO</font> || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Overly permissive ccTLD behavior test results (3 tests)</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">2/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">1/3 FAIL</font> || <font color="#30ff30">3/3 OK</font> || <font color="#30ff30">3/3 OK</font> || <font color="#ff0000">2/3 FAIL</font> || 
 
-^*^ Note that as discussed earlier, even when this is not directly permitted, the attacker may still drop the original cookie by simply overflowing the cookie jar, and insert a new one without a `httponly` or `secure` flag set.
+^*^ Note that as discussed earlier, even when this is not directly permitted, the attacker may still drop the original cookie by simply overflowing the cookie jar, and insert a new one without a `httponly` or `secure` flag set; and even if the ability to overflow the jar is limited, there is no way for a server to distinguish between a genuine `httponly` or `secure` cookie, and a differently scoped, but identically named lookalike.
 
 ===Same-origin policy for Flash===
 
