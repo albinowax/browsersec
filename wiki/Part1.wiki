@@ -540,7 +540,7 @@ In many cases, as with Java<b></b>Script, there is a need for web applications t
 
 Instead, a rather unusual and incompatible scheme consisting of `\` followed by non-prefixed, variable length one- to six-digit hexadecimal is employed; for example, `"test"` may be encoded as `"t\65st"` or `"t\000065st"` - but not as `t\est"`, `"t\x65st"`, `"t\u0065st"`, nor `"t&#x65;st"` ([http://www.w3.org/TR/CSS21/syndata.html#escaped-characters reference]).
 
-A very important and little-known oddity unique to CSS parsing is that escape sequences are also accepted outside strings, and confusingly, may substitute some syntax control characters in the stylesheet; so for example, `color: red` and `color: \072\065\064` have the same meaning - and so does `color: expression(alert(1))` and `color: expression\028\061lert\028\031\029\029`. To add insult to injury, syntax such as `color: \027red'` or `color: 'red\027` would not work, but `color: \027red\027` is OK.
+A very important and little-known oddity unique to CSS parsing is that escape sequences are also accepted outside strings, and confusingly, may substitute some syntax control characters in the stylesheet; so for example, `color: expression(alert(1))` and `color: expression \028 alert \028 1 \029 \029` have the same meaning. To add insult to injury, mixed syntax such as `color: expression ( alert \029 1 ) \029'` would not work.
 
 With the exception of Internet Explorer, stray multi-line string literals are not supported; but a lone `\` at the end of a line may be used to seamlessly break long lines.
 
