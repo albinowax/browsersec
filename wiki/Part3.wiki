@@ -128,6 +128,8 @@ An experimental [http://blogs.technet.com/swi/archive/2008/08/19/ie-8-xss-filter
 
 An important downside of the design is that it aims to selectively disable script snippets that appear in URL query parameters, instead of displaying an interstitial or other security prompt, and permitting the page to display in full, or not display at all. This behavior may potentially enable attackers to carefully take out [http://code.google.com/p/browsersec/wiki/Part2#Arbitrary_page_mashups_(UI_redressing) frame-busting code] or other security-critical components of targeted applications, while leaving the rest of the functionality intact. 
 
+The filter also features a same-origin exception that inhibits filtering when site-supplied links are followed. In many complex web applications, this may be used to bypass the mechanism altogether.
+
 ==Script restriction frameworks==
 
 Several experimental browser-side or client-side designs aim to provide control over same-origin permissions for scripts, or over when scripts may execute on pages to begin with. Although such features would not necessarily prevent all the potential negative effects of rendering attacker-controlled HTML in trusted domains, a well-executed solution could indeed avert most of the high-impact vulnerabilities.
