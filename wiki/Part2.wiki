@@ -371,7 +371,7 @@ try {
 }
 }}}
 
-It should be noted that there is no strict guarantee that the update of `top.location` would always work, particularly if dummy setters are defined, or if there are collaborating, attacker-controlled `<IFRAME>` containers performing conflicting location updates through various mechanisms. A more drastic solution would be to also overwrite or hide the current document pending page transition, or to perform `onclick` checks on all UI actions, and deny them from within frames. All of these mechanisms also fail if the user has Java<b></b>Script disabled globally, or for the attacked site. 
+It should be noted that there is no strict guarantee that the update of `top.location` would always work, particularly if dummy setters are defined, or if there are collaborating, attacker-controlled `<IFRAME>` containers performing conflicting location updates through various mechanisms. A more drastic solution would be to also overwrite or hide the current document pending page transition, or to perform `onclick` checks on all UI actions, and deny them from within frames. All of these mechanisms also fail if the user has Java<b></b>Script disabled globally, or for the attacked site.
 
 Likewise, because of the features of Java<b></b>Script, the following is enough to prevent frame busting in Microsoft Internet Explorer 7:
 
@@ -382,7 +382,8 @@ var location = "clobber";
 <iframe src="http://www.example.com/frame_busting_code.html"></iframe>
 }}}
 
-Joseph Schorr cleverly pointed out that this behavior may be worked around by creating an `<A HREF="..." TARGET="_top">` HTML tag, and then calling the `click()` on this element; on the other hand, flaws in [http://code.google.com/p/browsersec/wiki/Part3#Microsoft_Internet_Explorer_frame_restrictions SECURITY=RESTRICTED] frames and the inherent behavior of [http://code.google.com/p/browsersec/wiki/Part3#Microsoft_Internet_Explorer_XSS_filtering browser XSS filters] render even this variant of limited use.
+Joseph Schorr cleverly pointed out that this behavior may be worked around by creating an `<A HREF="..." TARGET="_top">` HTML tag, and then calling the `click()` on this element; on the other hand, flaws in [http://code.google.com/p/browsersec/wiki/Part3#Microsoft_Internet_Explorer_frame_restrictions SECURITY=RESTRICTED] frames and the inherent behavior of [http://code.google.com/p/browsersec/wiki/Part3#Microsoft_Internet_Explorer_XSS_filtering browser XSS filters] render even this variant of limited use; a comprehensive study of these vectors is given in [http://crypto.stanford.edu/~dabo/pubs/papers/framebust.pdf this research paper].
+
 
 Relevant tests:
 
