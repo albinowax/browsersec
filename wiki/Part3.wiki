@@ -102,7 +102,7 @@ This design makes it possible to, for example, fine-tune the permissions of `fil
 
   * The complexity of the model and the permissive settings of some zones resulted in a [http://www.securityfocus.com/news/8998 large number of security problems] that could easily be avoided by employing a simpler approach instead.
 
-==Microsoft Internet Explorer frame restrictions (and descendants)==
+==Microsoft Internet Explorer frame restrictions==
 
 Another interesting, little-known security feature unique to Microsoft Internet Explorer is the concept of [http://msdn.microsoft.com/en-us/library/ms534622(VS.85).aspx SECURITY=RESTRICTED frames]. The idea behind the mechanism is that some services may have a legitimate use for limiting the ability of data displayed within `<IFRAME>` containers to disrupt the top-level document or abuse same-origin policies - and so, with the `SECURITY=RESTRICTED` attribute, the content may be placed in the "Restricted sites" zone, and - in theory - deprived of the ability to run disruptive scripts or access cookies.
 
@@ -110,7 +110,11 @@ No support outside of Microsoft Internet Explorer makes this feature useless as 
 
 Due to its minimal use, the mechanism likely received very little security scrutiny otherwise.
 
-_Note: a descendant of the concept seem to be a current HTML5 proposal for [http://www.w3.org/TR/html5/text-level-semantics.html#attr-iframe-sandbox sandboxed frames]. The design appears to be considerably more robust and offers a better granularity for restricting the behavior of framed sites._
+==HTML5 sandboxed frames==
+
+A better-developed descendant of the `SECURITY=RESTRICTED` is the current HTML5 proposal for [http://www.w3.org/TR/html5/text-level-semantics.html#attr-iframe-sandbox sandboxed frames]. The design appears to be considerably more robust and offers a better granularity for restricting the behavior of framed sites: embedding domains will be able to disallow scripting altogether; allow Java<b></b>Script but make all same-origin policy checks fail;  or allow scripting, but prevent navigating the top-level document to prevent framebusting.
+
+Of all these features, the ability to place content in a same-origin policy sandbox is the most tricky one. Perhaps most importantly, the attacker could simply open the normally framed document directly (this is prevented by using `text/html-sandboxed` as a MIME type; but [http://code.google.com/p/browsersec/wiki/Part2#Survey_of_content_sniffing_behaviors content sniffing logic] will render this trick unsafe in certain browsers). The other significant problem is that mechanisms such as local storage and workers (see next chapter), form autocomplete, and so forth, need to be specifically accounted forth and denied access to - something that will likely prove challenging in the long run.
 
 ==HTML5 storage and worker experiments==
 
