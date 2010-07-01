@@ -388,7 +388,7 @@ Relevant tests:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Is CSS `opacity` supported ("decoy underneath")?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
-|| <font color="#3050a0">Are partly obstructed `IFRAME` containers clickable ("decoy on top")?</font> || YES || YES || || YES || YES || YES || YES || YES || YES ||
+|| <font color="#3050a0">Are partly obstructed `IFRAME` containers clickable ("decoy on top")?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Is cross-domain `scrollBy` scrolling permitted?</font> || NO || NO || NO || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is cross-domain anchor-based frame positioning permitted?</font> || YES || YES || YES || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is `X-Frame-Options` defense available?</font> || NO || NO || YES || NO || NO || YES || NO || YES || <font color="#909090">n/a</font> ||
