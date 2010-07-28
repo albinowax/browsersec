@@ -65,7 +65,7 @@ As a part of a broader form auto-completion mechanism, most browsers offer users
 
 Unfortunately, as noted in the previous section, the only standard mechanism for identifying and scoping user passwords in HTTP traffic had largely fallen into disuse; the new form- and cookie-based alternatives are custom-built for every application, are share almost nothing in common with each other. As a result, most browsers face challenges trying heuristically detect when a legitimate authentication attempt takes place and succeeds, or trying to decide how to define the realm for stored data.
 
-In particular, it might be easier than intuitively expected for certain types of user content hosted (or injected) under the same host name as a trusted login interface to spoof such forms and intercept auto-filled data; letting user-controlled forms and login interfaces mix on the same site appears to be not necessarily a good idea for time being.
+In particular, it might be easier than intuitively expected for certain types of user content hosted (or injected) under the same host name as a trusted login interface to spoof such forms and intercept auto-filled data; letting user-controlled forms and login interfaces mix within a single same-origin context appears to be not necessarily a good idea for time being.
 
 Several of the relevant password manager behaviors are shown below:
 
