@@ -61,8 +61,8 @@ All this ambiguity leads to a significant degree of variation between browsers, 
 || <font color="#3050a0">May `document.domain` be set to TLD with a trailing dot?</font> || YES || YES || NO || YES || NO || YES || NO || YES || YES ||
 || <font color="#3050a0">May `document.domain` be set to right-hand IP address fragments?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> ||
 || <font color="#3050a0">Do port numbers wrap around in same origin checks?</font> || NO || NO || NO || uint32 || uint32 || uint16/32 || uint16 || NO || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">May local HTML access unrelated local files via DOM?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">May local HTML access sites on the Internet via DOM?</font> || NO || NO || NO || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">May local HTML access unrelated local files via DOM?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">May local HTML access sites on the Internet via DOM?</font> || NO || NO || NO || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 
 _Note: Firefox 3 is currently the only browser that uses a [https://developer.mozilla.org/En/Same-origin_policy_for_file:_URIs directory-based scoping scheme] for same-origin access within `file://`. This bears some risk of breaking quirky local applications, and may not offer protection for shared download directories, but is a sensible approach otherwise._
 
@@ -122,8 +122,8 @@ Other important security properties of `XMLHttpRequest` are outlined below:
 || <font color="#3050a0">`XMLHttpRequest` may see invalid HTTP 30x responses</font>? || NO || NO || NO || YES || YES || NO || NO || YES || NO ||
 || <font color="#3050a0">`XMLHttpRequest` may see cross-domain HTTP 30x responses</font>? || NO || NO || NO || YES || YES || NO || NO || NO || NO ||
 || <font color="#3050a0">`XMLHttpRequest` may see other HTTP non-200 responses?</font> || YES || YES || YES || YES || YES || YES || YES || YES || NO ||
-|| <font color="#3050a0">May local HTML access unrelated local files via `XMLHttpRequest`?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">May local HTML access sites on the Internet via `XMLHttpRequest`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">May local HTML access unrelated local files via `XMLHttpRequest`?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || NO || NO || <font color="#ff0000">YES</font> || NO || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">May local HTML access sites on the Internet via `XMLHttpRequest`?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is partial `XMLHttpRequest` data visible while loading</font>? || NO || NO || NO || YES || YES || YES || NO || YES || NO ||
 
 ^*^ Implements a whitelist of known schemes, rejects made up values.<br />
