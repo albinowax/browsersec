@@ -267,15 +267,16 @@ The ability for various applications to accurately understand HTML document stru
 Sadly, for compatibility reasons, parsers operating in non-XML mode tend to be generally lax and feature proprietary, incompatible, poorly documented recovery modes that make it very difficult for any platform to anticipate how a third-party HTML document - or portion thereof - would be interpreted. Any of the following grossly malformed examples may be interpreted as a scripting directive by some, but usually not all, renderers:
 
 {{{
-1: <B <SCRIPT>alert(1)</SCRIPT>>
-2: <B="<SCRIPT>alert(1)</SCRIPT>">
-3: <IMG SRC=`javascript:alert(1)`>
-4: <S[0x00]CRIPT>alert(1)</S[0x00]CRIPT>
-5: <A """><IMG SRC="javascript:alert(1)">
-6: <IMG onmouseover =alert(1)>
-7: <A/HREF="javascript:alert(1)">
-8: <!-- Hello -- world > <SCRIPT>alert(1)</SCRIPT> -->
-9: <IMG ALT="><SCRIPT>alert(1)</SCRIPT>"(EOF)
+01: <B <SCRIPT>alert(1)</SCRIPT>>
+02: <B="<SCRIPT>alert(1)</SCRIPT>">
+03: <IMG SRC=`javascript:alert(1)`>
+04: <S[0x00]CRIPT>alert(1)</S[0x00]CRIPT>
+05: <A """><IMG SRC="javascript:alert(1)">
+06: <IMG onmouseover =alert(1)>
+07: <A/HREF="javascript:alert(1)">
+08: <!-- Hello -- world > <SCRIPT>alert(1)</SCRIPT> -->
+09: <IMG ALT="><SCRIPT>alert(1)</SCRIPT>"(EOF)
+10: <![><IMG ALT="]><SCRIPT>alert(1)</SCRIPT>">
 }}}
 
 [http://code.google.com/p/doctype/wiki/ArticlesXSS Cross-site scripting] aside, another interesting property of HTML is that it permits certain HTTP directives to be encoded within HTML itself, using the following format:
@@ -295,6 +296,7 @@ Key security-relevant differences between HTML parsing modes in the aforemention
 || <font color="#3050a0">Trace-back on missing tag closure (`<FOO BAR="><BAZ>"(EOF)`)?</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || <font color="#ff0000">YES</font> || NO || NO ||
 || <font color="#3050a0">Trace-back on missing parameter closure (`<FOO BAR="><BAZ>(EOF)`)?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO ||
 || <font color="#3050a0">SGML-style comment parsing permitted in strict mode (`--` and `>` may appear separately)?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
+|| <font color="#3050a0">`CDATA` blocks supported in plain HTML documents?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO ||
 || <font color="#3050a0">!-type tags are parsed in a non-HTML manner (`<!FOO BAR="-->"...` breaks)?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO ||
 || <font color="#3050a0">Characters accepted as tag name / parameter separators (excluding `\t \r \n \x20`)</font> || \x0B \x0C <font color="#ff0000">/</font> || \x0B \x0C <font color="#ff0000">/</font> || NO || <font color="#ff0000">/</font> || <font color="#ff0000">/</font> || \x0B \x0C || \x0B \x0C \xA0 || \x0B \x0C || \x0B \x0C ||
 || <font color="#3050a0">Characters ignored between parameter name, equals sign, and value (excluding `\t \r \n`)</font> || \0 \x0B \x0C \x20 || \0 \x0B \x0C \x20 || \0 \x0B \x0C \x20 || \x20 || \x20 || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> || \x20 \xA0 || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> ||
