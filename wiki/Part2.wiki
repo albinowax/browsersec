@@ -216,7 +216,9 @@ Flash applets running from the Internet do not have any specific permissions to 
 
 ===Same-origin policy for Java===
 
-Much like Adobe Flash, [http://java.sun.com/applets/ Java applets], reportedly supported on about 80% of all desktop systems, roughly follow the basic concept of same-origin checks applied to a runtime context derived from the site the applet is downloaded from. The documentation for Java security model available on the Internet appears to be remarkably poor and spotty, so the information provided in this section is in large part based on empirical testing. According to this research, the following permissions are available to Java applets:
+Much like Adobe Flash, [http://java.sun.com/applets/ Java applets], reportedly supported on about 80% of all desktop systems, roughly follow the basic concept of same-origin checks applied to a runtime context derived from the site the applet is downloaded from - except that rather unfortunately to many classes of modern websites, different host names sharing a single IP address [http://download.oracle.com/javase/6/docs/api/java/net/URL.html are considered same-origin] under certain circumstances. 
+
+The documentation for Java security model available on the Internet appears to be remarkably poor and spotty, so the information provided in this section is in large part based on empirical testing. According to this research, the following permissions are available to Java applets:
 
   * The ability to interact with Java<b></b>Script on the embedding page through the [http://java.sun.com/j2se/1.4.2/docs/guide/plugin/developer_guide/java_js.html JSObject] API, with no specific same-origin checks. This mechanism is disabled by default, but may be enabled with the `MAYSCRIPT` parameter within the `<APPLET>` tag.
 
