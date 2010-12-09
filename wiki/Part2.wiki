@@ -458,7 +458,7 @@ Aside from coding vulnerabilities such as [http://code.google.com/p/doctype/wiki
 Assorted tests related to the aforementioned side channels:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
-|| <font color="#3050a0">Is detection of `:visited` styles possible?</font> || YES || YES || YES || YES || NO || NO || YES || NO || YES ||
+|| <font color="#3050a0">Is detection of `:visited` styles possible?</font> || YES || YES || YES || YES || NO || NO || NO || NO || NO ||
 || <font color="#3050a0">Can image sizes be read back via CSS?</font> || NO || NO || NO || YES || YES || YES || NO || YES || YES ||
 || <font color="#3050a0">Can image sizes be read back via `Image` object?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Does CSS parser accept HTML documents as stylesheets?</font> || YES || YES || YES || YES || YES || NO || YES || NO || YES ||
