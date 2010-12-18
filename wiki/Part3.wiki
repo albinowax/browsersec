@@ -182,4 +182,6 @@ Other than the general design of HTTP, HTML, and related mechanisms discussed pr
 
   * *General susceptibility to denial-of-service attacks:* as discussed in the section on Java<b></b>Script execution restrictions, browsers are generally vulnerable to resource exhaustion or UI blocking attacks that may crash or render the browser - or even the underlying operating system - unresponsive or difficult to interact with. In some cases, this may be even abused to extort certain UI actions from less experienced users. Even with Java<b></b>Script out of the picture, tasks such as parsing XML or HTML documents, or rendering certain types of images or videos, are often sufficiently computationally expensive to facilitate such attacks.
 
+  * *Incompatibility with untrusted networks:* browsers will persistently cache resources retrieved over untrusted networks, such as public wifi - and will grant such content full access to previously cached pages or credentials. This problem makes it virtually impossible to use public wireless hotspots safely.
+
 _([http://code.google.com/p/browsersec/wiki/Main Go back to the beginning])_
