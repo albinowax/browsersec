@@ -122,7 +122,7 @@ Firefox 2 embraced the idea of [https://developer.mozilla.org/En/DOM/Storage glo
 
 Another idea of [http://www.w3.org/TR/2009/WD-html5-20090212/structured-client-side-storage.html#sql SQL database] support made rounds, but originally failed to gain any support.
 
-_NOTE: The implementation of `sessionStorage` and `localStorage` in Internet Explorer 8 dangerously deviates from the standard, treating storages managed by HTTP and HTTPS content as same-origin. The `sessionStorage` implementation in Firefox 3.6 also permits properties set by HTTP pages to be read by HTTPS content, but not vice versa - which can be problematic._
+_WARNING: The implementation of `sessionStorage` and `localStorage` in Internet Explorer 8 dangerously deviates from the standard, treating storages managed by HTTP and HTTPS content as same-origin. The `sessionStorage` implementation in Firefox 3.6 also permits properties set by HTTP pages to be read by HTTPS content, but not vice versa - which can be problematic._
 
 Further along the lines of offline storage mechanisms, Firefox 3 introduced, and Firefox 3.1 revised in a largely incompatible manner, the concept of [https://developer.mozilla.org/en/Offline_resources_in_Firefox cache manifests] that permit sites to opt for having certain resources persistently stored in a site-specific cache, and then retrieved from there instead of being looked up on the net. The feature is again borrowed from the ever-shifting HTML5 specification (and now also available in WebKit browsers).
 
