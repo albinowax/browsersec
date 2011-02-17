@@ -287,7 +287,23 @@ Sadly, for compatibility reasons, parsers operating in non-XML mode tend to be g
 
 Not all `HTTP-EQUIV` directives are meaningful - for example, the determination of `Content-Type`, `Content-Length`, `Location`, or `Content-Disposition` had already been made by the time HTML parsing begins - but some values seen may be set this way. The strategy for resolving HTTP - HTML conflicts is not outlined in W3C standards - but in practice, valid HTTP headers take precedence over `HTTP-EQUIV`; on the other hand, `HTTP-EQUIV` takes precedence over unrecognized HTTP header values. `HTTP-EQUIV` tags will also take precedence when the content is moved to non-HTTP media, such as saved to local disk.
 
-Key security-relevant differences between HTML parsing modes in the aforementioned engines are shown below:
+A fascinating quirk exists in the Internet Explorer HTML parser. While all other browsers accept quoted string parameter values only if the quote appear in front of the parameter, MSIE looks for an _equals-quote_ substring anywhere in the middle:
+
+{{{
+<img src=test.jpg?value=">Yes, we are still inside a tag!">
+}}}
+
+Other behaviors unique to Internet Explorer include the recognition of conditional HTML syntax, such as:
+
+{{{
+<!--[if IE 6]>
+  Markup that will be parsed only for Internet Explorer 6
+<![endif]-->
+}}}
+
+...and the recognition of %-type, comment-like HTML tags.
+
+Some of the other security-relevant differences between HTML parsing modes in the aforementioned engines are shown below:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
 || <font color="#3050a0">Parser resets on nested HTML tags (`<FOO <BAR...`)?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
@@ -297,13 +313,15 @@ Key security-relevant differences between HTML parsing modes in the aforemention
 || <font color="#3050a0">Trace-back on missing parameter closure (`<FOO BAR="><BAZ>(EOF)`)?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO ||
 || <font color="#3050a0">SGML-style comment parsing permitted in strict mode (`--` and `>` may appear separately)?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || NO || NO || NO ||
 || <font color="#3050a0">`CDATA` blocks supported in plain HTML documents?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO ||
-|| <font color="#3050a0">!-type tags are parsed in a non-HTML manner (`<!FOO BAR="-->"...` breaks)?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO ||
+|| <font color="#3050a0">!- and ?-type tags are parsed in a non-HTML manner (`<!FOO BAR="-->"...` breaks)?</font> || NO || NO || NO || <font color="#ff0000">YES</font> || <font color="#ff0000">YES</font> || NO || <font color="#ff0000">YES</font> || NO || NO ||
 || <font color="#3050a0">Characters accepted as tag name / parameter separators (excluding `\t \r \n \x20`)</font> || \x0B \x0C <font color="#ff0000">/</font> || \x0B \x0C <font color="#ff0000">/</font> || NO || <font color="#ff0000">/</font> || <font color="#ff0000">/</font> || \x0B \x0C || \x0B \x0C \xA0 || \x0B \x0C || \x0B \x0C ||
 || <font color="#3050a0">Characters ignored between parameter name, equals sign, and value (excluding `\t \r \n`)</font> || \0 \x0B \x0C \x20 || \0 \x0B \x0C \x20 || \0 \x0B \x0C \x20 || \x20 || \x20 || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> || \x20 \xA0 || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> || \0 \x0B \x0C \x20 <font color="#ff0000">/</font> ||
 || <font color="#3050a0">Characters accepted in lieu of quotes for HTML parameters (excluding `"`)</font> || ' <font color="#ff0000">`</font> || ' <font color="#ff0000">`</font> || ' <font color="#ff0000">`</font> || ' || ' || ' || ' || ' || ' || 
 || <font color="#3050a0">Characters accepted in tag names (excluding `A-Z / ? !`)</font> || <font color="#ff0000">\0 %*</font>|| <font color="#ff0000">\0 %</font> || <font color="#ff0000">\0 %</font> || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#909090">none</font> || <font color="#ff0000">\0</font> || <font color="#909090">none</font> || <font color="#909090">none</font> ||
 
-_NOTE: to add insult to injury, special HTML handling rules seem to be sometimes applied to specific sections of a document; for example, `\x00` character is ignored by Internet Explorer, and `\x08` by Firefox, in certain HTML contexts, but not in others; most notably, they are ignored in HTML tag parameter values in respective browsers._
+_NOTE 1: to add insult to injury, special HTML handling rules seem to be sometimes applied to specific sections of a document; for example, `\x00` character is ignored by Internet Explorer, and `\x08` by Firefox, in certain HTML contexts, but not in others; most notably, they are ignored in HTML tag parameter values in respective browsers._
+
+_NOTE 2: the behavior of HTML parsers, WebKit in particular, is changing rapidly due to some of the HTML5 work._
 
 ===HTML entity encoding===
 
