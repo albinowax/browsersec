@@ -393,7 +393,7 @@ Relevant tests:
 || <font color="#3050a0">Are partly obstructed `IFRAME` containers clickable ("decoy on top")?</font> || YES || YES || YES || YES || YES || YES || YES || YES || YES ||
 || <font color="#3050a0">Is cross-domain `scrollBy` scrolling permitted?</font> || NO || NO || NO || NO || NO || NO || NO || NO || <font color="#909090">n/a</font> ||
 || <font color="#3050a0">Is cross-domain anchor-based frame positioning permitted?</font> || YES || YES || YES || YES || YES || YES || YES || YES || <font color="#909090">n/a</font> ||
-|| <font color="#3050a0">Is `X-Frame-Options` defense available?</font> || NO || NO || YES || NO || NO || YES || NO || YES || <font color="#909090">n/a</font> ||
+|| <font color="#3050a0">Is `X-Frame-Options` defense available?</font> || NO || NO || YES || NO || YES || YES || NO || YES || <font color="#909090">n/a</font> ||
 
 <b></b>
 
