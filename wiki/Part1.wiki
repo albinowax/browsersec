@@ -627,7 +627,7 @@ Common document-embeddable plugins can be generally divided into several primary
 
   * *Specialized data manipulation widgets*. This includes features such as DHTML ActiveX editing gizmos (`2D360201-FFF5-11D1-8D03-00A0C959BC0A`). Some such plugins ship with Windows and are marked as safe despite receiving very little security scrutiny.<p />_Trivia: there is reportedly a sizeable and generally underresearched market of [http://blog.mozilla.com/gen/2007/02/27/the-cost-of-monoculture/ plugin-based crypto] clients implemented as ActiveX controls in certain Asian countries._
 
-One of the more important security properties of object-embedding tags is that like with many of their counterparts intended for embedding other non-HTML content, no particular attention is paid to server-supplied `Content-Type` and `Content-Disposition` headers, despite the fact that many embedded objects may in fact execute in a security context related to the domain that served them. 
+One of the more important security properties of object-embedding tags is that like with many of their counterparts intended for embedding other non-HTML content, no particular attention is guaranteed to paid to server-supplied `Content-Type` and `Content-Disposition` headers, despite the fact that many embedded objects may in fact execute in a security context related to the domain that served them. 
 
 The precedence of inputs for deciding how to interpret the content in various browsers is as follows:
 
@@ -639,6 +639,8 @@ The precedence of inputs for deciding how to interpret the content in various br
 || <font color="#3050a0">Content sniffing if `TYPE=` is missing</font> || ignored || ignored || ignored || ignored || ignored || (#3) || ignored || (#3) || <font color="#909090">n/a</font> ||
 
 The approach to determining how to handle the data with no attention to the intent indicated by the hosting server is a problematic design concept, as it makes it impossible for servers to opt out from having any particular resource being treated as a plugin-interpreted document in response to actions of a malicious third-party site. In conjunction with lax syntax parsers within browser plugins, this resulted in a number of long-standing vulnerabilities, such as valid Java archive files (JARs) [http://www.infoworld.com/article/08/08/01/A_photo_that_can_steal_your_online_credentials_1.html doubling as valid images]; or, more recently, [http://skeptikal.org/2009/11/when-flash-attacks.html Flash applets] doing the same.
+
+_NOTE: Unfortunately, as of today, the embedding party is also not in complete control of how a plugin-handled document will be displayed. See [http://lcamtuf.blogspot.com/2011/03/warning-object-and-embed-are-inherently.html this article] for more._
 
 Another interesting property worth noting here is that many plugins have their own HTTP stacks and caching systems, which makes them a good way to circumvent browser's privacy settings; Metasploit maintains an [http://decloak.net example site] illustrating the problem.
 
