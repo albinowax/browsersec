@@ -775,6 +775,8 @@ That said, if an appropriate character set declaration is provided, browsers tha
 
   * There are some reports of some exotic non-security glitches present in Microsoft Internet Explorer when only `Content-Type` headers, but not `META HTTP-EQUIV`, are used for HTML documents in certain scripts.
 
+  * In rare cases, Internet Explorer may choose to ignore `Content-Type` charset if the document is `text/html`, but no HTML markup is seen in the response.
+
 Relevant tests:
 
 || <font color="#3050a0">*Test description*</font> || <font color="#3050a0">*MSIE6*</font> || <font color="#3050a0">*MSIE7*</font> || <font color="#3050a0">*MSIE8*</font> || <font color="#3050a0">*FF2*</font> || <font color="#3050a0">*FF3*</font> || <font color="#3050a0">*Safari*</font> || <font color="#3050a0">*Opera*</font> || <font color="#3050a0">*Chrome*</font> || <font color="#3050a0">*Android*</font> ||
