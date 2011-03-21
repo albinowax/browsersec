@@ -775,7 +775,7 @@ That said, if an appropriate character set declaration is provided, browsers tha
 
   * There are some reports of some exotic non-security glitches present in Microsoft Internet Explorer when only `Content-Type` headers, but not `META HTTP-EQUIV`, are used for HTML documents in certain scripts.
 
-  * In some cases, Internet Explorer may choose to ignore `Content-Type` charset if the first character of the returned payload happens to be `+` (assuming UTF-7 instead). Other heuristics of this nature may be present, too.
+  * In some cases, Internet Explorer may choose to ignore `Content-Type` charset if the first characters of the returned payload happen to be a byte order mark associated with a particular character set (e.g., `+/v8` for UTF-7).
 
 Relevant tests:
 
